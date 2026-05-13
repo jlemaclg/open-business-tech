@@ -1359,9 +1359,11 @@
    RECURSOS-PANEL
    ============================================================ */
 .cmp-recursos {
-  max-width: 860px;
-  margin: 0 auto 48px;
-  padding: 0 40px;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 48px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 48px;
 }
 .cmp-recursos__header {
   margin-bottom: 32px;
