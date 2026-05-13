@@ -15,7 +15,7 @@ Para proponer algo nuevo, abre un [Issue en GitHub](https://github.com/jlemaclg/
 
 | # | Título | Tipo | Prioridad |
 |---|--------|------|-----------|
-| 1 | Contenido módulos 04–07 | Contenido | Alta |
+| 1 | Contenido módulos 05–07 | Contenido | Alta |
 | 2 | Sesiones y progreso persistente (Supabase) | Feature | Media |
 | 3 | Diseño responsive mobile/tablet | UX | Media |
 | 4 | Integración chatbot | Feature | Baja |
@@ -25,9 +25,9 @@ Para proponer algo nuevo, abre un [Issue en GitHub](https://github.com/jlemaclg/
 
 ## Detalle
 
-### 1 · Contenido módulos 04–07
+### 1 · Contenido módulos 05–07
 Módulos con estructura creada pero sin contenido. Cada uno requiere `modulo-data.json`, `quiz.json`, `recursos.json`, `contenido.md` e `index.html`.
-- [ ] 04 — OAuth, OpenID Connect y FAPI
+- [x] 04 — OAuth, OpenID Connect y FAPI ✅
 - [ ] 05 — Arquitectura Open Finance
 - [ ] 06 — Estándares regulatorios
 - [ ] 07 — Casos de uso técnicos
@@ -57,4 +57,5 @@ Un script PowerShell que automatice: `git add` + `git commit` + `git push` en un
 
 | Versión | Descripción |
 |---------|-------------|
+| 1.1.0 | Módulo 04 OAuth/FAPI + token-inspector |
 | 1.0.0 | Plataforma base publicada en GitHub Pages con módulos 01–03 |

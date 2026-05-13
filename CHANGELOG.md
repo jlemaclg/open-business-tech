@@ -5,6 +5,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [1.1.0] — 2026-05-13
+
+### Añadido
+- Módulo 04 · OAuth, OpenID Connect y FAPI — contenido completo con quiz
+- Componente `token-inspector.js`
+- Nuevos términos en el glosario
+
+### Modificado
+- `components.css` — estilos para nuevos componentes del módulo 04
+- `modulo-loader.js` — mejoras para soportar módulo 04
+- `index.html` — módulo 04 visible en la ruta de aprendizaje
+
+---
+
 ## [1.0.0] — 2026-05-13
 
 ### Añadido

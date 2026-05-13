@@ -1,0 +1,158 @@
+{
+  "modulo": "04-oauth-openid-fapi",
+  "preguntas": [
+    {
+      "id": "q1",
+      "tipo": "single_choice",
+      "enunciado": "En el modelo OAuth 2.0, ¿quién es exactamente el Resource Owner?",
+      "opciones": [
+        "El banco que aloja las APIs reguladas",
+        "El usuario final, dueño de los datos",
+        "La fintech (PSBI/PSIP) que pide acceso",
+        "El servidor que emite los tokens"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. El Resource Owner es siempre el usuario final que es dueño de los datos. El banco es el Resource Server (aloja los datos) y el Authorization Server (emite tokens). La fintech es el Client.",
+      "explicacion_incorrecto": "El Resource Owner es el usuario final, dueño de los datos. El banco juega dos roles distintos (RS + AS) y la fintech es el Client. Confundirlos hace que el resto del módulo no encaje."
+    },
+    {
+      "id": "q2",
+      "tipo": "true_false",
+      "enunciado": "En OAuth 2.0, el cliente recibe la contraseña del usuario para poder llamar a las APIs del Resource Server en su nombre.",
+      "opciones": ["Verdadero", "Falso"],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. Falso. La idea central de OAuth es justamente que el cliente NUNCA tiene la contraseña del usuario. El usuario autentica directamente en el Authorization Server y el cliente recibe solo un access_token con scope acotado.",
+      "explicacion_incorrecto": "Justamente lo contrario: el cliente nunca recibe la contraseña. Esa es la idea central de OAuth — el usuario autentica directamente con el AS, el cliente solo recibe un token."
+    },
+    {
+      "id": "q3",
+      "tipo": "single_choice",
+      "enunciado": "¿Cuál es la diferencia fundamental entre OAuth 2.0 y OpenID Connect?",
+      "opciones": [
+        "OAuth cifra el canal y OIDC firma los tokens",
+        "OAuth resuelve autorización; OIDC añade identidad (id_token + UserInfo)",
+        "OIDC reemplaza a OAuth porque OAuth es obsoleto",
+        "OIDC es para banca y OAuth es para apps de productividad"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. OAuth te da una llave (autorización). OIDC te dice también a quién pertenece la llave (identidad) mediante el id_token y el endpoint /userinfo. OIDC es una capa SOBRE OAuth, no un reemplazo.",
+      "explicacion_incorrecto": "OIDC es una capa de identidad sobre OAuth, no un reemplazo. OAuth te da una llave (autorización). OIDC añade el id_token con info del usuario y el endpoint /userinfo. Ambos cifran sobre TLS; eso no los diferencia."
+    },
+    {
+      "id": "q4",
+      "tipo": "single_choice",
+      "enunciado": "Un JWT está formado por tres bloques separados por punto. ¿Cuáles son?",
+      "opciones": [
+        "Header, payload y body",
+        "Header, payload y signature",
+        "Claim, payload y key",
+        "Algoritmo, datos y certificado"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. Header.Payload.Signature, en base64url. El header dice cómo está firmado (alg, kid). El payload trae los claims. La signature es la firma del emisor sobre los dos primeros.",
+      "explicacion_incorrecto": "Las tres partes son Header.Payload.Signature, en base64url. El header dice cómo está firmado (alg, kid), el payload trae los claims, y la signature es la firma del emisor sobre los dos primeros."
+    },
+    {
+      "id": "q5",
+      "tipo": "single_choice",
+      "enunciado": "En un access_token FAPI 2.0 sender-constrained vía mTLS, ¿qué función cumple el claim cnf.x5t#S256?",
+      "opciones": [
+        "Identifica al usuario final que autorizó el token",
+        "Indica el algoritmo de firma del JWT",
+        "Contiene el hash SHA-256 del certificado de cliente — el RS lo compara con el cert presentado en mTLS",
+        "Marca el token como revocable"
+      ],
+      "correcta": 2,
+      "explicacion_correcto": "Exacto. cnf.x5t#S256 contiene el hash SHA-256 del certificado de cliente con el que se solicitó el token. El Resource Server compara hash(cert presentado por mTLS) == cnf.x5t#S256. Si no coincide, descarta el token aunque la firma del JWT sea válida.",
+      "explicacion_incorrecto": "cnf.x5t#S256 es el hash SHA-256 del certificado de cliente. Sirve para que el RS compare con el cert presentado en mTLS — si no coinciden, descarta el token. Es lo que hace que un atacante que robe solo el token no pueda usarlo."
+    },
+    {
+      "id": "q6",
+      "tipo": "true_false",
+      "enunciado": "En FAPI 2.0, PKCE con method=S256 es obligatorio en todos los flujos, incluso en clientes server-to-server.",
+      "opciones": ["Verdadero", "Falso"],
+      "correcta": 0,
+      "explicacion_correcto": "Correcto. Verdadero. FAPI 2.0 cierra los grados de libertad de OAuth: PKCE con S256 es obligatorio en todos los flujos. El coste de adoptarlo es trivial y cierra una clase entera de ataques.",
+      "explicacion_incorrecto": "Es verdadero. FAPI 2.0 hace PKCE obligatorio en todos los flujos, no solo en apps públicas. El coste de adoptarlo es trivial y cierra una clase entera de ataques que pueden ser caros en banca."
+    },
+    {
+      "id": "q7",
+      "tipo": "single_choice",
+      "enunciado": "¿Qué problema resuelve PAR (Pushed Authorization Requests) que el /authorize clásico no?",
+      "opciones": [
+        "Cifra los tokens emitidos por el AS",
+        "Hace innecesario el mTLS entre cliente y AS",
+        "Evita que parámetros sensibles (authorization_details con montos, IBANs) viajen por la URL del navegador del usuario",
+        "Permite emitir tokens sin pasar por el endpoint /token"
+      ],
+      "correcta": 2,
+      "explicacion_correcto": "Exacto. En /authorize clásico los parámetros van como query string en la URL del navegador del usuario — pasan por historial, logs de proxies, referrers, extensiones. PAR los empuja antes por canal mTLS y deja en la URL solo un request_uri opaco de 90 segundos.",
+      "explicacion_incorrecto": "PAR resuelve la fuga de parámetros por la URL del navegador. En el endpoint clásico /authorize todo viaja como query string visible: historial, logs, referrers. PAR empuja la solicitud por canal mTLS y deja en la URL solo un request_uri opaco."
+    },
+    {
+      "id": "q8",
+      "tipo": "single_choice",
+      "enunciado": "En RAR (RFC 9396), ¿cuál es la diferencia entre el campo type y el campo actions del authorization_details?",
+      "opciones": [
+        "type es el método HTTP (GET/POST) y actions son los endpoints",
+        "type es la API solicitada (Accounts, SinglePayments, Loans...); actions son las operaciones concretas dentro de esa API (ReadAccounts, ReadAccountsTransactions)",
+        "type y actions son sinónimos en RAR",
+        "type es el nivel de privilegio y actions son los datos de retorno"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. type identifica el clúster de API (Accounts, SinglePayments, Loans, Investments...) y actions identifica las operaciones concretas autorizadas dentro de esa API (p.ej. ReadAccounts + ReadAccountsTransactions).",
+      "explicacion_incorrecto": "type identifica el clúster de API (Accounts, SinglePayments, Loans, etc.) mientras que actions identifica las operaciones concretas dentro de esa API (ReadAccounts, ReadAccountsTransactions, CreateSinglePayments...). El método HTTP no aparece en RAR; el regulador define el endpoint en su contrato."
+    },
+    {
+      "id": "q9",
+      "tipo": "single_choice",
+      "enunciado": "Un PSBI necesita acceso a transacciones de una cuenta específica. ¿Qué configuración de privileges en el authorization_details es válida según la regla jerárquica del FAD?",
+      "opciones": [
+        "[\"level3\"]",
+        "[\"level1\", \"level3\"]",
+        "[\"level1\", \"level2\", \"level3\"]",
+        "[\"level2\", \"level3\"]"
+      ],
+      "correcta": 2,
+      "explicacion_correcto": "Correcto. La regla jerárquica del FAD exige que los privileges sean acumulativos: para tener level3, se necesitan level1 y level2 también. Es válido solo [\"level1\", \"level2\", \"level3\"].",
+      "explicacion_incorrecto": "La regla jerárquica del FAD exige acumulación. No se puede pedir un nivel superior sin incluir los inferiores. Por eso solo [\"level1\", \"level2\", \"level3\"] es válido para acceder a transacciones — saltarse level1 o level2 hace que el AS rechace el PAR con 400 invalid_request."
+    },
+    {
+      "id": "q10",
+      "tipo": "single_choice",
+      "enunciado": "Un grant ya autoriza ReadAccounts con privileges [level1, level2]. El usuario quiere ahora también poder leer transacciones (ReadAccountsTransactions level3). ¿Qué operación de Grant Management debe usar el cliente?",
+      "opciones": [
+        "create — siempre se crea un grant nuevo",
+        "update — para ampliar el alcance",
+        "replace — sustituye el grant por uno con los nuevos permisos",
+        "merge — agrega los nuevos permisos a los existentes sin perder los anteriores"
+      ],
+      "correcta": 3,
+      "explicacion_correcto": "Exacto. merge agrega permisos a los existentes. Replace sustituiría todo el set y perdería ReadAccounts. Update solo extiende vigencia. Create crearía un grant nuevo con grantId distinto.",
+      "explicacion_incorrecto": "La operación correcta es merge: agrega los nuevos permisos a los existentes sin perder los anteriores. Replace sustituiría todo el set perdiendo ReadAccounts. Update solo cambia metadatos/vigencia, no permisos. Create generaría un grant nuevo con otro grantId."
+    },
+    {
+      "id": "q11",
+      "tipo": "true_false",
+      "enunciado": "El campo authorization_details viaja en cada llamada API (en headers o body) para que el Resource Server sepa qué está autorizado.",
+      "opciones": ["Verdadero", "Falso"],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. Falso. authorization_details viaja exclusivamente dentro de POST /par. Las llamadas API solo presentan el access_token; el AS resuelve internamente qué grant le corresponde y el RS valida contra el alcance del grant.",
+      "explicacion_incorrecto": "Es falso. authorization_details viaja solo dentro de POST /par. Las llamadas a las APIs solo usan el access_token como Bearer; el RS resuelve internamente qué grant le corresponde a ese token y valida acciones/privilegios contra el alcance del grant."
+    },
+    {
+      "id": "q12",
+      "tipo": "single_choice",
+      "enunciado": "Un cliente bancario te dice: 'ya tengo OAuth 2.0 corriendo en producción'. ¿Cuál es la pregunta más útil que puedes hacer para entender el alcance real?",
+      "opciones": [
+        "¿Qué versión de OAuth?",
+        "¿Cuántos tokens emiten por segundo?",
+        "¿Qué perfil — FAPI 1.0 Advanced, FAPI 2.0 Baseline, FAPI 2.0 con RAR + Grant Management, o vainilla?",
+        "¿Usan JSON o XML para los payloads?"
+      ],
+      "correcta": 2,
+      "explicacion_correcto": "Exacto. OAuth 2.0 a secas no dice nada sobre la seguridad real. La pregunta de perfil te dice si está PKCE obligatorio, si hay PAR, si los tokens son sender-constrained, si hay RAR y Grant Management. Todo el resto de la conversación técnica depende de esa respuesta.",
+      "explicacion_incorrecto": "La pregunta clave es por el perfil. \"OAuth 2.0\" a secas no dice nada sobre la seguridad real — puede ser vainilla sin PKCE ni mTLS, o puede ser FAPI 2.0 Baseline con todo endurecido. Sin saber qué perfil, no puedes evaluar si cumple con la regulación ni qué riesgos están abiertos."
+    }
+  ]
+}

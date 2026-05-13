@@ -1,0 +1,691 @@
+{
+  "modulo": "04-oauth-openid-fapi",
+  "titulo_topbar": "OAuth, OpenID Connect, FAPI 2.0",
+  "duracion_min": 55,
+  "nivel": "intermedio-avanzado",
+  "xp_lectura": 30,
+  "xp_quiz": 50,
+  "xp_quiz_perfecto": 20,
+  "badge": {
+    "id": "maestro-del-token",
+    "nombre": "Maestro del Token",
+    "svg_url": "../../assets/img/badges/maestro-del-token.svg",
+    "descripcion": "Has completado el módulo de autorización Open Finance. Ya puedes sostener una conversación técnica seria sobre OAuth 2.0, OpenID Connect, FAPI 2.0, PAR, RAR y Grant Management con un arquitecto bancario — y explicar por qué cada pieza está donde está."
+  },
+
+  "componentes": [
+
+    {
+      "tipo": "hero-modulo",
+      "eyebrow": "MÓDULO 04 · AUTORIZACIÓN",
+      "titulo_pre_accent": "La llave",
+      "titulo_accent": "temporal, firmada y de un solo uso",
+      "titulo_post_accent": "que sostiene todo Open Finance",
+      "subtitulo": "Sobre el túnel mTLS que ya entiendes, viaja un token. Quién lo emite, qué dice por dentro, cómo se acota y cómo se gestiona su ciclo de vida — eso es lo que cualquier arquitecto bancario te va a preguntar en los primeros 30 minutos.",
+      "duracion_min": 55,
+      "nivel": "intermedio-avanzado",
+      "badge_target": "Maestro del Token"
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "pregunta",
+      "titulo": "Por qué este módulo importa para tu día a día",
+      "parrafos": [
+        "Cuando un cliente te pregunta <em>\"¿cómo accede una fintech a las cuentas de mi usuario sin tener su contraseña?\"</em>, la respuesta corta es <span class=\"glosario-term\" data-term=\"OAuth\">OAuth 2.0</span>. Pero esa respuesta no cierra. En cuanto la conversación se pone técnica aparecen <span class=\"glosario-term\" data-term=\"OIDC\">OIDC</span>, <span class=\"glosario-term\" data-term=\"JWT\">JWT</span>, <span class=\"glosario-term\" data-term=\"PKCE\">PKCE</span>, <span class=\"glosario-term\" data-term=\"PAR\">PAR</span>, <span class=\"glosario-term\" data-term=\"RAR\">RAR</span>, <span class=\"glosario-term\" data-term=\"grant-management\">Grant Management</span>, y los tokens <em>sender-constrained</em>. Si solo conoces el flujo OAuth genérico, te quedas afuera.",
+        "El núcleo de este módulo es entender que <span class=\"glosario-term\" data-term=\"FAPI\">FAPI 2.0</span> no es \"OAuth con esteroides\": es un <strong>perfil endurecido</strong> que cierra ataques que en banca pueden costar millones, y un modelo de consentimiento <strong>granular y gestionable</strong> que reemplaza al scope clásico — porque \"autorizo accounts\" en banca no significa nada útil."
+      ],
+      "cita": "El consultor que solo sabe OAuth genérico le explica al cliente el 30 % de lo que necesita. El que conoce FAPI 2.0 + RAR + Grant Management entrega el 100 % de lo que el regulador chileno está exigiendo en el SFA."
+    },
+
+    {
+      "tipo": "objetivos-grid",
+      "titulo": "Lo que vas a saber al final",
+      "subtitulo": "Cuatro puntos concretos. Si no los tienes claros al terminar, no completaste el módulo.",
+      "items": [
+        { "num": "01", "titulo": "Los 4 actores y los flujos OAuth", "descripcion": "Quién pide qué a quién, Authorization Code Flow y por qué PKCE es obligatorio en FAPI 2.0." },
+        { "num": "02", "titulo": "JWT, OIDC y el id_token",         "descripcion": "Cómo se estructura un token, qué claims importan y qué añade OIDC sobre OAuth." },
+        { "num": "03", "titulo": "FAPI 2.0 — PAR + tokens atados",    "descripcion": "Por qué se hace el push antes de redirigir y qué es un token sender-constrained vía mTLS." },
+        { "num": "04", "titulo": "RAR + Grant Management en SFA Chile", "descripcion": "Del scope clásico al authorization_details granular, y el ciclo de vida completo del consentimiento (Create / Update / Replace / Merge / Query / Revoke)." }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Concepto 1 — Los <span class=\"accent\">cuatro actores</span> que necesitas memorizar",
+      "subtitulo": "OAuth 2.0 no es un protocolo entre dos partes — son cuatro. Confundir cualquiera hace que el resto del módulo no encaje.",
+      "tabs": [
+        {
+          "id": "diagrama",
+          "titulo": "Diagrama",
+          "tipo_contenido": "svg-inline",
+          "svg": "<svg viewBox=\"0 0 900 360\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width:100%;max-width:880px;display:block;margin:0 auto;font-family:Georgia,serif\"><defs><marker id=\"arr04\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#FF0054\"/></marker></defs><g><rect x=\"40\" y=\"50\" width=\"170\" height=\"110\" rx=\"10\" fill=\"#F5F4EE\" stroke=\"#4F062A\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"82\" r=\"14\" fill=\"#FF0054\"/><circle cx=\"70\" cy=\"82\" r=\"6\" fill=\"#FFFFFF\"/><path d=\"M58 110 Q70 96 82 110\" stroke=\"#FFFFFF\" stroke-width=\"2.5\" fill=\"none\"/><rect x=\"55\" y=\"100\" width=\"30\" height=\"16\" fill=\"#FF0054\" rx=\"3\"/><text x=\"110\" y=\"86\" font-size=\"15\" fill=\"#4F062A\" font-weight=\"600\">Resource</text><text x=\"110\" y=\"104\" font-size=\"15\" fill=\"#4F062A\" font-weight=\"600\">Owner</text><text x=\"110\" y=\"126\" font-size=\"11\" fill=\"#666\">El usuario</text><text x=\"110\" y=\"140\" font-size=\"11\" fill=\"#666\">final, dueño</text><text x=\"110\" y=\"152\" font-size=\"11\" fill=\"#666\">de los datos</text></g><g><rect x=\"260\" y=\"50\" width=\"170\" height=\"110\" rx=\"10\" fill=\"#F5F4EE\" stroke=\"#4F062A\" stroke-width=\"2\"/><rect x=\"278\" y=\"75\" width=\"36\" height=\"28\" rx=\"4\" fill=\"#4F062A\"/><rect x=\"282\" y=\"108\" width=\"28\" height=\"3\" fill=\"#4F062A\"/><text x=\"325\" y=\"86\" font-size=\"15\" fill=\"#4F062A\" font-weight=\"600\">Client</text><text x=\"325\" y=\"104\" font-size=\"13\" fill=\"#4F062A\">(PSBI / PSIP)</text><text x=\"325\" y=\"126\" font-size=\"11\" fill=\"#666\">La fintech</text><text x=\"325\" y=\"140\" font-size=\"11\" fill=\"#666\">o app que</text><text x=\"325\" y=\"152\" font-size=\"11\" fill=\"#666\">pide acceso</text></g><g><rect x=\"480\" y=\"50\" width=\"180\" height=\"110\" rx=\"10\" fill=\"#4F062A\" stroke=\"#FF0054\" stroke-width=\"2\"/><circle cx=\"515\" cy=\"95\" r=\"22\" fill=\"#FF0054\" stroke=\"#FFFFFF\" stroke-width=\"2\"/><path d=\"M515 80 L515 95 L525 105\" stroke=\"#FFFFFF\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><text x=\"548\" y=\"82\" font-size=\"14\" fill=\"#FFFFFF\" font-weight=\"700\">Authorization</text><text x=\"548\" y=\"100\" font-size=\"14\" fill=\"#FFFFFF\" font-weight=\"700\">Server (AS)</text><text x=\"548\" y=\"122\" font-size=\"11\" fill=\"#E3E2DA\">Autentica al</text><text x=\"548\" y=\"136\" font-size=\"11\" fill=\"#E3E2DA\">usuario y</text><text x=\"548\" y=\"150\" font-size=\"11\" fill=\"#E3E2DA\">emite tokens</text></g><g><rect x=\"710\" y=\"50\" width=\"170\" height=\"110\" rx=\"10\" fill=\"#F5F4EE\" stroke=\"#4F062A\" stroke-width=\"2\"/><rect x=\"728\" y=\"75\" width=\"34\" height=\"15\" rx=\"3\" fill=\"#4F062A\"/><rect x=\"728\" y=\"95\" width=\"34\" height=\"15\" rx=\"3\" fill=\"#4F062A\"/><circle cx=\"735\" cy=\"82\" r=\"2\" fill=\"#FF0054\"/><circle cx=\"735\" cy=\"102\" r=\"2\" fill=\"#FF0054\"/><text x=\"775\" y=\"82\" font-size=\"14\" fill=\"#4F062A\" font-weight=\"600\">Resource</text><text x=\"775\" y=\"99\" font-size=\"14\" fill=\"#4F062A\" font-weight=\"600\">Server</text><text x=\"775\" y=\"122\" font-size=\"11\" fill=\"#666\">Las APIs que</text><text x=\"775\" y=\"136\" font-size=\"11\" fill=\"#666\">guardan los</text><text x=\"775\" y=\"150\" font-size=\"11\" fill=\"#666\">datos (IPI)</text></g><g stroke=\"#FF0054\" stroke-width=\"2\" fill=\"none\"><path d=\"M210 110 L260 110\" marker-end=\"url(#arr04)\"/><path d=\"M430 110 L480 110\" marker-end=\"url(#arr04)\"/><path d=\"M660 110 L710 110\" marker-end=\"url(#arr04)\"/></g><text x=\"460\" y=\"220\" text-anchor=\"middle\" font-size=\"12\" fill=\"#666\" font-style=\"italic\">El cliente nunca ve la contraseña del usuario. Solo recibe del AS un token con scope acotado.</text><text x=\"460\" y=\"245\" text-anchor=\"middle\" font-size=\"12\" fill=\"#666\" font-style=\"italic\">Y ese token solo le sirve para hablar con un Resource Server específico.</text><text x=\"460\" y=\"285\" text-anchor=\"middle\" font-size=\"13\" fill=\"#4F062A\" font-weight=\"700\">En el SFA chileno: Client = PSBI/PSIP · AS = IPI/IPC · Resource Server = APIs del banco</text></svg>"
+        },
+        {
+          "id": "quien-es-quien",
+          "titulo": "Quién es quién en el SFA",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:18px;\"><div style=\"background:#F5F4EE;padding:18px;border-radius:8px;border-left:3px solid #FF0054\"><div style=\"font-size:11px;letter-spacing:1.5px;color:#FF0054;font-weight:700;margin-bottom:6px\">RESOURCE OWNER</div><div style=\"font-family:Georgia,serif;font-size:18px;color:#4F062A;margin-bottom:6px\">El usuario final</div><div style=\"font-size:13px;color:#444;line-height:1.5\">Persona natural o jurídica dueña de los datos. En el SFA es el usuario que se autentica en su banco para autorizar a una fintech. Nunca comparte su clave con el cliente — solo aprueba en la pantalla del banco.</div></div><div style=\"background:#F5F4EE;padding:18px;border-radius:8px;border-left:3px solid #FF0054\"><div style=\"font-size:11px;letter-spacing:1.5px;color:#FF0054;font-weight:700;margin-bottom:6px\">CLIENT</div><div style=\"font-family:Georgia,serif;font-size:18px;color:#4F062A;margin-bottom:6px\">El que pide el acceso</div><div style=\"font-size:13px;color:#444;line-height:1.5\">La aplicación que quiere los datos. En el SFA es el <span class=\"glosario-term\" data-term=\"PSBI\">PSBI</span> (información) o el <span class=\"glosario-term\" data-term=\"PSIP\">PSIP</span> (iniciación de pagos). Para ser un cliente válido tiene que registrarse vía <span class=\"glosario-term\" data-term=\"DCR\">DCR</span> y tener su <span class=\"glosario-term\" data-term=\"SSA\">SSA</span> firmado por el Directorio CMF.</div></div><div style=\"background:#4F062A;color:white;padding:18px;border-radius:8px;border-left:3px solid #FF0054\"><div style=\"font-size:11px;letter-spacing:1.5px;color:#FF0054;font-weight:700;margin-bottom:6px\">AUTHORIZATION SERVER</div><div style=\"font-family:Georgia,serif;font-size:18px;color:white;margin-bottom:6px\">El que autentica y emite tokens</div><div style=\"font-size:13px;color:#E3E2DA;line-height:1.5\">Servidor que autentica al usuario (con SCA cuando aplica), muestra la pantalla de consentimiento, emite el <span class=\"glosario-term\" data-term=\"access-token\">access_token</span> y el <span class=\"glosario-term\" data-term=\"id-token\">id_token</span>, y gestiona la revocación. En el SFA lo opera el banco proveedor (IPI / IPC).</div></div><div style=\"background:#F5F4EE;padding:18px;border-radius:8px;border-left:3px solid #FF0054\"><div style=\"font-size:11px;letter-spacing:1.5px;color:#FF0054;font-weight:700;margin-bottom:6px\">RESOURCE SERVER</div><div style=\"font-family:Georgia,serif;font-size:18px;color:#4F062A;margin-bottom:6px\">El que tiene los datos</div><div style=\"font-size:13px;color:#444;line-height:1.5\">Servidor que aloja las APIs reguladas (cuentas, pagos, créditos, inversiones, seguros). Verifica el token en cada llamada y, en FAPI 2.0, también valida que el certificado mTLS coincida con el del token.</div></div></div>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "stepper-flow",
+      "numero_concepto": 2,
+      "titulo": "Authorization Code Flow — el OAuth clásico, paso a paso",
+      "subtitulo": "Este es el flujo base. En FAPI 2.0 se endurece (PAR + PKCE obligatorios + sender-constrained), pero el esqueleto sigue siendo este. Avanza con el botón.",
+      "actores": [
+        { "id": "client", "label": "Client",  "icono": "laptop", "sublabel": "PSBI o PSIP que necesita acceder a recursos en nombre del usuario" },
+        { "id": "server", "label": "Authorization Server", "icono": "shield", "sublabel": "IPI / IPC. Autentica al usuario, gestiona el consentimiento, emite los tokens" }
+      ],
+      "pasos": [
+        {
+          "from": "client", "to": "server",
+          "titulo": "Authorization Request",
+          "snippet": "GET /authorize?client_id=...&redirect_uri=...&scope=openid&response_type=code",
+          "explicacion": "El cliente redirige el navegador del usuario al endpoint /authorize del AS. En la URL viaja qué cliente es, dónde quiere volver (redirect_uri), qué scope solicita y qué tipo de respuesta espera (code).",
+          "analogia": "Como llegar a la portería de un edificio y decir: \"vengo a hablar con tu inquilino del 4ºB, dile que vuelva a llamarme aquí cuando termine\"."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "Pantalla de autenticación y consentimiento",
+          "snippet": "El AS muestra el login al usuario y, tras autenticarlo, una pantalla con: \"¿Autorizas a la app X a acceder a Y?\"",
+          "explicacion": "El AS toma el control de la pantalla. Autentica al usuario (con SCA cuando aplica) y le muestra exactamente qué se está pidiendo. El usuario aprueba o rechaza. El cliente no ve nada de esto — está esperando al callback.",
+          "analogia": "El portero llama por el interfono y el inquilino decide si te abre o no. Tú no estás en esa conversación."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "Callback con authorization code",
+          "snippet": "302 redirect → https://miapp.com/callback?code=AUTH_CODE&state=xyz123",
+          "explicacion": "Si el usuario aprueba, el AS redirige al navegador de vuelta al cliente con un código de autorización temporal (single-use, vida corta, ~30–60 s) en la query string. Este code todavía NO es el token; es el ticket para canjearlo.",
+          "analogia": "El portero te entrega un comprobante con un número de ticket. Con ese ticket, en la ventanilla de al lado, te dan la llave. El ticket solo, sin pasar por la ventanilla, no abre nada."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "Token Request (canje code → tokens)",
+          "snippet": "POST /token { grant_type: 'authorization_code', code: 'AUTH_CODE', client_id, client_secret }",
+          "explicacion": "El cliente — ya por el canal trasero, no por el navegador del usuario — llama al endpoint /token enviando el code y su autenticación de cliente (en FAPI 2.0 esto va por mTLS con su certificado). El AS valida que el code sea válido y no esté usado.",
+          "analogia": "Vas a la ventanilla con tu ticket y tu carnet. Solo si los dos coinciden, te entregan la llave."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "Access Token + Refresh Token",
+          "snippet": "200 OK { access_token: '...', refresh_token: '...', id_token: '...', token_type: 'Bearer', expires_in: 600 }",
+          "explicacion": "El AS responde con el access_token (vida corta, lo usas para llamar a las APIs), un refresh_token (vida larga, para renovar el access_token sin reautenticación) y, si pediste scope openid, también un id_token con info del usuario autenticado.",
+          "analogia": "Te dan la llave (access_token), un duplicado para reemplazo (refresh_token) y un comprobante de identidad de quien te la dio (id_token)."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "Consumo de la API",
+          "snippet": "GET /accounts/v1/{accountId}/balance  Authorization: Bearer <access_token>",
+          "explicacion": "El cliente llama a la API protegida poniendo el access_token en la cabecera Authorization como Bearer. El Resource Server valida la firma del token contra el JWKS del AS y, si todo cuadra, devuelve los datos.",
+          "analogia": "Entras a la habitación con la llave. La cerradura solo necesita ver que la llave fue cortada por el cerrajero correcto."
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Concepto 3 — <span class=\"accent\">PKCE</span>: cerrar el ataque del code interceptado",
+      "subtitulo": "PKCE convierte el code en algo que solo el cliente original puede canjear. En FAPI 2.0 es obligatorio para cualquier flujo.",
+      "tabs": [
+        {
+          "id": "ataque",
+          "titulo": "Sin PKCE: el ataque",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "El flujo vulnerable",
+            "subtitulo": "OAuth 2.0 estándar sin PKCE",
+            "items": [
+              { "check": false, "texto": "El cliente pide el code al AS" },
+              { "check": false, "texto": "El AS lo devuelve por la URL del callback" },
+              { "check": false, "texto": "Una app maliciosa en el mismo dispositivo intercepta el callback y captura el code" },
+              { "check": false, "texto": "La app maliciosa canjea el code antes que el cliente real, sin haber pedido autorización" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "PKCE",
+            "titulo": "Con PKCE: el ataque se cae",
+            "subtitulo": "RFC 7636 — obligatorio en FAPI 2.0",
+            "items": [
+              { "check": true, "texto": "Cliente genera un secreto aleatorio (code_verifier)" },
+              { "check": true, "texto": "Envía solo su hash SHA-256 (code_challenge) en /authorize" },
+              { "check": true, "texto": "Al canjear el code envía el verifier original" },
+              { "check": true, "texto": "El AS compara hash(verifier) == challenge. Si la app maliciosa robó el code, no tiene el verifier, no puede canjear" }
+            ]
+          }
+        },
+        {
+          "id": "verifier",
+          "titulo": "Verifier y challenge",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "code_verifier",
+            "items": [
+              "Cadena aleatoria de 43–128 caracteres",
+              "Generada por el cliente en cada flujo",
+              "NUNCA viaja por la red en /authorize — solo en /token",
+              "Si se filtra, el flujo concreto está comprometido (pero no los anteriores)"
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "code_challenge",
+            "items": [
+              "Hash SHA-256 del verifier, codificado en base64url",
+              "Viaja en /authorize junto al resto de parámetros",
+              "Por sí solo no permite canjear el code",
+              "FAPI 2.0 exige method=S256 — nunca \"plain\""
+            ]
+          }
+        },
+        {
+          "id": "porque",
+          "titulo": "Por qué es obligatorio",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#F5F4EE;padding:22px 26px;border-radius:8px;border-left:3px solid #FF0054\"><p style=\"font-size:14px;line-height:1.65;color:#333\">PKCE nació para apps móviles porque otras apps en el mismo dispositivo podían registrar el mismo <code>redirect_uri</code> y robarse el code. Pero FAPI 2.0 lo exige <strong>en todos los flujos</strong>, incluso server-to-server, porque cierra una clase entera de ataques sin coste operativo: el cliente ya tiene que generar entropía para el <code>state</code>, generar también el verifier no añade complejidad real.</p><p style=\"font-size:14px;line-height:1.65;color:#333;margin-top:14px\">En el SFA chileno, el FAD v1.0.0 exige <code>code_challenge_method=S256</code> en cada llamada a <code>/par</code>. Un AS que reciba un PAR sin <code>code_challenge</code>, o con <code>code_challenge_method=plain</code>, debe rechazarlo con <code>400 invalid_request</code>.</p></div>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "token-inspector",
+      "numero_concepto": 4,
+      "titulo": "La anatomía de un <span class=\"accent\">JWT</span>",
+      "subtitulo": "Un access_token real, por dentro. Pasa el ratón por cada claim para ver qué hace. Alterna entre la vista decodificada y la cadena serializada que efectivamente viaja por la red.",
+      "jwt_demo": "eyJhbGciOiJQUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtpZC1jbWYtMjAyNS0wNCJ9.eyJpc3MiOiJodHRwczovL2FzLmJhbmNvLmNsIiwic3ViIjoidXNyLTAwOTI4MyIsImF1ZCI6Imh0dHBzOi8vYXBpLmJhbmNvLmNsIiwiZXhwIjoxNzM1MDAwMzAwLCJpYXQiOjE3MzUwMDAwMDAsImp0aSI6IjkzZjdiZjk4LTdkNTAtNGIwNyIsInNjb3BlIjoib3BlbmlkIiwiY2xpZW50X2lkIjoicHNiaS1maW50ZWNoLTEyMyIsImNuZiI6eyJ4NXQjUzI1NiI6ImFhYjEyMyJ9LCJncmFudF9pZCI6IjkzZjdiZjk4LTdkNTAtNGIwNyJ9.RmFLZS1zaWduYXR1cmUtUFMyNTYtaWxsdXN0cmF0aXZh",
+      "header": {
+        "alg": "PS256",
+        "typ": "JWT",
+        "kid": "kid-cmf-2025-04"
+      },
+      "payload": {
+        "iss": "https://as.banco.cl",
+        "sub": "usr-009283",
+        "aud": "https://api.banco.cl",
+        "exp": 1735000300,
+        "iat": 1735000000,
+        "jti": "93f7bf98-7d50-4b07",
+        "scope": "openid",
+        "client_id": "psbi-fintech-123",
+        "cnf": { "x5t#S256": "aab123-hash-del-cert-cliente" },
+        "grant_id": "93f7bf98-7d50-4b07-8243-823f553730b2"
+      },
+      "highlight_claims": ["alg", "exp", "aud", "cnf", "grant_id"],
+      "nota_final": "Los claims marcados en rosa son los críticos en FAPI 2.0: <strong>alg</strong> tiene que ser PS256/ES256 (no HS256), <strong>aud</strong> tiene que coincidir con la API que recibe el token, <strong>exp</strong> tiene que ser corto (5–15 min), <strong>cnf</strong> ata el token al certificado mTLS del cliente, y <strong>grant_id</strong> referencia el grant gestionable vía Grant Management API."
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Concepto 5 — De <span class=\"accent\">OAuth a OpenID Connect</span>",
+      "subtitulo": "OAuth te da una llave. OIDC te dice también a quién pertenece la llave.",
+      "tabs": [
+        {
+          "id": "que-anade",
+          "titulo": "Qué añade OIDC",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "OAuth 2.0 puro",
+            "subtitulo": "Protocolo de autorización",
+            "items": [
+              { "check": true, "texto": "Emite access_token y refresh_token" },
+              { "check": true, "texto": "Acota lo que el cliente puede hacer (scopes)" },
+              { "check": false, "texto": "NO te dice quién es el usuario que autorizó" },
+              { "check": false, "texto": "NO tiene endpoint estándar para info del usuario" },
+              { "check": false, "texto": "NO incluye claims de identidad" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "OIDC",
+            "titulo": "OpenID Connect",
+            "subtitulo": "Capa de identidad sobre OAuth",
+            "items": [
+              { "check": true, "texto": "Todo lo de OAuth +" },
+              { "check": true, "texto": "Emite también un id_token (JWT con info del usuario)" },
+              { "check": true, "texto": "Define el endpoint /userinfo (REST estándar)" },
+              { "check": true, "texto": "Claims estándar: sub, name, email, auth_time, acr, amr" },
+              { "check": true, "texto": "Soporta nonce para detectar replay del id_token" }
+            ]
+          }
+        },
+        {
+          "id": "tokens",
+          "titulo": "access_token vs id_token",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "access_token",
+            "items": [
+              "Para presentar ante las APIs (Resource Server)",
+              "Su contenido es opaco al cliente — lo entiende el RS",
+              "Su scope decide qué endpoints se pueden tocar",
+              "Vida corta (5–15 min en FAPI 2.0)",
+              "Puede ser sender-constrained (atado al cert mTLS)"
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "id_token",
+            "items": [
+              "Para que el cliente sepa a quién autenticó el AS",
+              "Su contenido SÍ es para el cliente",
+              "No se presenta ante las APIs",
+              "Vida también corta",
+              "Lleva auth_time, acr (nivel SCA), amr (métodos)"
+            ]
+          }
+        },
+        {
+          "id": "userinfo",
+          "titulo": "El endpoint /userinfo",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#F5F4EE;padding:22px;border-radius:8px;border-left:3px solid #FF0054\"><p style=\"font-size:14px;line-height:1.6;color:#333\">El cliente puede pedir más datos del usuario llamando a <code>GET /userinfo</code> con el access_token como Bearer. El AS responde un JSON con los claims que correspondan al scope. La gracia: estos claims pueden cambiar (el usuario edita su perfil) sin necesidad de re-emitir el id_token.</p><pre style=\"background:white;padding:14px 18px;border-radius:6px;margin-top:14px;font-size:12.5px;color:#333;line-height:1.55;border:1px solid #E3E2DA;overflow-x:auto\">GET /userinfo HTTP/1.1\nHost: as.banco.cl\nAuthorization: Bearer eyJhbGciOiJQUzI1NiIs...\n\n200 OK\nContent-Type: application/json\n\n{\n  \"sub\": \"usr-009283\",\n  \"name\": \"María González\",\n  \"email\": \"maria.gonzalez@ejemplo.cl\",\n  \"email_verified\": true\n}</pre></div>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "escudo",
+      "titulo": "Concepto 6 — FAPI 2.0, el endurecimiento financiero",
+      "parrafos": [
+        "OAuth 2.0 y OIDC son extensibles a propósito: cada implementación puede decidir qué algoritmos firmar, si exigir <span class=\"glosario-term\" data-term=\"PKCE\">PKCE</span> o no, cómo se autentica el cliente. Esa flexibilidad funciona para apps de productividad. <strong>No funciona para banca</strong>: en banca hay dinero real, hay obligación de no repudio, y hay reguladores que necesitan probar que algo se hizo conforme a un perfil estándar.",
+        "<span class=\"glosario-term\" data-term=\"FAPI\">FAPI 2.0</span> (Financial-grade API Security Profile 2.0, de OpenID Foundation) cierra los grados de libertad de OAuth/OIDC con cuatro decisiones operativas: <strong>(1)</strong> <span class=\"glosario-term\" data-term=\"mTLS\">mTLS</span> para autenticar al cliente, <strong>(2)</strong> <span class=\"glosario-term\" data-term=\"PAR\">PAR</span> para enviar la solicitud de autorización por canal seguro antes de redirigir, <strong>(3)</strong> <span class=\"glosario-term\" data-term=\"PKCE\">PKCE</span> con S256 obligatorio, y <strong>(4)</strong> <span class=\"glosario-term\" data-term=\"sender-constrained\">tokens sender-constrained</span> (atados al cert mTLS que los pidió). Encima, el SFA chileno suma <span class=\"glosario-term\" data-term=\"RAR\">RAR</span> y <span class=\"glosario-term\" data-term=\"grant-management\">Grant Management</span> para la granularidad del consentimiento."
+      ],
+      "cita": "Si un cliente bancario te dice \"ya tengo OAuth 2.0 corriendo en producción\", la pregunta correcta no es \"¿qué versión?\". Es \"¿qué perfil? ¿FAPI 1.0 Advanced, FAPI 2.0 Baseline, FAPI 2.0 con RAR, o vainilla?\". El resto de la conversación depende de esa respuesta."
+    },
+
+    {
+      "tipo": "stepper-flow",
+      "numero_concepto": 7,
+      "titulo": "PAR — el push antes de redirigir",
+      "subtitulo": "En OAuth clásico, los parámetros de /authorize viajan en la URL del navegador del usuario. PAR los empuja antes por un canal mTLS seguro y deja solo un identificador para la redirección.",
+      "actores": [
+        { "id": "client", "label": "Client",  "icono": "laptop", "sublabel": "PSBI / PSIP autenticado vía mTLS contra el AS" },
+        { "id": "server", "label": "Authorization Server", "icono": "shield", "sublabel": "Expone /par además del /authorize clásico" }
+      ],
+      "pasos": [
+        {
+          "from": "client", "to": "server",
+          "titulo": "POST /par (canal mTLS)",
+          "snippet": "POST /par  body: { client_id, redirect_uri, scope, code_challenge, authorization_details: [...] }",
+          "explicacion": "El cliente envía al endpoint /par toda la información de la solicitud de autorización — incluyendo el authorization_details (RAR) que puede ser sensible (montos, IBANs, identificadores de cuenta). Va por POST sobre el canal mTLS que ya tienen establecido, no por URL.",
+          "analogia": "En vez de gritar tu pedido en la entrada del restaurante (donde cualquiera puede oírlo), entras y se lo dejas escrito al maître. Te da un número."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "201 Created — request_uri (90 s)",
+          "snippet": "201 Created  { request_uri: 'urn:ietf:params:oauth:request_uri:abc123', expires_in: 90 }",
+          "explicacion": "El AS guarda la solicitud en su memoria, le asigna un identificador URN (request_uri) y se lo devuelve al cliente. Esa URI vive 90 segundos.",
+          "analogia": "El maître te da un número de mesa. Tienes 90 segundos para llegar a esa mesa o el pedido se descarta."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "Redirección a /authorize con solo el request_uri",
+          "snippet": "302 → GET /authorize?client_id=psbi-fintech-123&request_uri=urn:...:abc123",
+          "explicacion": "Ahora sí, el cliente redirige el navegador del usuario a /authorize. Pero la URL ya no contiene scopes, ni authorization_details, ni nada sensible — solo el client_id y el request_uri. El AS lee de su memoria la solicitud completa y procede al consentimiento como en el flujo clásico.",
+          "analogia": "Cuando llegas a tu mesa con tu número, el maître ya tiene tu pedido preparado. Nadie en el restaurante se enteró de qué pediste."
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Concepto 8 — <span class=\"accent\">RAR</span>: del scope al authorization_details",
+      "subtitulo": "RAR (RFC 9396) reemplaza el scope genérico por un objeto JSON que describe exactamente qué, sobre qué recurso, con qué profundidad, para qué finalidad, hasta cuándo.",
+      "tabs": [
+        {
+          "id": "antes-despues",
+          "titulo": "Antes y después",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "scope clásico",
+            "subtitulo": "OAuth 2.0 vainilla",
+            "items": [
+              { "check": false, "texto": "scope=accounts payments" },
+              { "check": false, "texto": "Etiquetas planas — no dicen sobre qué cuenta" },
+              { "check": false, "texto": "No discrimina leer saldo vs leer transacciones" },
+              { "check": false, "texto": "No tiene noción de vigencia ni recurrencia" },
+              { "check": false, "texto": "No registra la finalidad declarada" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "RFC 9396",
+            "titulo": "authorization_details",
+            "subtitulo": "RAR — obligatorio en SFA",
+            "items": [
+              { "check": true, "texto": "Array JSON con un objeto por permiso" },
+              { "check": true, "texto": "type, actions, identifier — qué se hace sobre qué" },
+              { "check": true, "texto": "privileges level1/2/3 — qué profundidad de datos" },
+              { "check": true, "texto": "validFrom/To + frequency RFC 5545" },
+              { "check": true, "texto": "purpose — finalidad declarada (auditoría)" }
+            ]
+          }
+        },
+        {
+          "id": "ejemplo-pfm",
+          "titulo": "Ejemplo real (PFM)",
+          "tipo_contenido": "texto-libre",
+          "html": "<p style=\"font-size:14px;color:#444;line-height:1.6;margin-bottom:14px\">Una fintech de gestión financiera personal pide acceso al listado, detalle, saldos y transacciones de una cuenta concreta, con vigencia anual y refresco diario. Así viaja en POST /par:</p><pre style=\"background:#F5F4EE;border:1px solid #E3E2DA;border-radius:8px;padding:18px 22px;font-size:12.5px;line-height:1.55;color:#333;overflow-x:auto\">{\n  \"redirect_uri\": \"https://pfm-fintech.com/callback\",\n  \"scope\": \"openid\",\n  \"code_challenge_method\": \"S256\",\n  \"code_challenge\": \"E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM\",\n  \"grant_management_action\": \"create\",\n  \"authorization_details\": [\n    {\n      \"type\": \"Accounts\",\n      \"actions\": [\"ReadAccounts\", \"ReadAccountsBalance\", \"ReadAccountsTransactions\"],\n      \"identifier\": \"ACC12345\",\n      \"privileges\": [\"level1\", \"level2\", \"level3\"],\n      \"purpose\": \"Gestión de finanzas personales y categorización de gastos\",\n      \"recurringIndicator\": true,\n      \"frequency\": \"R/2025-05-01T00:00:00Z/P1D\",\n      \"validFrom\": \"2025-04-22T00:00:00Z\",\n      \"validTo\": \"2026-04-22T00:00:00Z\",\n      \"consentType\": false\n    }\n  ]\n}</pre><p style=\"font-size:13px;color:#666;line-height:1.55;margin-top:12px\"><em>Datos en el objeto: qué recurso (Accounts), qué acciones (3 scopes específicos), qué cuenta (ACC12345), qué profundidad (los tres niveles), para qué (PFM), cada cuánto (diario), por cuánto tiempo (un año). El usuario aprueba todo esto en una sola pantalla.</em></p>"
+        },
+        {
+          "id": "ejemplo-pago",
+          "titulo": "Ejemplo real (pago único)",
+          "tipo_contenido": "texto-libre",
+          "html": "<p style=\"font-size:14px;color:#444;line-height:1.6;margin-bottom:14px\">Un PSIP que inicia un pago único en representación del usuario. Notar la diferencia: <code>recurringIndicator=false</code>, sin <code>frequency</code>, <code>consentType=true</code> (caduca por validTo de un día).</p><pre style=\"background:#F5F4EE;border:1px solid #E3E2DA;border-radius:8px;padding:18px 22px;font-size:12.5px;line-height:1.55;color:#333;overflow-x:auto\">{\n  \"redirect_uri\": \"https://psip-pagos.com/callback\",\n  \"scope\": \"openid\",\n  \"grant_management_action\": \"create\",\n  \"authorization_details\": [\n    {\n      \"type\": \"SinglePayments\",\n      \"actions\": [\"CreateSinglePayments\", \"ReadSinglePayments\"],\n      \"identifier\": \"PAY-20250422-001\",\n      \"privileges\": [\"level1\", \"level2\"],\n      \"purpose\": \"Pago de servicio de telecomunicaciones\",\n      \"recurringIndicator\": false,\n      \"validFrom\": \"2025-04-22T00:00:00Z\",\n      \"validTo\": \"2025-04-23T00:00:00Z\",\n      \"consentType\": true\n    }\n  ]\n}</pre>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Concepto 9 — <span class=\"accent\">Privilegios</span> jerárquicos level1/2/3",
+      "subtitulo": "Probablemente el concepto donde más se traba un perfil de negocio. Vamos despacio.",
+      "tabs": [
+        {
+          "id": "que-es",
+          "titulo": "Qué define",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "privileges NO es",
+            "items": [
+              "No es el factor de autenticación (eso es ACR del id_token)",
+              "No es el scope genérico (eso es type + actions del RAR)",
+              "No es un rol de usuario interno del banco",
+              "No es una etiqueta organizacional"
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "privileges SÍ es",
+            "items": [
+              "La profundidad de datos que se autoriza sobre un recurso",
+              "Acumulativo y jerárquico — no se puede pedir 3 sin 1 y 2",
+              "Refleja la profundidad de la ruta del endpoint",
+              "Configurable por recurso identificado"
+            ]
+          }
+        },
+        {
+          "id": "niveles",
+          "titulo": "Los tres niveles",
+          "tipo_contenido": "texto-libre",
+          "html": "<table style=\"width:100%;border-collapse:collapse;font-size:13.5px\"><thead><tr style=\"background:#4F062A;color:white\"><th style=\"padding:12px 14px;text-align:left;font-family:Georgia,serif;font-weight:400;font-size:13.5px\">Nivel</th><th style=\"padding:12px 14px;text-align:left;font-family:Georgia,serif;font-weight:400;font-size:13.5px\">Qué significa</th><th style=\"padding:12px 14px;text-align:left;font-family:Georgia,serif;font-weight:400;font-size:13.5px\">Patrón del endpoint</th></tr></thead><tbody><tr style=\"background:#F5F4EE\"><td style=\"padding:12px 14px;border-bottom:1px solid #E3E2DA\"><code style=\"background:rgba(255,0,84,0.1);color:#FF0054;padding:2px 8px;border-radius:3px;font-weight:600\">level1</code></td><td style=\"padding:12px 14px;border-bottom:1px solid #E3E2DA\">Listado general del recurso (sin identificador específico)</td><td style=\"padding:12px 14px;border-bottom:1px solid #E3E2DA;font-family:monospace;font-size:12px\">GET /accounts/v1</td></tr><tr><td style=\"padding:12px 14px;border-bottom:1px solid #E3E2DA\"><code style=\"background:rgba(255,0,84,0.1);color:#FF0054;padding:2px 8px;border-radius:3px;font-weight:600\">level2</code></td><td style=\"padding:12px 14px;border-bottom:1px solid #E3E2DA\">Detalle de un recurso identificado (requiere identifier)</td><td style=\"padding:12px 14px;border-bottom:1px solid #E3E2DA;font-family:monospace;font-size:12px\">GET /accounts/v1/{accountId}</td></tr><tr style=\"background:#F5F4EE\"><td style=\"padding:12px 14px\"><code style=\"background:rgba(255,0,84,0.1);color:#FF0054;padding:2px 8px;border-radius:3px;font-weight:600\">level3</code></td><td style=\"padding:12px 14px\">Sub-recursos del recurso identificado (saldo, transacciones, overdraft)</td><td style=\"padding:12px 14px;font-family:monospace;font-size:12px\">GET /accounts/v1/{accountId}/transactions</td></tr></tbody></table><p style=\"font-size:13px;color:#444;margin-top:18px;background:rgba(255,0,84,0.06);padding:14px 18px;border-radius:6px;border-left:3px solid #FF0054;line-height:1.5\"><strong>Insight crítico:</strong> un mismo scope (<code>ReadAccounts</code>) opera en <code>level1</code> contra el listado y en <code>level2</code> contra el detalle de una cuenta. <strong>No son scopes distintos, son profundidades distintas del mismo scope.</strong></p>"
+        },
+        {
+          "id": "regla",
+          "titulo": "La regla jerárquica",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "Inválido",
+            "subtitulo": "El AS rechaza con 400 invalid_request",
+            "items": [
+              { "check": false, "texto": "\"privileges\": [\"level3\"]" },
+              { "check": false, "texto": "\"privileges\": [\"level2\", \"level3\"]" },
+              { "check": false, "texto": "\"privileges\": [\"level3\", \"level1\"] sin level2" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "Válido",
+            "subtitulo": "Niveles acumulativos completos",
+            "items": [
+              { "check": true, "texto": "\"privileges\": [\"level1\"]" },
+              { "check": true, "texto": "\"privileges\": [\"level1\", \"level2\"]" },
+              { "check": true, "texto": "\"privileges\": [\"level1\", \"level2\", \"level3\"]" }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Concepto 10 — <span class=\"accent\">Sender-constrained</span> tokens",
+      "subtitulo": "En FAPI 2.0 un access_token no es portable. Está atado a quien lo pidió.",
+      "tabs": [
+        {
+          "id": "mtls-bound",
+          "titulo": "mTLS-bound (lo normal en banca)",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#F5F4EE;padding:22px;border-radius:8px;border-left:3px solid #FF0054\"><p style=\"font-size:14px;line-height:1.65;color:#333\"><strong>RFC 8705.</strong> Cuando el cliente solicita el token vía /token (sobre mTLS), el AS toma el hash SHA-256 del certificado de cliente y lo incluye en el JWT como <code>cnf.x5t#S256</code>. Cuando el cliente llama luego a la API, presenta el token <em>y</em> el mismo certificado por mTLS. El Resource Server compara hash(cert presentado) == cnf.x5t#S256. Si no coincide, descarta el token aunque esté firmado válidamente.</p><p style=\"font-size:14px;line-height:1.65;color:#333;margin-top:14px\"><strong>Resultado operativo:</strong> un atacante que robe solo el token no puede usarlo. Necesitaría también la clave privada del certificado del cliente. Como esa clave nunca sale del HSM del cliente, robar solo el token deja al atacante con un papel inservible.</p><p style=\"font-size:14px;line-height:1.65;color:#333;margin-top:14px\">Es lo que usan el SFA chileno, OFB Brasil, OBIE Reino Unido y la mayoría de Open Finance regulado bancario.</p></div>"
+        },
+        {
+          "id": "dpop",
+          "titulo": "DPoP (cuando no hay mTLS)",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#F5F4EE;padding:22px;border-radius:8px;border-left:3px solid #FF0054\"><p style=\"font-size:14px;line-height:1.65;color:#333\"><strong>RFC 9449.</strong> Pensado para clientes públicos donde mTLS no es viable: apps móviles, SPAs en navegador, cualquier cliente que no controla un certificado X.509. El cliente genera un par de claves asimétricas en el dispositivo y firma cada llamada API con un JWT corto (DPoP proof) que demuestra posesión de la clave privada.</p><p style=\"font-size:14px;line-height:1.65;color:#333;margin-top:14px\">El access_token lleva el hash de la clave pública del cliente en <code>cnf.jkt</code>. Para cada request, el cliente firma un DPoP proof que incluye método, URL y timestamp; el RS lo valida.</p><p style=\"font-size:14px;line-height:1.65;color:#333;margin-top:14px\"><strong>FAPI 2.0 Baseline acepta DPoP como alternativa a mTLS-bound</strong>, pero en banca regulada bancaria gana mTLS-bound por la facilidad de auditoría y porque el certificado emitido por el directorio ya cumple doble función (autenticación de cliente + binding del token).</p></div>"
+        },
+        {
+          "id": "cuando",
+          "titulo": "Cuándo usar cada uno",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "mTLS-bound",
+            "items": [
+              "Cliente server-to-server con certificado del Directorio",
+              "Banca regulada Open Finance LATAM/Europa",
+              "El cliente puede gestionar HSM",
+              "Cuando ya hay mTLS por requisito regulatorio"
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "DPoP",
+            "items": [
+              "Apps móviles nativas como TPP",
+              "SPAs JavaScript que llaman directo al RS",
+              "Clientes públicos sin gestión de certificados",
+              "Open Finance en jurisdicciones con perfil flexible"
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "stepper-flow",
+      "numero_concepto": 11,
+      "titulo": "El flujo completo FAD — PAR + RAR + Grant + Token + API",
+      "subtitulo": "Los 11 pasos como los exige el FAD chileno, integrando todo lo anterior. El usuario aparece en los pasos donde el AS toma su pantalla.",
+      "actores": [
+        { "id": "client", "label": "PSBI / PSIP", "icono": "laptop", "sublabel": "Cliente registrado, con cert mTLS emitido por la CA del Directorio CMF" },
+        { "id": "server", "label": "AS del IPI/IPC", "icono": "shield", "sublabel": "Authorization Server del banco proveedor, que también gestiona el Resource Server" }
+      ],
+      "pasos": [
+        {
+          "from": "client", "to": "server",
+          "titulo": "1. mTLS y POST /par",
+          "snippet": "POST /par  body: { authorization_details, code_challenge=S256, grant_management_action: 'create', redirect_uri, scope: 'openid' }",
+          "explicacion": "Sobre el canal mTLS ya establecido, el cliente envía la solicitud RAR completa. El AS valida la coherencia entre scope, actions, type y privileges, y verifica el certificado mTLS contra el directorio.",
+          "analogia": "Dejas el formulario completo en la mesa del banco antes de que tu cliente cruce la puerta."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "2. 201 Created — request_uri (90 s)",
+          "snippet": "201 Created { request_uri: 'urn:ietf:...:abc', expires_in: 90 }",
+          "explicacion": "El AS valida y devuelve el request_uri temporal. Vida 90 segundos. Si el cliente no redirige en ese plazo, el PAR caduca.",
+          "analogia": "El banco te da un número de turno con validez muy corta — tu cliente tiene que llegar pronto."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "3-4. Redirección y pantalla de consentimiento",
+          "snippet": "302 → GET /authorize?client_id=...&request_uri=urn:...:abc  // El AS muestra al usuario qué recursos, acciones, privilegios y vigencia se piden",
+          "explicacion": "El cliente redirige el navegador del usuario al endpoint /authorize. El AS recupera la solicitud completa de su memoria interna y pinta una pantalla de consentimiento granular: nombre del recurso, lista de acciones, niveles, finalidad, vigencia.",
+          "analogia": "El cliente entra, el banco le muestra exactamente qué se le va a permitir hacer a quién."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "5-6. Autenticación + aprobación → grant creado",
+          "snippet": "Usuario SCA → aprueba → AS genera grantId (UUID), grant.status = Authorised",
+          "explicacion": "El usuario se autentica con SCA y aprueba. El AS crea un grant nuevo, le asigna un grantId (UUID), copia el authorization_details aprobado y deja el estado en Authorised. Si es persona jurídica con apoderados, queda AwaitingMultiAuthorisation hasta que firmen todos.",
+          "analogia": "El cliente firma en la pantalla del banco. El banco abre una carpeta con su número de expediente."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "7. Callback con code",
+          "snippet": "302 → redirect_uri?code=AUTH_CODE&state=xyz",
+          "explicacion": "El AS redirige al callback del cliente con un code single-use de vida corta. Mismo patrón que Authorization Code Flow estándar.",
+          "analogia": "El banco le entrega al cliente un comprobante para retirar la llave por la ventanilla."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "8-9. POST /token (canal mTLS)",
+          "snippet": "POST /token { grant_type, code, code_verifier, client_id }  →  200 { access_token, refresh_token, grant_id }",
+          "explicacion": "El cliente canjea code por tokens. El AS valida PKCE (verifier vs challenge), atado mTLS, y devuelve access_token (con cnf.x5t#S256 atado al cert), refresh_token y el grant_id.",
+          "analogia": "Llegas a la ventanilla con tu ticket y tu cédula. Te entregan la llave grabada con tu número de serie."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "10-11. Consumo de la API",
+          "snippet": "GET /accounts/v1/{accountId}/transactions  Authorization: Bearer <token>  (sobre mTLS con el mismo cert)",
+          "explicacion": "El cliente llama a la API regulada. El Resource Server valida: firma del token, atado al cert mTLS (cnf.x5t#S256 vs hash del cert presentado), que las actions y privileges cubran el endpoint, y que el grant siga Authorised. Si todo cuadra, devuelve los datos.",
+          "analogia": "Abres la puerta de la habitación que te corresponde — y solo esa. La cerradura comprueba tu llave, tu carnet y tu número de expediente activo."
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Concepto 12 — <span class=\"accent\">Grant Management</span> — el ciclo de vida del consentimiento",
+      "subtitulo": "Una vez creado el grant, hay seis operaciones que el cliente y el usuario pueden ejecutar sobre él. Cuatro van por POST /par con grant_management_action; dos son endpoints REST directos.",
+      "tabs": [
+        {
+          "id": "create",
+          "titulo": "Create",
+          "tipo_contenido": "texto-libre",
+          "html": "<p style=\"font-size:14px;color:#444;line-height:1.6;margin-bottom:14px\"><strong>Función:</strong> crear un consentimiento nuevo. Sin <code>grant_id</code> previo. Tras aprobación del usuario, el AS genera un nuevo <code>grantId</code>.</p><pre style=\"background:#F5F4EE;border:1px solid #E3E2DA;border-radius:8px;padding:18px 22px;font-size:12.5px;color:#333;line-height:1.5;overflow-x:auto\">POST /par\n{\n  \"grant_management_action\": \"create\",\n  \"authorization_details\": [\n    {\n      \"type\": \"Accounts\",\n      \"actions\": [\"ReadAccounts\", \"ReadAccountsTransactions\"],\n      \"identifier\": \"ACC12345\",\n      \"privileges\": [\"level1\", \"level2\", \"level3\"],\n      \"purpose\": \"Gestión de finanzas personales\",\n      \"recurringIndicator\": true,\n      \"frequency\": \"R/2025-05-01T00:00:00Z/P1M\",\n      \"validFrom\": \"2025-04-22T00:00:00Z\",\n      \"validTo\": \"2026-04-22T00:00:00Z\",\n      \"consentType\": false\n    }\n  ]\n}</pre>"
+        },
+        {
+          "id": "update",
+          "titulo": "Update",
+          "tipo_contenido": "texto-libre",
+          "html": "<p style=\"font-size:14px;color:#444;line-height:1.6;margin-bottom:14px\"><strong>Función:</strong> extender vigencia o modificar metadatos <em>sin cambiar alcance</em>. Las acciones, recursos y privilegios siguen idénticos. Solo cambia, típicamente, <code>validTo</code>.</p><pre style=\"background:#F5F4EE;border:1px solid #E3E2DA;border-radius:8px;padding:18px 22px;font-size:12.5px;color:#333;line-height:1.5;overflow-x:auto\">POST /par\n{\n  \"grant_management_action\": \"update\",\n  \"grant_id\": \"93f7bf98-7d50-4b07-8243-823f553730b2\",\n  \"authorization_details\": [\n    {\n      \"type\": \"Accounts\",\n      \"actions\": [\"ReadAccounts\", \"ReadAccountsTransactions\"],\n      \"identifier\": \"ACC12345\",\n      \"privileges\": [\"level1\", \"level2\", \"level3\"],\n      \"validTo\": \"2026-07-21T00:00:00Z\"\n    }\n  ]\n}</pre><p style=\"font-size:13px;color:#666;margin-top:10px;line-height:1.5\"><em>Caso típico: la fintech detecta que el consentimiento del usuario va a caducar y le ofrece prorrogarlo 90 días. El usuario reconfirma — pero los permisos no cambian.</em></p>"
+        },
+        {
+          "id": "replace",
+          "titulo": "Replace",
+          "tipo_contenido": "texto-libre",
+          "html": "<p style=\"font-size:14px;color:#444;line-height:1.6;margin-bottom:14px\"><strong>Función:</strong> reemplazar completamente el set de permisos. <strong>Lo anterior se sustituye, no se acumula.</strong> Útil cuando el usuario quiere reducir el alcance.</p><pre style=\"background:#F5F4EE;border:1px solid #E3E2DA;border-radius:8px;padding:18px 22px;font-size:12.5px;color:#333;line-height:1.5;overflow-x:auto\">POST /par\n{\n  \"grant_management_action\": \"replace\",\n  \"grant_id\": \"93f7bf98-7d50-4b07-8243-823f553730b2\",\n  \"authorization_details\": [\n    {\n      \"type\": \"Accounts\",\n      \"actions\": [\"ReadAccounts\"],\n      \"identifier\": \"ACC12345\",\n      \"privileges\": [\"level1\", \"level2\"]\n    }\n  ]\n}</pre><p style=\"font-size:13px;color:#666;margin-top:10px;line-height:1.5\"><em>El grant pasa de tener ReadAccounts + ReadAccountsTransactions con level1+2+3, a solo ReadAccounts con level1+2. Las transacciones dejan de estar autorizadas.</em></p>"
+        },
+        {
+          "id": "merge",
+          "titulo": "Merge",
+          "tipo_contenido": "texto-libre",
+          "html": "<p style=\"font-size:14px;color:#444;line-height:1.6;margin-bottom:14px\"><strong>Función:</strong> agregar nuevos permisos a los existentes. Lo que viene en el body se <em>suma</em> al grant. Caso típico: ampliar a transacciones cuando ya estaba autorizado el listado.</p><pre style=\"background:#F5F4EE;border:1px solid #E3E2DA;border-radius:8px;padding:18px 22px;font-size:12.5px;color:#333;line-height:1.5;overflow-x:auto\">POST /par\n{\n  \"grant_management_action\": \"merge\",\n  \"grant_id\": \"93f7bf98-7d50-4b07-8243-823f553730b2\",\n  \"authorization_details\": [\n    {\n      \"type\": \"Accounts\",\n      \"actions\": [\"ReadAccountsTransactions\"],\n      \"identifier\": \"ACC12345\",\n      \"privileges\": [\"level3\"]\n    }\n  ]\n}</pre><p style=\"font-size:13px;color:#666;margin-top:10px;line-height:1.5\"><em>Punto fino: en merge el body trae <strong>solo el delta</strong>. Por eso es válido enviar <code>[\"level3\"]</code> sin level1/2 — la regla jerárquica se valida sobre el grant resultante (que sí termina con level1+2+3), no sobre el delta.</em></p>"
+        },
+        {
+          "id": "query",
+          "titulo": "Query",
+          "tipo_contenido": "texto-libre",
+          "html": "<p style=\"font-size:14px;color:#444;line-height:1.6;margin-bottom:14px\"><strong>Función:</strong> consultar el estado y contenido de un grant. No va por /par — es un GET directo a la Grant Management API.</p><pre style=\"background:#F5F4EE;border:1px solid #E3E2DA;border-radius:8px;padding:18px 22px;font-size:12.5px;color:#333;line-height:1.5;overflow-x:auto\">GET /grants/93f7bf98-7d50-4b07-8243-823f553730b2\nAuthorization: Bearer <access_token>\n\n200 OK\n{\n  \"grantId\": \"93f7bf98-7d50-4b07-8243-823f553730b2\",\n  \"status\": \"Authorised\",\n  \"creationDateTime\": \"2025-04-22T14:25:33Z\",\n  \"validToDateTime\": \"2026-04-22T00:00:00Z\",\n  \"authorization_details\": [ ... ]\n}</pre><p style=\"font-size:13px;color:#666;margin-top:10px;line-height:1.5\"><em>El cliente usa esto para pintar el panel de control del usuario o para validar si todavía tiene acceso antes de pegar otra llamada API. También existe <code>GET /grants</code> (lista) y <code>GET /grants/history</code> (auditoría).</em></p>"
+        },
+        {
+          "id": "revoke",
+          "titulo": "Revoke",
+          "tipo_contenido": "texto-libre",
+          "html": "<p style=\"font-size:14px;color:#444;line-height:1.6;margin-bottom:14px\"><strong>Función:</strong> revocar un grant. Invalida los tokens asociados (access y refresh). El grant pasa al estado Revoked. No va por /par — es un DELETE directo.</p><pre style=\"background:#F5F4EE;border:1px solid #E3E2DA;border-radius:8px;padding:18px 22px;font-size:12.5px;color:#333;line-height:1.5;overflow-x:auto\">DELETE /grants/93f7bf98-7d50-4b07-8243-823f553730b2\nAuthorization: Bearer <access_token>\n\n204 No Content</pre><p style=\"font-size:13px;color:#666;margin-top:10px;line-height:1.5\"><em>Es el endpoint que tiene que invocar el Panel de Control de Consentimientos cuando el usuario pulsa \"revocar acceso\". El SFA exige que tanto el banco (IPI/IPC) como el cliente (PSBI/PSIP) implementen ese panel.</em></p>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "<span class=\"accent\">JARM y CIBA</span> — lo que conviene reconocer aunque no profundices",
+      "subtitulo": "Dos extensiones FAPI que vas a oír mencionadas en clientes maduros. No son baseline FAPI 2.0, pero no te dejes pillar.",
+      "tabs": [
+        {
+          "id": "jarm",
+          "titulo": "JARM",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#F5F4EE;padding:22px;border-radius:8px;border-left:3px solid #FF0054\"><div style=\"font-family:Georgia,serif;font-size:18px;color:#4F062A;margin-bottom:8px\">JWT Secured Authorization Response Mode</div><p style=\"font-size:14px;line-height:1.6;color:#333\">En OAuth/OIDC clásico, los parámetros de la respuesta del AS (code, state) viajan en query string de la URL del callback. Un atacante que controle el navegador o un intermediario podría manipularlos.</p><p style=\"font-size:14px;line-height:1.6;color:#333;margin-top:12px\"><strong>JARM</strong> empuja toda la respuesta del /authorize dentro de un JWT firmado por el AS. El cliente recibe un solo parámetro <code>response</code> que es un JWT — y lo valida con la clave pública del AS antes de procesarlo. Cierra ataques de manipulación de la respuesta.</p><p style=\"font-size:14px;line-height:1.6;color:#333;margin-top:12px\"><strong>Estado:</strong> está en FAPI 2.0 <em>Advanced</em>, no en el Baseline. En el SFA chileno se considera opcional. Si lo oyes, asocia: <em>la respuesta del AS firmada en JWT</em>.</p></div>"
+        },
+        {
+          "id": "ciba",
+          "titulo": "CIBA",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#F5F4EE;padding:22px;border-radius:8px;border-left:3px solid #FF0054\"><div style=\"font-family:Georgia,serif;font-size:18px;color:#4F062A;margin-bottom:8px\">Client Initiated Backchannel Authentication</div><p style=\"font-size:14px;line-height:1.6;color:#333\">El flujo Authorization Code asume que el usuario está delante de un navegador. Pero hay escenarios donde no: cajero automático, call center, IVR, comercio físico con TPV. CIBA permite que el cliente inicie la autenticación por el <em>backchannel</em>, y el usuario aprueba en otro dispositivo registrado (típicamente su app móvil del banco).</p><p style=\"font-size:14px;line-height:1.6;color:#333;margin-top:12px\"><strong>Tres modos de obtención del resultado:</strong> Poll (el cliente hace polling), Ping (el AS notifica una URI), Push (el AS empuja el token directo).</p><p style=\"font-size:14px;line-height:1.6;color:#333;margin-top:12px\"><strong>Estado:</strong> es un perfil OIDC aparte que FAPI puede invocar. Útil para el momento en que un cliente bancario pregunte \"¿cómo hago Open Finance desde mi cajero?\". Respuesta: CIBA.</p></div>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "ejemplo-real",
+      "pais": "Chile",
+      "etiqueta": "CASO REAL · CHILE — FAD v1.0.0 RAR & Grant Management",
+      "titulo_pre_accent": "El",
+      "titulo_accent": "SFA chileno",
+      "titulo_post_accent": "implementa FAPI 2.0 Baseline + RAR + Grant Management",
+      "parrafos": [
+        "El Sistema de Finanzas Abiertas chileno (SFA), regulado por la <span class=\"glosario-term\" data-term=\"NCG-514\">NCG 514</span> de la CMF y materializado técnicamente en el <span class=\"glosario-term\" data-term=\"FAD\">FAD</span>, no se quedó en FAPI 1.0 Advanced. Adoptó directamente <strong>FAPI 2.0 Baseline + RAR (RFC 9396) + Grant Management (OpenID Foundation)</strong>. Es probablemente la implementación regulatoria más estricta de LATAM hoy.",
+        "Eso significa que todo PSBI o PSIP que quiera operar en el SFA tiene que: tener cert mTLS emitido por la CA del Directorio CMF, hacer PAR obligatorio (con PKCE S256), enviar el consentimiento como <code>authorization_details</code> con type/actions/identifier/privileges/purpose/vigencia, recibir tokens sender-constrained vía mTLS (cnf.x5t#S256), y soportar las 6 operaciones de Grant Management."
+      ],
+      "flow_pasos": [
+        { "num": 1, "texto": "El <code>PSBI</code> tiene su <code>SSA</code> firmado por el Directorio CMF y un cert mTLS emitido por la CA del SFA — esto es prerrequisito del DCR." },
+        { "num": 2, "texto": "Sobre mTLS, hace <code>POST /par</code> al AS del IPI con <code>authorization_details</code> + <code>code_challenge_method=S256</code> + <code>grant_management_action=create</code>." },
+        { "num": 3, "texto": "El AS valida coherencia (scope ↔ actions, jerarquía privileges) y devuelve <code>request_uri</code> con TTL de 90 s." },
+        { "num": 4, "texto": "El PSBI redirige el navegador del usuario a <code>/authorize?request_uri=...</code> — sin nada sensible en la URL." },
+        { "num": 5, "texto": "El AS pinta la pantalla de consentimiento <strong>granular</strong>: lista de recursos, acciones, privilegios, finalidad y vigencia. El usuario aprueba con SCA." },
+        { "num": 6, "texto": "El AS crea el grant con <code>grantId</code> UUID, estado <em>Authorised</em>, y redirige al callback del PSBI con <code>code</code>." },
+        { "num": 7, "texto": "El PSBI canjea code por tokens. Recibe <code>access_token</code> con <code>cnf.x5t#S256</code> + <code>refresh_token</code> + <code>grant_id</code>." },
+        { "num": 8, "texto": "Llamadas API: el PSBI presenta access_token y el mismo cert mTLS. El RS valida que hash(cert) == cnf.x5t#S256 y que las actions+privileges cubran el endpoint solicitado." }
+      ]
+    },
+
+    {
+      "tipo": "ejemplo-real",
+      "pais": "LATAM",
+      "etiqueta": "ADAPTACIÓN A LA REGIÓN — Brasil, Perú, México",
+      "titulo_pre_accent": "Tres adaptaciones",
+      "titulo_accent": "del mismo perfil técnico",
+      "titulo_post_accent": "según el reloj de cada regulador",
+      "parrafos": [
+        "<strong>Brasil (OFB).</strong> Lleva años en producción con <span class=\"glosario-term\" data-term=\"FAPI\">FAPI 1.0 Advanced</span>. Tiene su Directorio activo, miles de organizaciones registradas, y un volumen de operaciones que ya pasó los 10 mil millones de llamadas mensuales. Está en proceso de migrar a FAPI 2.0 — su roadmap apunta a Baseline + Grant Management. Hoy un consultor que llega a una conversación con un banco brasileño tiene que estar preparado para el legado 1.0 Advanced <em>y</em> los matices del roadmap 2.0.",
+        "<strong>Perú (SBS).</strong> La SBS confirmó que lanzará Directorio peruano, con un perfil técnico propio (Anexo F de la regulación). El esqueleto es FAPI 2.0, pero deja explícitas algunas decisiones que el banco/consultor tendrá que tomar: si exigir DPoP además de mTLS-bound, si adoptar JARM o solo Baseline, qué alcance de RAR habilitan en la primera fase (¿solo Accounts? ¿con Payments?), y cómo gestionan el ciclo de Grant Management. La decisión peruana de tener un perfil propio significa que un consultor que llega a la SBS tiene que poder explicar el menú de opcionales FAPI 2.0 para que el cliente elija con criterio.",
+        "<strong>México (CNBV).</strong> Avanzó primero en Open Data (información agregada, sin consentimiento individual). El perfil técnico para fases siguientes (Open Wealth, iniciación de pagos) está en consulta, pero la dirección viene FAPI 2.0. Más conservador en plazos que Chile o Brasil."
+      ],
+      "flow_pasos": []
+    },
+
+    {
+      "tipo": "dialogo-transferencia",
+      "titulo": "Lo que tienes que poder explicarle a un cliente",
+      "subtitulo": "El test real: si un arquitecto bancario te lo pregunta, esto es lo que respondes. Cuatro intercambios.",
+      "intercambios": [
+        {
+          "cliente": "Si ya tengo HTTPS y mTLS configurados, ¿para qué quiero PAR? ¿No es redundante mover la solicitud a otro endpoint?",
+          "tu": "No es redundante — cierran riesgos distintos. mTLS protege la comunicación entre tu cliente y mi AS. PAR resuelve un problema diferente: en /authorize clásico, los parámetros viajan en la URL del navegador del usuario, y esa URL pasa por el historial del navegador, por logs de proxies, por extensiones del navegador, y aparece en referrers. Con PAR, la solicitud sensible —que incluye el authorization_details con montos, IBANs, identificadores— viaja por mTLS directamente entre tu servidor y mi AS, y a la URL del navegador solo le llega un request_uri opaco de 90 segundos. Es defensa en profundidad."
+        },
+        {
+          "cliente": "¿Qué significa exactamente que un token es \"sender-constrained\"? ¿Es lo mismo que firmar el token con la clave del cliente?",
+          "tu": "No es lo mismo. Firmar el token con la clave del cliente sería un cambio profundo en el modelo OAuth. Sender-constrained es más sutil: el token sigue siendo firmado por el AS como siempre, pero al emitirlo el AS añade un claim cnf.x5t#S256 con el hash SHA-256 del certificado de cliente con el que se pidió. Cuando llames después a la API, presentas el token <em>y</em> el mismo certificado por mTLS. El Resource Server hace una operación trivial: hash del cert que está viendo, compara con cnf.x5t#S256 del token. Si no coincide, descarta el token. Resultado: aunque alguien robe el token, no puede usarlo sin la clave privada del certificado, que vive en tu HSM."
+        },
+        {
+          "cliente": "Entonces RAR reemplaza al scope. Si pongo todo en authorization_details, ¿el scope desaparece?",
+          "tu": "No exactamente. En el SFA chileno, el scope conserva el valor openid para activar OIDC y emitir id_token. Lo que sí se vacía es el resto del scope —no vas a ver más \"accounts payments\". Toda la granularidad migra a authorization_details. Lo importante de cara al cliente: scope ya no representa permisos en sentido normativo. Lo que representa permisos, y lo que el banco evalúa para decidir si una llamada API está autorizada, son las combinaciones type + actions + identifier + privileges del authorization_details — y el grant que las contiene."
+        },
+        {
+          "cliente": "Si el usuario ya autorizó un grant para leer su cuenta y ahora quiere también ver transacciones, ¿uso replace o merge?",
+          "tu": "Merge. La diferencia operativa es: replace sustituye todo el set de permisos —si haces replace con solo ReadAccountsTransactions, pierdes ReadAccounts. Para sumar sin perder lo anterior, merge. Body con solo el delta: type Accounts, actions ReadAccountsTransactions, privileges level3. El AS lo aplica acumulativamente: el grant resultante tiene ReadAccounts + ReadAccountsTransactions con level1 + level2 + level3. Detalle fino: la regla jerárquica de privileges se valida sobre el estado final del grant, no sobre el delta. Por eso puedes enviar privileges level3 a secas y es válido — el grant resultante sí cumplirá level1 + level2 + level3."
+        }
+      ]
+    },
+
+    {
+      "tipo": "quiz-engine"
+    },
+
+    {
+      "tipo": "footer-completar",
+      "titulo": "¿Listo para desbloquear el badge?",
+      "subtitulo": "Marca el módulo como completado para sumar 80 XP y desbloquear Maestro del Token. Recuerda que los conceptos de este módulo se asumen en 05, 06 y 07."
+    },
+
+    {
+      "tipo": "badge-modal"
+    }
+  ]
+}

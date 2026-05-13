@@ -1,0 +1,132 @@
+{
+  "modulo": "04-oauth-openid-fapi",
+  "videos": [
+    {
+      "titulo": "Authorization Code Flow + PKCE — recorrido completo",
+      "duracion_min": 14,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/oauth-authcode-pkce.mp4",
+      "obligatorio": true,
+      "descripcion": "Animación del Authorization Code Flow con PKCE, comentado por Jonathan. Cubre los 6 pasos del flujo base y el cierre del ataque por interceptación del code.",
+      "verificar_con_jonathan": true
+    },
+    {
+      "titulo": "PAR + RAR + Grant Management en el SFA chileno",
+      "duracion_min": 22,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/fapi-sfa-completo.mp4",
+      "obligatorio": true,
+      "descripcion": "Recorrido del flujo de 11 pasos del FAD desde un PSBI registrado hasta la primera llamada a la API. Incluye pantallas reales del AS de referencia.",
+      "verificar_con_jonathan": true
+    },
+    {
+      "titulo": "Anatomía de un JWT — claims FAPI explicados",
+      "duracion_min": 9,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/jwt-claims-fapi.mp4",
+      "obligatorio": false,
+      "descripcion": "Recorrido rápido por los claims registrados y los específicos de FAPI 2.0 (cnf, grant_id, authorization_details).",
+      "verificar_con_jonathan": true
+    }
+  ],
+  "lecturas": [
+    {
+      "titulo": "FAPI 2.0 Security Profile (OpenID Foundation)",
+      "url": "https://openid.net/specs/fapi-2_0-security-profile.html",
+      "tipo": "spec",
+      "obligatorio": true,
+      "tiempo_min": 25,
+      "descripcion": "La especificación FAPI 2.0 Baseline. Lectura obligatoria si vas a hablar de FAPI con un arquitecto."
+    },
+    {
+      "titulo": "RFC 9126 — OAuth 2.0 Pushed Authorization Requests (PAR)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc9126",
+      "tipo": "rfc",
+      "obligatorio": true,
+      "tiempo_min": 20
+    },
+    {
+      "titulo": "RFC 9396 — OAuth 2.0 Rich Authorization Requests (RAR)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc9396",
+      "tipo": "rfc",
+      "obligatorio": true,
+      "tiempo_min": 25
+    },
+    {
+      "titulo": "Grant Management for OAuth 2.0 (OpenID Foundation)",
+      "url": "https://openid.net/specs/fapi-grant-management.html",
+      "tipo": "spec",
+      "obligatorio": true,
+      "tiempo_min": 20,
+      "descripcion": "Define las seis operaciones (Create/Update/Replace/Merge/Query/Revoke) del ciclo de vida del grant."
+    },
+    {
+      "titulo": "RFC 7519 — JSON Web Token (JWT)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc7519",
+      "tipo": "rfc",
+      "obligatorio": false,
+      "tiempo_min": 25
+    },
+    {
+      "titulo": "RFC 7636 — Proof Key for Code Exchange (PKCE)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc7636",
+      "tipo": "rfc",
+      "obligatorio": false,
+      "tiempo_min": 15
+    },
+    {
+      "titulo": "RFC 8705 — OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8705",
+      "tipo": "rfc",
+      "obligatorio": false,
+      "tiempo_min": 20,
+      "descripcion": "La base de los tokens sender-constrained vía mTLS."
+    },
+    {
+      "titulo": "RFC 9449 — OAuth 2.0 Demonstrating Proof of Possession (DPoP)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc9449",
+      "tipo": "rfc",
+      "obligatorio": false,
+      "tiempo_min": 25,
+      "descripcion": "Alternativa a mTLS-bound para clientes públicos."
+    },
+    {
+      "titulo": "OpenID Connect Core 1.0",
+      "url": "https://openid.net/specs/openid-connect-core-1_0.html",
+      "tipo": "spec",
+      "obligatorio": false,
+      "tiempo_min": 35,
+      "descripcion": "Spec base de OIDC. Útil para profundizar en id_token, UserInfo, claims."
+    },
+    {
+      "titulo": "NCG 514 — Norma de Carácter General CMF Chile",
+      "url": "https://www.cmfchile.cl/portal/principal/613/w3-article-71717.html",
+      "tipo": "regulacion",
+      "obligatorio": true,
+      "tiempo_min": 40,
+      "descripcion": "Marco normativo del SFA. El Anexo 3 cubre el detalle técnico de RAR y Grant Management."
+    },
+    {
+      "titulo": "Ley 21.521 (Chile) — Promueve la Competencia e Inclusión Financiera",
+      "url": "https://bcn.cl/3hgsl",
+      "tipo": "regulacion",
+      "obligatorio": false,
+      "tiempo_min": 30,
+      "descripcion": "Ley que crea el SFA. La NCG 514 la materializa."
+    },
+    {
+      "titulo": "Open Finance Brasil — FAPI Profile",
+      "url": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/82313270/Specifications",
+      "tipo": "spec",
+      "obligatorio": false,
+      "tiempo_min": 30,
+      "descripcion": "El perfil técnico de Brasil — referencia para entender el legado FAPI 1.0 Advanced + roadmap 2.0.",
+      "verificar_con_jonathan": true
+    }
+  ],
+  "transcripciones": [
+    {
+      "titulo": "Workshop interno Minsait — FAPI 2.0 en el SFA chileno",
+      "archivo": "Knowledge Base/10-RAR-Grant_Management.md",
+      "obligatorio": false,
+      "descripcion": "Material interno con ejemplos completos de los seis flujos de Grant Management con payloads HTTP reales."
+    }
+  ]
+}

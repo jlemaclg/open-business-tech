@@ -17,6 +17,7 @@
     'objetivos-grid':         'ObjetivosGrid',
     'stepper-flow':           'StepperFlow',
     'comparativa-tabs':       'ComparativaTabs',
+    'token-inspector':        'TokenInspector',
     'ejemplo-real':           'EjemploReal',
     'dialogo-transferencia':  'DialogoTransferencia',
     'quiz-engine':            'QuizEngine',
