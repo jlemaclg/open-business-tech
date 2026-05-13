@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Arquitecto del Ecosistema">
+  <defs>
+    <linearGradient id="ade-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F062A"/>
+      <stop offset="100%" stop-color="#260717"/>
+    </linearGradient>
+  </defs>
+
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55"
+           fill="url(#ade-bg)" stroke="#FF0054" stroke-width="3"/>
+  <polygon points="100,30 162,65 162,135 100,170 38,135 38,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.4"/>
+
+  <!-- Grafo de nodos: 1 central, 6 periféricos en forma hexagonal -->
+  <!-- Aristas -->
+  <g stroke="#FF0054" stroke-width="1.5" opacity="0.55">
+    <line x1="100" y1="100" x2="100" y2="65"/>
+    <line x1="100" y1="100" x2="130" y2="82"/>
+    <line x1="100" y1="100" x2="130" y2="118"/>
+    <line x1="100" y1="100" x2="100" y2="135"/>
+    <line x1="100" y1="100" x2="70"  y2="118"/>
+    <line x1="100" y1="100" x2="70"  y2="82"/>
+  </g>
+
+  <!-- Nodos periféricos -->
+  <g fill="#FF0054">
+    <circle cx="100" cy="65"  r="5"/>
+    <circle cx="130" cy="82"  r="5"/>
+    <circle cx="130" cy="118" r="5"/>
+    <circle cx="100" cy="135" r="5"/>
+    <circle cx="70"  cy="118" r="5"/>
+    <circle cx="70"  cy="82"  r="5"/>
+  </g>
+
+  <!-- Nodo central destacado -->
+  <circle cx="100" cy="100" r="9" fill="#FFFFFF"/>
+  <circle cx="100" cy="100" r="9" fill="none" stroke="#FF0054" stroke-width="2"/>
+</svg>

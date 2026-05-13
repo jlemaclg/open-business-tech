@@ -1,0 +1,89 @@
+{
+  "modulo": "01-fundamentos-api",
+  "preguntas": [
+    {
+      "id": "q1",
+      "tipo": "single_choice",
+      "enunciado": "¿Cuál de estas definiciones describe mejor qué es una API?",
+      "opciones": [
+        "Un programa que se descarga e instala en el ordenador del consumidor",
+        "Un contrato entre dos sistemas que define qué se puede pedir y cómo se entrega la respuesta",
+        "Una página web que muestra información estructurada al usuario final",
+        "Un protocolo de cifrado de las comunicaciones entre sistemas"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. Una API es un contrato. Define qué endpoints existen, qué parámetros aceptan, y qué forma tiene la respuesta. No es código que se instala — es una promesa publicada por un servidor sobre lo que sabe responder.",
+      "explicacion_incorrecto": "Una API no se instala (eso es un SDK), no es una página web (es una interfaz para sistemas, no para humanos), y no es un protocolo de cifrado (eso es TLS, módulo 03). Lo que define a una API es el contrato: qué se puede pedir y cómo se entrega la respuesta."
+    },
+    {
+      "id": "q2",
+      "tipo": "single_choice",
+      "enunciado": "En una llamada a API, ¿quién es el cliente y quién el servidor?",
+      "opciones": [
+        "El cliente es siempre un usuario humano; el servidor es la aplicación",
+        "El cliente es el sistema que pide el dato; el servidor es el sistema que lo tiene y responde",
+        "El cliente es el banco; el servidor es siempre el regulador",
+        "Cliente y servidor son dos palabras para lo mismo, depende del idioma"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. Cliente y servidor son roles, no entidades fijas. En una llamada el cliente es quien inicia la petición (puede ser una app móvil, un agregador, otro banco) y el servidor quien la responde. Un mismo sistema puede ser servidor en una llamada y cliente en otra.",
+      "explicacion_incorrecto": "El cliente no es necesariamente humano (en Open Finance casi nunca lo es: son sistemas hablando entre sí). Tampoco es siempre el banco ni siempre el regulador. Son roles relativos a la llamada concreta: cliente = quien pide, servidor = quien responde."
+    },
+    {
+      "id": "q3",
+      "tipo": "single_choice",
+      "enunciado": "¿Qué es un endpoint?",
+      "opciones": [
+        "El último paso del flujo OAuth",
+        "Una dirección concreta dentro de la API que recibe peticiones de un tipo específico",
+        "El final de la conversación entre cliente y servidor",
+        "Un certificado emitido por una CA"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. Un endpoint es la dirección concreta a la que llamas para pedir algo específico. Por ejemplo, <code>GET /accounts/12345/balance</code> es un endpoint distinto de <code>POST /payments</code>. Cada endpoint tiene su propia documentación: qué espera, qué devuelve, qué errores produce.",
+      "explicacion_incorrecto": "Endpoint no significa “punto final” en sentido literal. Es el punto de entrada concreto de una petición — la URL específica más el método HTTP. La API completa está formada por el conjunto de sus endpoints."
+    },
+    {
+      "id": "q4",
+      "tipo": "single_choice",
+      "enunciado": "Tu cliente bancario te dice: <em>“¿Pueden recomendarnos un buen SDK Python para nuestra API?”</em>. ¿Qué te está pidiendo?",
+      "opciones": [
+        "Un programa que documente la API automáticamente",
+        "Un código en Python que sus consumidores puedan integrar para llamar a la API sin escribir las llamadas a mano",
+        "Una versión nueva de la API escrita en Python",
+        "Un certificado X.509 emitido en formato Python"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. El SDK es una librería de código (en Python en este caso) que envuelve las llamadas a la API. Los desarrolladores que consumen la API la importan como dependencia y llaman a funciones del SDK en vez de construir las peticiones HTTP manualmente. La API no cambia: sigue siendo la misma; el SDK es una capa de conveniencia encima.",
+      "explicacion_incorrecto": "El SDK no es la API misma — es una herramienta para consumirla. No es un documento ni un certificado. Es código real que el desarrollador integra en su aplicación, atado a un lenguaje (Python, Java, JavaScript, etc.)."
+    },
+    {
+      "id": "q5",
+      "tipo": "single_choice",
+      "enunciado": "El Directorio Open Finance chileno publica su información para que los bancos consulten qué TPPs están autorizados. ¿Cómo lo expone?",
+      "opciones": [
+        "Como un PDF que los bancos descargan diariamente",
+        "Como un servicio web que los bancos consultan vía API",
+        "Como una base de datos a la que cada banco se conecta directamente",
+        "Como un correo electrónico que la CMF envía a cada banco"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. El Directorio del ecosistema chileno es, él mismo, una API. Los bancos llaman a sus endpoints para listar organizaciones autorizadas, validar SSAs, recuperar JWKS. Es exactamente el patrón que viste en este módulo: un sistema (banco) consume otro sistema (Directorio) por contrato, sin acceso directo al motor.",
+      "explicacion_incorrecto": "Un PDF no se puede consultar programáticamente en tiempo real, una conexión directa a la base rompería la promesa de aislamiento de la API, y el correo no es un mecanismo automatizable. La forma correcta — y la que usa el ecosistema Open Finance chileno — es exponer una API."
+    },
+    {
+      "id": "q6",
+      "tipo": "single_choice",
+      "enunciado": "Un cliente bancario insiste: <em>“Si los datos ya están en nuestro portal web, ¿por qué necesitamos exponer una API encima?”</em>. ¿Cuál es la razón principal?",
+      "opciones": [
+        "El portal web es más lento que una API",
+        "El portal web está diseñado para humanos; la API está diseñada para que otros sistemas accedan de forma estructurada y controlada",
+        "El portal web no se puede cifrar, la API sí",
+        "Es un requisito puramente regulatorio sin razón técnica"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. La razón es de propósito. El portal asume un humano que lee, decide y hace clic; no permite que un agregador o un iniciador de pagos opere de forma automatizada, ni gestiona quién pregunta, ni audita el acceso a nivel de sistema. La API resuelve precisamente esos problemas: identidad de la app consumidora, control granular, trazabilidad, formato estructurado.",
+      "explicacion_incorrecto": "La razón no es velocidad ni cifrado (ambos son orthogonales y aplicables a las dos). Tampoco es un capricho regulatorio: es un requisito técnico real. El portal web no fue diseñado para que otros sistemas operen de forma automatizada. La API sí."
+    }
+  ]
+}

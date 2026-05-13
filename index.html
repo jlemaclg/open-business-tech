@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Open Business Tech Academy</title>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/modulo.css">
+  <style>
+    /* --------- HUB ESPECÍFICO --------- */
+    .hub-hero {
+      background: linear-gradient(135deg, var(--morado) 0%, var(--morado-oscuro) 100%);
+      color: white;
+      padding: 56px 40px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hub-hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hub-hero h1 {
+      font-family: var(--font-serif);
+      font-size: 40px;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      max-width: 800px;
+    }
+    .hub-hero h1 .accent { color: var(--accent); }
+    .hub-hero p {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      opacity: 0.85;
+      max-width: 700px;
+      line-height: 1.4;
+    }
+    .hub-hero-decoration {
+      position: absolute;
+      right: -50px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 360px;
+      height: 360px;
+      opacity: 0.22;
+    }
+
+    /* Dashboard */
+    .hub-dashboard {
+      max-width: 1200px;
+      margin: -36px auto 0;
+      padding: 0 40px;
+      position: relative;
+      z-index: 3;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .dashboard-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+    }
+    .dashboard-card .label {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .dashboard-card .big {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      color: var(--morado);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .dashboard-card .sub {
+      font-size: 12.5px;
+      color: #666;
+    }
+    .dashboard-card .nivel-bar {
+      height: 8px;
+      background: var(--gris);
+      border-radius: 4px;
+      margin: 14px 0 6px;
+      overflow: hidden;
+    }
+    .dashboard-card .nivel-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.4s;
+    }
+    .dashboard-card .nivel-info {
+      font-size: 11.5px;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+    }
+    .dashboard-card.objetivo {
+      background: var(--morado);
+      color: white;
+    }
+    .dashboard-card.objetivo .label { color: var(--accent); }
+    .dashboard-card.objetivo .big { color: white; font-size: 24px; }
+    .dashboard-card.objetivo .sub { color: rgba(255,255,255,0.75); }
+    .dashboard-card.objetivo .objetivo-edit {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .dashboard-card.objetivo .objetivo-edit select,
+    .dashboard-card.objetivo .objetivo-edit input,
+    .dashboard-card.objetivo .objetivo-edit button {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-size: 12px;
+      font-family: inherit;
+    }
+    .dashboard-card.objetivo .objetivo-edit button {
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+      flex: 0 0 auto;
+      padding: 8px 14px;
+      font-weight: 700;
+    }
+
+    /* Ruta */
+    .ruta-section h2 {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      color: var(--morado);
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .ruta-section h2 .accent { color: var(--accent); }
+    .ruta-subtitle {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      color: var(--morado);
+      opacity: 0.75;
+      margin-bottom: 24px;
+    }
+    .ruta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .modulo-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 24px 22px;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      color: var(--texto);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      transition: transform 0.15s, box-shadow 0.15s;
+      border-top: 3px solid transparent;
+    }
+    .modulo-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-top-color: var(--accent);
+    }
+    .modulo-card.is-locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .modulo-card.is-locked:hover {
+      transform: none;
+      box-shadow: var(--shadow-sm);
+      border-top-color: transparent;
+    }
+    .modulo-card.is-completado { border-top-color: var(--ok); }
+    .modulo-card .num {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      color: var(--accent);
+      font-weight: 400;
+    }
+    .modulo-card h3 {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      color: var(--morado);
+      font-weight: 400;
+      line-height: 1.3;
+      min-height: 42px;
+    }
+    .modulo-card p {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+    }
+    .modulo-card .estado {
+      margin-top: auto;
+      padding-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+    .modulo-card .estado .pill {
+      background: var(--gris-claro);
+      color: var(--morado);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .modulo-card.is-completado .pill { background: var(--ok-bg); color: var(--ok); }
+    .modulo-card.is-locked .pill { background: #eee; color: #999; }
+    .modulo-card .progress {
+      flex: 1;
+      max-width: 60%;
+      height: 4px;
+      background: var(--gris);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-left: 12px;
+    }
+    .modulo-card .progress-fill {
+      height: 100%;
+      background: var(--accent);
+    }
+
+    /* Badges desbloqueados */
+    .badges-section {
+      margin-top: 48px;
+      margin-bottom: 60px;
+    }
+    .badges-section h2 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: var(--morado);
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+    .badges-section h2 .accent { color: var(--accent); }
+    .badges-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .badge-thumb {
+      width: 88px;
+      text-align: center;
+    }
+    .badge-thumb svg {
+      width: 72px;
+      height: 72px;
+      transition: transform 0.15s;
+    }
+    .badge-thumb:hover svg { transform: scale(1.05); }
+    .badge-thumb .badge-name {
+      font-family: var(--font-serif);
+      font-size: 11px;
+      color: var(--morado);
+      margin-top: 6px;
+      line-height: 1.2;
+    }
+    .badge-thumb.is-locked svg { opacity: 0.18; filter: grayscale(1); }
+    .badge-thumb.is-locked .badge-name { color: #aaa; }
+
+    /* Footer hub */
+    .hub-footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-top: 1px solid var(--gris);
+    }
+    .hub-footer .links a {
+      color: var(--morado);
+      text-decoration: none;
+      font-size: 13px;
+      margin-right: 18px;
+      font-weight: 600;
+    }
+    .hub-footer .links a:hover { color: var(--accent); }
+    .hub-footer .meta { font-size: 12px; color: #888; }
+
+    @media (max-width: 1100px) {
+      .ruta-grid { grid-template-columns: repeat(2, 1fr); }
+      .dashboard-grid { grid-template-columns: 1fr 1fr; }
+      .dashboard-card.objetivo { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ TOPBAR ============ -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Open Business <span class="accent">Tech Academy</span></span>
+    </div>
+    <div class="topbar-right">
+      <div class="consultor-info">Consultor · Nivel 1 · <span class="consultor-xp">0 XP</span></div>
+    </div>
+  </header>
+
+  <!-- ============ HERO HUB ============ -->
+  <section class="hub-hero">
+    <div class="hub-hero-content">
+      <h1>Cierra el gap técnico que te separa de la <span class="accent">conversación con un arquitecto bancario</span></h1>
+      <p>Ocho módulos. Sin frameworks, sin certificados, sin ruido. Aprendes operando los conceptos, no leyéndolos.</p>
+    </div>
+    <svg class="hub-hero-decoration" viewBox="0 0 400 400" aria-hidden="true">
+      <g stroke="white" stroke-width="1" fill="none" opacity="0.6">
+        <line x1="100" y1="100" x2="200" y2="200"/>
+        <line x1="200" y1="200" x2="300" y2="100"/>
+        <line x1="200" y1="200" x2="100" y2="300"/>
+        <line x1="200" y1="200" x2="300" y2="300"/>
+      </g>
+      <g fill="#FF0054">
+        <circle cx="100" cy="100" r="6"/>
+        <circle cx="300" cy="100" r="6"/>
+        <circle cx="100" cy="300" r="6"/>
+        <circle cx="300" cy="300" r="6"/>
+      </g>
+      <g fill="white">
+        <circle cx="200" cy="200" r="10"/>
+      </g>
+    </svg>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="hub-dashboard">
+
+    <div class="dashboard-grid">
+
+      <div class="dashboard-card">
+        <div class="label">TU NIVEL</div>
+        <div class="big" id="dashNivel">Aprendiz</div>
+        <div class="sub" id="dashXP">0 XP acumulados</div>
+        <div class="nivel-bar"><div class="nivel-bar-fill" id="dashNivelBar"></div></div>
+        <div class="nivel-info"><span id="dashNivelMin">0</span><span id="dashNivelNext">200 XP al siguiente nivel</span></div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="label">PROGRESO RUTA</div>
+        <div class="big" id="dashCompletados">0 / 8</div>
+        <div class="sub" id="dashRacha">módulos completados</div>
+        <div class="nivel-bar"><div class="nivel-bar-fill" id="dashRutaBar"></div></div>
+        <div class="nivel-info"><span id="dashRutaPct">0%</span><span id="dashBadgesCount">0 badges</span></div>
+      </div>
+
+      <div class="dashboard-card objetivo">
+        <div class="label">OBJETIVO PERSONAL</div>
+        <div class="big" id="dashObjTitulo">Aún no definido</div>
+        <div class="sub" id="dashObjFecha">Define un objetivo para mantener foco.</div>
+        <div class="objetivo-edit">
+          <select id="objModulo" aria-label="Módulo objetivo">
+            <option value="">— Módulo —</option>
+          </select>
+          <input type="date" id="objFecha" aria-label="Fecha objetivo">
+          <button id="objGuardar">Fijar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ruta de aprendizaje -->
+    <section class="ruta-section">
+      <h2>La <span class="accent">ruta</span></h2>
+      <p class="ruta-subtitle">Lineal. No saltes — cada módulo asume el anterior.</p>
+      <div class="ruta-grid" id="rutaGrid"></div>
+    </section>
+
+    <!-- Badges -->
+    <section class="badges-section">
+      <h2>Badges <span class="accent">desbloqueados</span></h2>
+      <div class="badges-grid" id="badgesGrid"></div>
+    </section>
+
+  </section>
+
+  <footer class="hub-footer">
+    <div class="links">
+      <a href="glosario/index.html">Glosario</a>
+      <a href="chatbot/index.html">Asistente (Fase 2)</a>
+      <a href="README.md">README del proyecto</a>
+    </div>
+    <div class="meta">Open Business Tech Academy · Minsait · Open Finance &amp; MMPP</div>
+  </footer>
+
+  <script src="assets/js/progress.js"></script>
+  <script src="assets/js/glossary.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Catálogo de la ruta — ÚNICA FUENTE DE VERDAD para el hub
+    const RUTA = [
+      { id: '00-bienvenida',                num: '00', titulo: 'Bienvenida y mapa',                  badge: 'cartografo',                 disponible: false },
+      { id: '01-fundamentos-api',           num: '01', titulo: 'Fundamentos de APIs',                badge: 'hablante-de-apis',           disponible: true,
+        descripcion: 'Qué es una API, cliente y servidor, endpoints y contrato. La base sobre la que descansa todo.' },
+      { id: '02-http-rest-json',            num: '02', titulo: 'HTTP, REST y JSON',                  badge: 'domador-del-json',           disponible: true,
+        descripcion: 'Verbos REST, códigos de estado, JSON. El lenguaje en el que se hablan las APIs Open Finance.' },
+      { id: '03-seguridad-tls-mtls',        num: '03', titulo: 'Seguridad de transporte (TLS, mTLS)', badge: 'guardian-del-tunel',        disponible: true,
+        descripcion: 'TLS, mTLS, certificados X.509. Por qué FAPI 2.0 los exige.' },
+      { id: '04-oauth-openid-fapi',         num: '04', titulo: 'OAuth, OpenID Connect, FAPI 2.0',    badge: 'maestro-del-token',          disponible: false },
+      { id: '05-arquitectura-open-finance', num: '05', titulo: 'Arquitectura Open Finance',          badge: 'arquitecto-del-ecosistema', disponible: false },
+      { id: '06-estandares-regulatorios',   num: '06', titulo: 'Estándares y mapeo regulatorio LATAM', badge: 'cartografo-regulatorio',  disponible: false },
+      { id: '07-casos-uso-tecnicos',        num: '07', titulo: 'Casos de uso técnicos',              badge: 'embajador-open-finance',    disponible: false }
+    ];
+
+    const BADGES_INFO = {
+      'cartografo':                 { nombre: 'Cartógrafo',                   svg_url: 'assets/img/badges/cartografo.svg' },
+      'hablante-de-apis':           { nombre: 'Hablante de APIs',             svg_url: 'assets/img/badges/hablante-de-apis.svg' },
+      'domador-del-json':           { nombre: 'Domador del JSON',             svg_url: 'assets/img/badges/domador-del-json.svg' },
+      'guardian-del-tunel':         { nombre: 'Guardián del Túnel',           svg_url: 'assets/img/badges/guardian-del-tunel.svg' },
+      'maestro-del-token':          { nombre: 'Maestro del Token',            svg_url: 'assets/img/badges/maestro-del-token.svg' },
+      'arquitecto-del-ecosistema':  { nombre: 'Arquitecto del Ecosistema',    svg_url: 'assets/img/badges/arquitecto-del-ecosistema.svg' },
+      'cartografo-regulatorio':     { nombre: 'Cartógrafo Regulatorio LATAM', svg_url: 'assets/img/badges/cartografo-regulatorio.svg' },
+      'embajador-open-finance':     { nombre: 'Embajador Open Finance',       svg_url: 'assets/img/badges/embajador-open-finance.svg' }
+    };
+
+    // Estado actual
+    function pintar() {
+      const estado = Progress.leer();
+      const nivel = Progress.obtenerNivelInfo();
+      // Nivel
+      document.getElementById('dashNivel').textContent = nivel.nombre;
+      document.getElementById('dashXP').textContent = estado.progreso.xp_total + ' XP acumulados';
+      const niveles = Progress.NIVELES;
+      const idxN = niveles.findIndex(n => n.nivel === nivel.nivel);
+      const next = niveles[idxN + 1];
+      const min = nivel.xp_min;
+      const max = next ? next.xp_min : nivel.xp_min;
+      const pctNivel = next ? Math.min(100, Math.round((estado.progreso.xp_total - min) / (max - min) * 100)) : 100;
+      document.getElementById('dashNivelBar').style.width = pctNivel + '%';
+      document.getElementById('dashNivelMin').textContent = min + ' XP';
+      document.getElementById('dashNivelNext').textContent = next
+        ? (max - estado.progreso.xp_total) + ' XP a ' + next.nombre
+        : 'Nivel máximo';
+
+      // Ruta
+      let completados = 0;
+      RUTA.forEach(m => {
+        const p = Progress.progresoModulo(m.id);
+        if (p.completado) completados++;
+      });
+      const pctRuta = Math.round(completados / RUTA.length * 100);
+      document.getElementById('dashCompletados').textContent = completados + ' / ' + RUTA.length;
+      document.getElementById('dashRutaBar').style.width = pctRuta + '%';
+      document.getElementById('dashRutaPct').textContent = pctRuta + '%';
+      document.getElementById('dashBadgesCount').textContent =
+        estado.progreso.badges_desbloqueados.length + ' badge' +
+        (estado.progreso.badges_desbloqueados.length === 1 ? '' : 's');
+
+      // Objetivo personal
+      const obj = estado.progreso.objetivo_personal;
+      const dashTit = document.getElementById('dashObjTitulo');
+      const dashFch = document.getElementById('dashObjFecha');
+      if (obj && obj.modulo_target) {
+        const m = RUTA.find(r => r.id === obj.modulo_target);
+        dashTit.textContent = m ? 'Llegar a "' + m.titulo + '"' : obj.modulo_target;
+        dashFch.textContent = obj.fecha_target ? 'Para el ' + obj.fecha_target : '';
+      } else {
+        dashTit.textContent = 'Aún no definido';
+        dashFch.textContent = 'Define un objetivo para mantener foco.';
+      }
+
+      // Selector de módulo en objetivo
+      const sel = document.getElementById('objModulo');
+      if (sel.options.length <= 1) {
+        RUTA.forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m.id;
+          opt.textContent = m.num + ' · ' + m.titulo;
+          sel.appendChild(opt);
+        });
+      }
+      if (obj && obj.modulo_target) sel.value = obj.modulo_target;
+      if (obj && obj.fecha_target) document.getElementById('objFecha').value = obj.fecha_target;
+
+      // Cards de la ruta
+      const rutaGrid = document.getElementById('rutaGrid');
+      rutaGrid.innerHTML = RUTA.map(m => {
+        const p = Progress.progresoModulo(m.id);
+        const completado = p.completado;
+        const disponible = m.disponible;
+        const pct = p.porcentaje || 0;
+        const cls = ['modulo-card'];
+        if (completado) cls.push('is-completado');
+        if (!disponible && !completado) cls.push('is-locked');
+        const desc = m.descripcion || (disponible ? 'Disponible — pulsa para entrar.' : 'Próximamente.');
+        const pillTxt = completado ? 'COMPLETADO' : disponible ? 'DISPONIBLE' : 'BLOQUEADO';
+        const href = disponible ? `modulos/${m.id}/index.html` : 'javascript:void(0)';
+        return `
+          <a href="${href}" class="${cls.join(' ')}" ${!disponible && !completado ? 'aria-disabled="true"' : ''}>
+            <div class="num">${m.num}</div>
+            <h3>${m.titulo}</h3>
+            <p>${desc}</p>
+            <div class="estado">
+              <span class="pill">${pillTxt}</span>
+              <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+            </div>
+          </a>`;
+      }).join('');
+
+      // Badges
+      const bGrid = document.getElementById('badgesGrid');
+      const desbl = estado.progreso.badges_desbloqueados || [];
+      const badgeIds = RUTA.map(r => r.badge);
+      bGrid.innerHTML = badgeIds.map(bid => {
+        const info = BADGES_INFO[bid] || { nombre: bid };
+        const tiene = desbl.includes(bid);
+        const svgPlaceholder = `
+          <svg viewBox="0 0 200 200">
+            <polygon points="100,10 180,55 180,145 100,190 20,145 20,55"
+                     fill="#4F062A" stroke="#FF0054" stroke-width="3"/>
+          </svg>`;
+        const tag = `<div class="badge-thumb ${tiene ? '' : 'is-locked'}" data-badge="${bid}">
+          ${info.svg_url ? '<div class="svg-host">' + svgPlaceholder + '</div>' : svgPlaceholder}
+          <div class="badge-name">${info.nombre}</div>
+        </div>`;
+        return tag;
+      }).join('');
+
+      // Si algún badge tiene svg_url, hacer fetch y reemplazar
+      bGrid.querySelectorAll('.badge-thumb[data-badge]').forEach(el => {
+        const id = el.dataset.badge;
+        const info = BADGES_INFO[id];
+        if (info && info.svg_url) {
+          fetch(info.svg_url)
+            .then(r => r.ok ? r.text() : null)
+            .then(svg => {
+              if (!svg) return;
+              const host = el.querySelector('.svg-host') || el;
+              const tmp = document.createElement('div');
+              tmp.innerHTML = svg;
+              const newSvg = tmp.querySelector('svg');
+              if (newSvg) {
+                const old = host.querySelector('svg');
+                if (old) old.replaceWith(newSvg);
+              }
+            }).catch(() => {});
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      pintar();
+      // Guardar objetivo personal
+      document.getElementById('objGuardar').addEventListener('click', () => {
+        const m = document.getElementById('objModulo').value;
+        const f = document.getElementById('objFecha').value;
+        if (!m) return;
+        Progress.setObjetivoPersonal(m, f);
+        pintar();
+      });
+    });
+  </script>
+</body>
+</html>

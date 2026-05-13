@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Embajador Open Finance">
+  <defs>
+    <linearGradient id="eof-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F062A"/>
+      <stop offset="100%" stop-color="#260717"/>
+    </linearGradient>
+    <radialGradient id="eof-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF0054" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#FF0054" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55"
+           fill="url(#eof-bg)" stroke="#FF0054" stroke-width="3"/>
+  <polygon points="100,30 162,65 162,135 100,170 38,135 38,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.4"/>
+
+  <!-- Halo radial -->
+  <circle cx="100" cy="100" r="50" fill="url(#eof-glow)"/>
+
+  <!-- Estrella central (5 puntas) -->
+  <polygon points="100,62 109,87 135,87 114,103 122,128 100,113 78,128 86,103 65,87 91,87"
+           fill="#FF0054"/>
+
+  <!-- Laureles laterales (curvas) -->
+  <path d="M 50 130 Q 56 110 70 105"
+        fill="none" stroke="#FF0054" stroke-width="2" opacity="0.7"/>
+  <path d="M 150 130 Q 144 110 130 105"
+        fill="none" stroke="#FF0054" stroke-width="2" opacity="0.7"/>
+
+  <!-- Tres pequeños frutos de laurel -->
+  <circle cx="56" cy="125" r="2.5" fill="#FF0054" opacity="0.7"/>
+  <circle cx="62" cy="118" r="2.5" fill="#FF0054" opacity="0.7"/>
+  <circle cx="144" cy="125" r="2.5" fill="#FF0054" opacity="0.7"/>
+  <circle cx="138" cy="118" r="2.5" fill="#FF0054" opacity="0.7"/>
+</svg>

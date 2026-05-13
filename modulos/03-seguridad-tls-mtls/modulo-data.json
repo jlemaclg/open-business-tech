@@ -1,0 +1,262 @@
+{
+  "modulo": "03-seguridad-tls-mtls",
+  "titulo_topbar": "Seguridad de transporte",
+  "duracion_min": 35,
+  "nivel": "intermedio",
+  "xp_lectura": 30,
+  "xp_quiz": 50,
+  "xp_quiz_perfecto": 20,
+  "badge": {
+    "id": "guardian-del-tunel",
+    "nombre": "Guardián del Túnel",
+    "svg_url": "../../assets/img/badges/guardian-del-tunel.svg",
+    "descripcion": "Has completado el módulo de Seguridad de transporte. Ya puedes mantener una conversación seria sobre TLS, mTLS y FAPI 2.0 con un arquitecto bancario."
+  },
+
+  "componentes": [
+    {
+      "tipo": "hero-modulo",
+      "eyebrow": "MÓDULO 03 · SEGURIDAD",
+      "titulo_pre_accent": "El túnel",
+      "titulo_accent": "cifrado y mutuamente autenticado",
+      "titulo_post_accent": "que sostiene Open Finance",
+      "subtitulo": "Cuando un regulador exige FAPI 2.0, la primera línea de defensa es mTLS. Aquí entiendes por qué — y cómo explicárselo a un arquitecto.",
+      "duracion_min": 35,
+      "nivel": "intermedio",
+      "badge_target": "Guardián del Túnel"
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "alerta",
+      "titulo": "Por qué este módulo importa para tu día a día",
+      "parrafos": [
+        "En cualquier conversación con un cliente bancario sobre Open Finance, los <span class=\"glosario-term\" data-term=\"estandares-tecnicos\">estándares técnicos</span> aparecen en los primeros 10 minutos. Y en esos 10 minutos vas a oír \"<span class=\"glosario-term\" data-term=\"mTLS\">mTLS</span>\", \"certificado de cliente\", \"<span class=\"glosario-term\" data-term=\"FAPI\">FAPI 2.0</span>\"."
+      ],
+      "cita": "Sin entender qué pasa en la capa de transporte, no puedes responder por qué un PSIP necesita certificados de cliente para conectarse al sandbox del FAD chileno, ni por qué la Ley Fintech de Chile exige FAPI 2.0."
+    },
+
+    {
+      "tipo": "objetivos-grid",
+      "titulo": "Lo que vas a saber al final",
+      "subtitulo": "Cuatro puntos concretos. Si no los tienes claros al terminar, no completaste el módulo.",
+      "items": [
+        { "num": "01", "titulo": "Cómo funciona TLS",     "descripcion": "El handshake paso a paso. Qué problema resuelve y dónde fallaría sin él." },
+        { "num": "02", "titulo": "Qué añade mTLS",        "descripcion": "Los dos pasos extra del handshake y por qué los reguladores Open Finance lo exigen." },
+        { "num": "03", "titulo": "Certificados X.509 + SSA", "descripcion": "Quién emite los certs, qué es una CA y por qué el FAD acompaña con SSA." },
+        { "num": "04", "titulo": "Caso real LATAM",       "descripcion": "El flujo DCR del FAD chileno y cómo se adapta a la SBS de Perú." }
+      ]
+    },
+
+    {
+      "tipo": "stepper-flow",
+      "numero_concepto": 1,
+      "titulo": "El handshake TLS, paso a paso",
+      "subtitulo": "Antes de transmitir cualquier dato, cliente y servidor negocian. Avanza con el botón.",
+      "actores": [
+        { "id": "client", "label": "Cliente",  "icono": "laptop", "sublabel": "App, navegador o servicio que quiere consumir la API" },
+        { "id": "server", "label": "Servidor", "icono": "server", "sublabel": "API del banco o ASPSP que expone los recursos" }
+      ],
+      "pasos": [
+        {
+          "from": "client", "to": "server",
+          "titulo": "ClientHello",
+          "snippet": "Hola, hablo TLS 1.3. Aquí mis algoritmos.",
+          "explicacion": "El cliente abre la conversación diciendo qué versiones de TLS soporta y qué algoritmos de cifrado conoce. No envía aún ningún dato sensible — es una propuesta de hablemos así.",
+          "analogia": "Es como llegar a una reunión y preguntar ¿hablamos español o inglés? antes de empezar a negociar."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "ServerHello + Certificado",
+          "snippet": "Yo soy el servidor. Aquí mi cert firmado por una CA.",
+          "explicacion": "El servidor responde con la versión TLS escogida y envía su certificado X.509 firmado por una CA. Este certificado es la prueba de identidad: dice yo soy api.banco.cl, y aquí está la firma de una autoridad que lo respalda.",
+          "analogia": "Como mostrar tu pasaporte: cualquiera puede decir que es Pepe, pero solo el gobierno puede emitir un pasaporte válido a nombre de Pepe."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "Verificación + clave",
+          "snippet": "Tu cert es válido. Genero clave de sesión.",
+          "explicacion": "El cliente valida que el certificado del servidor sea legítimo (firmado por una CA en su lista de confianza, no expirado, dominio correcto). Si todo cuadra, genera material criptográfico que ambos usarán para derivar la clave de sesión.",
+          "analogia": "Verificas el pasaporte y, si es válido, le entregas una llave nueva en un sobre que solo él puede abrir."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "Finished — canal cifrado listo",
+          "snippet": "Canal cifrado listo.",
+          "explicacion": "Servidor confirma que ya están en sintonía. A partir de aquí, todo el tráfico HTTP va cifrado con la clave de sesión derivada. Nadie en el medio puede leer ni alterar los datos.",
+          "analogia": "Ya están en una sala insonorizada, hablando en un idioma que solo ellos dos conocen. El resto del mundo puede ver que conversan, pero no qué dicen."
+        }
+      ]
+    },
+
+    {
+      "tipo": "stepper-flow",
+      "numero_concepto": 2,
+      "titulo": "Y ahora el handshake mTLS — el que exige FAPI 2.0",
+      "subtitulo": "Solo añade dos pasos al flujo anterior. Pero esos dos pasos son los que permiten al servidor verificar al cliente. Avanza con el botón.",
+      "actores": [
+        { "id": "client", "label": "Cliente",  "icono": "laptop", "sublabel": "TPP autorizado: PSIP, PSBI, AISP, etc. con cert emitido por la CA del directorio" },
+        { "id": "server", "label": "Servidor", "icono": "server", "sublabel": "ASPSP / IPI / IPC. Configurado para exigir cert de cliente" }
+      ],
+      "pasos": [
+        {
+          "from": "client", "to": "server",
+          "titulo": "ClientHello",
+          "snippet": "Hola, hablo TLS 1.3. Aquí mis algoritmos.",
+          "explicacion": "Idéntico al handshake TLS estándar. El cliente abre proponiendo versión y algoritmos. Nada cambia en este primer paso.",
+          "analogia": "Misma reunión, misma pregunta inicial: ¿hablamos español o inglés?"
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "ServerHello + Certificado + CertificateRequest",
+          "snippet": "Aquí mi cert. Y necesito ver el tuyo.",
+          "explicacion": "Aquí está la diferencia clave. El servidor responde con su certificado X.509 (igual que en TLS estándar) PERO añade un mensaje CertificateRequest pidiéndole al cliente que también se identifique. Solo los servidores configurados para mTLS hacen esto.",
+          "analogia": "Es como si en la entrada del banco, el guardia no solo te enseñara su acreditación — también te pidiera la tuya antes de dejarte pasar."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "Certificate del cliente",
+          "snippet": "Aquí está el mío, firmado por la CA del directorio.",
+          "explicacion": "El cliente envía su certificado X.509 — emitido por la CA del directorio del ecosistema (FAD chileno, OFB Brasil, etc.). Si el cliente no tiene cert, o si no fue emitido por una CA reconocida, aquí se cae el handshake.",
+          "analogia": "Sacas tu acreditación. Si la perdiste, si está expirada, o si no es de las que el banco reconoce, no entras."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "Verificación mutua + clave de sesión",
+          "snippet": "Tu cert es válido. Aquí va la clave.",
+          "explicacion": "Ambos verifican el certificado del otro contra sus listas de confianza. El cliente comprueba que el servidor es quien dice ser; el servidor comprueba que el cliente está registrado y autorizado. Si ambos pasan, se deriva la clave de sesión.",
+          "analogia": "Cada uno valida la acreditación del otro contra su libro de organizaciones reconocidas. Solo si ambos están en el libro, pasan a la sala segura."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "Finished — canal mTLS listo",
+          "snippet": "Canal mTLS establecido. Procedemos con OAuth.",
+          "explicacion": "Canal cifrado y mutuamente autenticado. A partir de aquí ya puede empezar la conversación HTTP — y solo entonces entra OAuth a autorizar al usuario final. Si el handshake mTLS falla, OAuth ni siquiera se ejecuta.",
+          "analogia": "Ya están los dos en la sala insonorizada, ambos identificados. Ahora pueden firmar contratos."
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "TLS vs <span class=\"accent\">mTLS</span> — la diferencia que cambia todo",
+      "subtitulo": "Solo cambia un detalle. Pero ese detalle es la razón por la que existe FAPI 2.0.",
+      "tabs": [
+        {
+          "id": "lado-a-lado",
+          "titulo": "Lado a lado",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "TLS",
+            "subtitulo": "Lo que usa Google, tu banco web, cualquier sitio HTTPS",
+            "items": [
+              { "check": true,  "texto": "El servidor se identifica con certificado" },
+              { "check": true,  "texto": "El canal se cifra (nadie lee en el medio)" },
+              { "check": true,  "texto": "El cliente confía en el servidor" },
+              { "check": false, "texto": "El servidor <strong>no</strong> verifica al cliente — cualquiera puede conectar" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "FAPI 2.0",
+            "titulo": "mTLS",
+            "subtitulo": "Lo que exigen los reguladores Open Finance",
+            "items": [
+              { "check": true, "texto": "El servidor se identifica con certificado" },
+              { "check": true, "texto": "El canal se cifra" },
+              { "check": true, "texto": "El cliente <strong>también</strong> presenta certificado" },
+              { "check": true, "texto": "Solo TPPs registrados con cert válido pueden conectar" }
+            ]
+          }
+        },
+        {
+          "id": "visual",
+          "titulo": "Visualmente",
+          "tipo_contenido": "svg-inline",
+          "svg": "<svg viewBox='0 0 800 280' xmlns='http://www.w3.org/2000/svg'><text x='50' y='40' font-family='Georgia' font-size='16' fill='#4F062A'>TLS estándar</text><rect x='50' y='60' width='100' height='60' rx='8' fill='white' stroke='#4F062A' stroke-width='2'/><text x='100' y='95' text-anchor='middle' font-size='12' fill='#4F062A'>Cliente</text><line x1='150' y1='90' x2='650' y2='90' stroke='#4F062A' stroke-width='2'/><polygon points='650,85 660,90 650,95' fill='#4F062A'/><rect x='650' y='60' width='100' height='60' rx='8' fill='#4F062A' stroke='#4F062A' stroke-width='2'/><text x='700' y='95' text-anchor='middle' font-size='12' fill='white'>Servidor</text><text x='400' y='80' text-anchor='middle' font-size='11' fill='#666'>cifrado pero servidor no sabe quién soy</text><text x='50' y='170' font-family='Georgia' font-size='16' fill='#4F062A'>mTLS</text><rect x='50' y='190' width='100' height='60' rx='8' fill='white' stroke='#FF0054' stroke-width='2'/><text x='100' y='218' text-anchor='middle' font-size='12' fill='#4F062A'>Cliente</text><text x='100' y='234' text-anchor='middle' font-size='9' fill='#FF0054'>+ certificado</text><line x1='150' y1='220' x2='650' y2='220' stroke='#FF0054' stroke-width='2'/><polygon points='650,215 660,220 650,225' fill='#FF0054'/><line x1='650' y1='232' x2='150' y2='232' stroke='#FF0054' stroke-width='2'/><polygon points='150,237 140,232 150,227' fill='#FF0054'/><rect x='650' y='190' width='100' height='60' rx='8' fill='#4F062A' stroke='#FF0054' stroke-width='2'/><text x='700' y='218' text-anchor='middle' font-size='12' fill='white'>Servidor</text><text x='700' y='234' text-anchor='middle' font-size='9' fill='#FF0054'>+ certificado</text><text x='400' y='210' text-anchor='middle' font-size='11' fill='#666'>cifrado + ambos prueban quiénes son</text></svg>"
+        },
+        {
+          "id": "cuando",
+          "titulo": "¿Cuándo se usa cada uno?",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "TLS estándar es suficiente cuando…",
+            "items": [
+              "El acceso es público (web pública)",
+              "La identidad del cliente se valida en otra capa (login)",
+              "No hay regulación financiera de por medio"
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "mTLS es obligatorio cuando…",
+            "items": [
+              "La regulación lo exige (FAPI 2.0)",
+              "Solo TPPs registrados deben conectar",
+              "La identidad del cliente debe probarse a nivel de red",
+              "No basta con OAuth: el ataque debe parar antes"
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "ejemplo-real",
+      "etiqueta": "CASO REAL · CHILE — FAD v1.0.1",
+      "titulo_pre_accent": "El DCR del",
+      "titulo_accent": "FAD chileno",
+      "titulo_post_accent": "y cómo se aplica mTLS aquí",
+      "parrafos": [
+        "El Sistema de Finanzas Abiertas (SFA) chileno se crea por la <strong>Ley Fintech de Chile</strong> y la implementa la CMF. La especificación técnica vive en el FAD (Finanzas Abiertas Chile), donde el equipo Open Business de Minsait participa activamente.",
+        "El documento <strong>FAD v1.0.1 — Dynamic Client Registration</strong> define cómo un <span class=\"glosario-term\" data-term=\"PSIP\">PSIP</span> o un PSBI se registra contra un Authorization Server (IPI/IPC). El registro requiere mTLS desde el primer byte: ningún <code>POST /register</code> entra sin canal mutuamente autenticado.",
+        "Y la pieza clave que acompaña al cert mTLS es el <strong>SSA</strong> — Software Statement Assertion, un JWT firmado por el Directorio CMF que contiene los atributos verificados de la organización."
+      ],
+      "flow_pasos": [
+        { "num": 1, "texto": "El PSIP, ya autorizado regulatoriamente, obtiene su <code>SSA</code> y su cert mTLS del Directorio CMF" },
+        { "num": 2, "texto": "Hace <code>POST /register</code> contra la IPI/IPC del banco — la conexión exige mTLS desde el primer byte" },
+        { "num": 3, "texto": "El Authorization Server valida la firma <strong>PS256</strong> del SSA contra el JWKS del Directorio" },
+        { "num": 4, "texto": "Si firma, vigencia (<code>exp</code>) y audiencia (<code>aud</code>) cuadran, emite <code>client_id</code> con <code>token_endpoint_auth_method: tls_client_auth</code>" },
+        { "num": 5, "texto": "A partir de ahí cada llamada a <code>/payments</code> o <code>/accounts</code> exige ese mismo cert. Si el cert falla, la conexión <strong>no llega</strong> a OAuth" }
+      ]
+    },
+
+    {
+      "tipo": "ejemplo-real",
+      "etiqueta": "ADAPTACIÓN A LA REGIÓN · PERÚ — SBS",
+      "titulo_pre_accent": "El mismo modelo,",
+      "titulo_accent": "distinto Directorio:",
+      "titulo_post_accent": "SBS Perú",
+      "parrafos": [
+        "La Superintendencia de Banca, Seguros y AFP del Perú ha confirmado que <strong>va a lanzar un Directorio peruano</strong> para Open Finance. Esa pieza institucional es justo la que el modelo chileno exige para funcionar — y es la decisión política que la SBS está tomando ahora.",
+        "La consecuencia práctica: la capa <strong>técnica</strong> del FAD (FAPI 2.0, mTLS RFC 8705, DCR sobre RFC 7591/7592, SSA firmado en PS256) <strong>se traslada tal cual</strong>. Lo que cambia es la pieza institucional — quién opera el Directorio, qué CA emite los certificados, cómo se nombran los roles regulados peruanos.",
+        "Tu mensaje a un cliente bancario peruano no es \"copiemos lo de Chile\". Es: <em>aplicamos los mismos estándares globales que ya demostramos en el FAD, ajustados a la arquitectura institucional que la SBS defina</em>. Esa diferencia importa al regulador."
+      ],
+      "flow_pasos": [
+        { "num": 1, "texto": "<strong>Trasladable de Chile a Perú:</strong> FAPI 2.0, mTLS, formato del SSA, prohibición de <code>client_secret_basic</code>, exigencia de <code>tls_client_auth</code> y firmas PS256" },
+        { "num": 2, "texto": "<strong>Decisión SBS:</strong> quién opera el Directorio peruano (la propia SBS, una entidad delegada o un consorcio de la industria)" },
+        { "num": 3, "texto": "<strong>Decisión SBS:</strong> qué CA emite los certificados de cliente y cómo se revocan cuando un TPP pierde autorización" },
+        { "num": 4, "texto": "<strong>Decisión SBS:</strong> mapeo de la terminología regulada peruana (ITF, OPF u otros) a los roles que el SSA debe declarar" },
+        { "num": 5, "texto": "<strong>Posición de Minsait:</strong> evidencia probada del FAD + experiencia trasladable + mismos estándares globales = conversación creíble con SBS" }
+      ]
+    },
+
+    {
+      "tipo": "dialogo-transferencia",
+      "titulo": "Lo que tienes que poder explicar a un cliente",
+      "subtitulo": "El test real: si un arquitecto te lo pregunta, esto es lo que respondes",
+      "pregunta_cliente": "¿Por qué necesitamos mTLS si ya estamos usando OAuth para autorizar al usuario?",
+      "respuesta_consultor": "Porque mTLS opera en una capa distinta: cierra el canal de transporte y prueba la identidad del <em>cliente</em> a nivel de red, antes de que OAuth gestione la autorización del <em>usuario</em>. Son capas complementarias. Sin mTLS, cualquiera puede intentar el handshake; con mTLS, solo TPPs registrados llegan a hablar con tu servidor."
+    },
+
+    { "tipo": "quiz-engine" },
+
+    {
+      "tipo": "footer-completar",
+      "titulo": "¿Listo para desbloquear el badge?",
+      "subtitulo": "Marca el módulo como completado para sumar 80 XP y desbloquear Guardián del Túnel"
+    },
+
+    { "tipo": "badge-modal" }
+  ]
+}

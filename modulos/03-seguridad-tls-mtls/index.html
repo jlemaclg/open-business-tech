@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Módulo 03 — Seguridad de transporte | Open Business Tech Academy</title>
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/modulo.css">
+</head>
+<body data-modulo="03-seguridad-tls-mtls">
+
+  <!-- ============ TOPBAR GLOBAL ============ -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="../../index.html" class="topbar-back">← Ruta de aprendizaje</a>
+      <span class="topbar-title">Módulo 03 · <span class="accent">Seguridad de transporte</span></span>
+    </div>
+    <div class="topbar-right">
+      <div class="consultor-info">Consultor · Nivel 1 · <span class="consultor-xp">0 XP</span></div>
+    </div>
+  </header>
+
+  <!-- ============ PROGRESO MÓDULO ============ -->
+  <div class="progress-strip">
+    <span class="progress-label">PROGRESO DEL MÓDULO</span>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
+    <span class="progress-label">0%</span>
+  </div>
+
+  <!-- ============ HERO inyectado por modulo-loader ============ -->
+  <!-- El hero se inserta aquí automáticamente, antes de #modulo-root -->
+
+  <!-- ============ ROOT del módulo ============ -->
+  <main class="modulo-content">
+    <div id="modulo-root">
+      <!-- modulo-loader.js inyecta los componentes según modulo-data.json -->
+    </div>
+  </main>
+
+  <!-- ============ Sistema ============ -->
+  <script src="../../assets/js/progress.js"></script>
+  <script src="../../assets/js/glossary.js"></script>
+  <script src="../../assets/js/content-loader.js"></script>
+
+  <!-- ============ Biblioteca de componentes ============ -->
+  <script src="../../assets/components/hero-modulo.js"></script>
+  <script src="../../assets/components/por-que-importa.js"></script>
+  <script src="../../assets/components/objetivos-grid.js"></script>
+  <script src="../../assets/components/stepper-flow.js"></script>
+  <script src="../../assets/components/comparativa-tabs.js"></script>
+  <script src="../../assets/components/ejemplo-real.js"></script>
+  <script src="../../assets/components/dialogo-transferencia.js"></script>
+  <script src="../../assets/components/quiz-engine.js"></script>
+  <script src="../../assets/components/footer-completar.js"></script>
+  <script src="../../assets/components/badge-modal.js"></script>
+
+  <!-- ============ App + orquestador ============ -->
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/modulo-loader.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ModuloLoader.cargar({
+        dataUrl: 'modulo-data.json',
+        quizUrl: 'quiz.json',
+        recursosUrl: 'recursos.json',
+        rootSelector: '#modulo-root'
+      });
+    });
+  </script>
+</body>
+</html>

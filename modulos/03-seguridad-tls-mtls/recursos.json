@@ -1,0 +1,69 @@
+{
+  "modulo": "03-seguridad-tls-mtls",
+  "videos": [],
+  "lecturas": [
+    {
+      "titulo": "Finanzas Abiertas Chile (FAD) — Confluence público",
+      "url": "https://openfinancechile.atlassian.net/wiki/spaces/OFAC/overview",
+      "tipo": "referencia-regional",
+      "obligatorio": true,
+      "tiempo_min": 25,
+      "descripcion": "Espacio público donde el FAD documenta perfiles, estándares y especificaciones técnicas del Sistema de Finanzas Abiertas chileno. El equipo Open Business de Minsait participa en su construcción. Es la mejor referencia LATAM viva para entender mTLS aplicado a Open Finance regulado."
+    },
+    {
+      "titulo": "FAD v1.0.1 — Dynamic Client Registration",
+      "tipo": "spec-regional",
+      "obligatorio": true,
+      "tiempo_min": 15,
+      "descripcion": "Documento técnico que detalla cómo un PSBI/PSIP se registra contra un Authorization Server (IPI/IPC), cómo se valida el SSA (JWT firmado por el Directorio CMF) y los requisitos de seguridad (HTTPS+mTLS, PS256, tls_client_auth). Disponible en el portal del desarrollador del FAD."
+    },
+    {
+      "titulo": "Ley Fintech de Chile",
+      "tipo": "regulacion",
+      "obligatorio": false,
+      "tiempo_min": 30,
+      "descripcion": "Ley que crea el Sistema de Finanzas Abiertas chileno y delega su implementación técnica a la CMF. Es la base legal sobre la que se construye todo el ecosistema FAD."
+    },
+    {
+      "titulo": "FAPI 2.0 Security Profile — sección de transporte",
+      "url": "https://openid.net/specs/fapi-2_0-security-profile.html",
+      "tipo": "spec",
+      "obligatorio": true,
+      "tiempo_min": 15,
+      "descripcion": "Perfil de seguridad de OpenID Foundation que exige mTLS y otros refuerzos. Es la norma que sustenta los modelos chileno y brasileño."
+    },
+    {
+      "titulo": "RFC 8705 — OAuth 2.0 Mutual-TLS Client Authentication",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8705",
+      "tipo": "spec",
+      "obligatorio": false,
+      "tiempo_min": 20,
+      "descripcion": "Define cómo se usa mTLS para autenticar clientes OAuth (tls_client_auth). Referenciado explícitamente por el FAD."
+    },
+    {
+      "titulo": "RFC 8446 — TLS 1.3",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8446",
+      "tipo": "spec",
+      "obligatorio": false,
+      "tiempo_min": 25,
+      "descripcion": "El protocolo TLS en su versión actual. Lectura profunda solo si quieres entender el handshake al detalle."
+    }
+  ],
+  "transcripciones": [],
+  "videos_planeados": [
+    {
+      "nombre_provisional": "TLS handshake paso a paso",
+      "duracion_estimada_min": 12,
+      "estado": "pendiente_grabacion",
+      "responsable": "Jonathan",
+      "nota": "Cuando esté disponible, mover a videos[]."
+    },
+    {
+      "nombre_provisional": "mTLS y SSA en el FAD chileno — recorrido del flujo DCR",
+      "duracion_estimada_min": 18,
+      "estado": "pendiente_grabacion",
+      "responsable": "Jonathan",
+      "nota": "Cuando esté disponible, mover a videos[]."
+    }
+  ]
+}

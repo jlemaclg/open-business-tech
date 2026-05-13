@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Maestro del Token">
+  <defs>
+    <linearGradient id="mdt-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F062A"/>
+      <stop offset="100%" stop-color="#260717"/>
+    </linearGradient>
+  </defs>
+
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55"
+           fill="url(#mdt-bg)" stroke="#FF0054" stroke-width="3"/>
+  <polygon points="100,30 162,65 162,135 100,170 38,135 38,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.4"/>
+
+  <!-- Llave inclinada (maestra) -->
+  <!-- Anilla -->
+  <circle cx="78" cy="118" r="14" fill="none" stroke="#FF0054" stroke-width="3"/>
+  <circle cx="78" cy="118" r="5" fill="#FF0054" opacity="0.5"/>
+
+  <!-- Caña diagonal de la llave -->
+  <line x1="89" y1="108" x2="138" y2="68" stroke="#FF0054" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Dientes -->
+  <line x1="124" y1="74" x2="124" y2="84" stroke="#FF0054" stroke-width="3" stroke-linecap="round"/>
+  <line x1="132" y1="68" x2="132" y2="80" stroke="#FF0054" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Tres puntos pequeños debajo simbolizando tokens generados -->
+  <circle cx="86" cy="148" r="2.6" fill="#FF0054"/>
+  <circle cx="100" cy="152" r="2.6" fill="#FF0054"/>
+  <circle cx="114" cy="148" r="2.6" fill="#FF0054"/>
+</svg>

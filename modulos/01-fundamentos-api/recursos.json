@@ -1,0 +1,38 @@
+{
+  "modulo": "01-fundamentos-api",
+  "videos": [
+    {
+      "titulo": "¿Qué es una API? — explicación para perfil de negocio",
+      "duracion_min": 8,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/01-que-es-una-api.mp4",
+      "obligatorio": true,
+      "descripcion": "Introducción narrada por Jonathan, sin tecnicismos. Pensada para verse antes de entrar al módulo. TODO: Jonathan grabar y subir."
+    },
+    {
+      "titulo": "Recorrido por el Directorio Open Finance chileno",
+      "duracion_min": 12,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/01-directorio-open-finance-chile.mp4",
+      "obligatorio": false,
+      "descripcion": "Demostración en pantalla del Directorio del ecosistema chileno: qué endpoints expone, qué devuelve, cómo lo consume un banco. TODO: Jonathan grabar."
+    }
+  ],
+  "lecturas": [
+    {
+      "titulo": "Portal del desarrollador del Open Finance chileno",
+      "url": "https://openfinancechile.atlassian.net/wiki/spaces/OFAC/overview",
+      "tipo": "referencia",
+      "obligatorio": false,
+      "tiempo_min": 15,
+      "descripcion": "Documentación pública del ecosistema Open Finance chileno. Buscar la sección de Directorio para ver los endpoints expuestos."
+    },
+    {
+      "titulo": "REST API Tutorial — qué es una API REST (en español)",
+      "url": "https://restfulapi.net/",
+      "tipo": "introductorio",
+      "obligatorio": false,
+      "tiempo_min": 20,
+      "descripcion": "Lectura introductoria. Solo el primer apartado What is REST — el resto se cubre en el módulo 02."
+    }
+  ],
+  "transcripciones": []
+}

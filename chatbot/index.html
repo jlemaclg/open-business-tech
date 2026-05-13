@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Asistente · Fase 2 | Open Business Tech Academy</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <style>
+    .chatbot-page { max-width: 980px; margin: 0 auto; padding: 56px 40px 80px; }
+    .chatbot-hero {
+      background: linear-gradient(135deg, var(--morado) 0%, var(--morado-oscuro) 100%);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .chatbot-hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,0,84,0.25), transparent 70%);
+    }
+    .chatbot-hero .eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .chatbot-hero h1 {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+      max-width: 700px;
+    }
+    .chatbot-hero h1 .accent { color: var(--accent); }
+    .chatbot-hero p {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      opacity: 0.85;
+      max-width: 700px;
+      line-height: 1.5;
+    }
+    .roadmap {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 32px;
+    }
+    .roadmap h2 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: var(--morado);
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+    .roadmap-step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--gris);
+    }
+    .roadmap-step:last-child { border-bottom: none; }
+    .roadmap-step .num {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .roadmap-step h3 {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      color: var(--morado);
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .roadmap-step p {
+      font-size: 13.5px;
+      color: var(--texto);
+      line-height: 1.5;
+    }
+    .placeholder-chat {
+      background: var(--gris-claro);
+      border: 2px dashed #c9c7be;
+      border-radius: var(--radius-lg);
+      padding: 56px 40px;
+      text-align: center;
+    }
+    .placeholder-chat .icon {
+      width: 56px; height: 56px;
+      margin: 0 auto 16px;
+      background: rgba(255,0,84,0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .placeholder-chat .icon svg {
+      width: 28px; height: 28px;
+      stroke: var(--accent); fill: none; stroke-width: 2;
+    }
+    .placeholder-chat h3 {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      color: var(--morado);
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .placeholder-chat p { font-size: 13.5px; color: #666; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="../index.html" class="topbar-back">← Ruta de aprendizaje</a>
+      <span class="topbar-title">Asistente · <span class="accent">próximamente</span></span>
+    </div>
+    <div class="topbar-right">
+      <div class="consultor-info">Consultor · Nivel 1 · <span class="consultor-xp">0 XP</span></div>
+    </div>
+  </header>
+
+  <main class="chatbot-page">
+
+    <section class="chatbot-hero">
+      <div class="eyebrow">FASE 2 · ROADMAP</div>
+      <h1>Un asistente que conoce <span class="accent">todo el contenido</span> de la academia</h1>
+      <p>Próximamente, un chatbot RAG entrenado sobre los <code>contenido.md</code> de cada módulo y el glosario completo. Podrás preguntar dudas, pedir comparaciones entre conceptos y validar respuestas para clientes — sin salir de la academia.</p>
+    </section>
+
+    <section class="roadmap">
+      <h2>Cómo va a funcionar (cuando llegue)</h2>
+
+      <div class="roadmap-step">
+        <div class="num">1</div>
+        <div>
+          <h3>Indexación de contenido</h3>
+          <p>Los <code>contenido.md</code> de cada módulo y el <code>terminos.json</code> del glosario se ingieren a una base vectorial. El proyecto ya está pensado para esto: el Markdown es portable y la estructura es estable.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="num">2</div>
+        <div>
+          <h3>Chat conversacional contextual</h3>
+          <p>El consultor pregunta — el asistente responde citando el módulo concreto donde se trata el tema, y enlaza al fragmento exacto. No alucina porque tiene la fuente.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="num">3</div>
+        <div>
+          <h3>Validador de respuestas para clientes</h3>
+          <p>Modo "voy a una reunión": pegas la pregunta del cliente, el asistente te entrega la respuesta corta (lo que dirías) y la respuesta extendida (referencias regulatorias y técnicas).</p>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="num">4</div>
+        <div>
+          <h3>Insights agregados (sin tracking individual)</h3>
+          <p>Las preguntas más frecuentes alimentan la decisión sobre qué contenidos reforzar. Solo agregados — sin perfilar a consultores específicos.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="placeholder-chat">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Aún no está activo</h3>
+      <p>Por ahora consulta el <a href="../glosario/index.html" style="color:var(--accent)">glosario</a> o navega los módulos.</p>
+    </div>
+
+  </main>
+
+  <script src="../assets/js/progress.js"></script>
+  <script src="../assets/js/glossary.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

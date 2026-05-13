@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Cartógrafo">
+  <defs>
+    <linearGradient id="crt-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F062A"/>
+      <stop offset="100%" stop-color="#260717"/>
+    </linearGradient>
+  </defs>
+
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55"
+           fill="url(#crt-bg)" stroke="#FF0054" stroke-width="3"/>
+  <polygon points="100,30 162,65 162,135 100,170 38,135 38,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.4"/>
+
+  <!-- Brújula: rosa de los vientos -->
+  <circle cx="100" cy="100" r="36" fill="none" stroke="#FF0054" stroke-width="2"/>
+  <circle cx="100" cy="100" r="26" fill="none" stroke="#FF0054" stroke-width="1" opacity="0.45"/>
+
+  <!-- Cuatro puntas (rosa) -->
+  <polygon points="100,68 105,100 100,100 95,100" fill="#FF0054"/>
+  <polygon points="100,132 105,100 100,100 95,100" fill="#FF0054" opacity="0.55"/>
+  <polygon points="68,100 100,95 100,100 100,105" fill="#FF0054" opacity="0.55"/>
+  <polygon points="132,100 100,95 100,100 100,105" fill="#FF0054" opacity="0.55"/>
+
+  <!-- Centro -->
+  <circle cx="100" cy="100" r="3.5" fill="#FFFFFF"/>
+
+  <!-- N pequeño -->
+  <text x="100" y="65" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#FF0054" font-weight="700">N</text>
+</svg>

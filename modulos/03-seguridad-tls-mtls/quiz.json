@@ -1,0 +1,117 @@
+{
+  "modulo": "03-seguridad-tls-mtls",
+  "preguntas": [
+    {
+      "id": "q1",
+      "tipo": "single_choice",
+      "enunciado": "¿Qué problema resuelve mTLS que TLS estándar no resuelve?",
+      "opciones": [
+        "Cifrado del canal de comunicación",
+        "Autenticación del servidor ante el cliente",
+        "Autenticación mutua: el servidor también verifica al cliente",
+        "Compresión de los datos transmitidos"
+      ],
+      "correcta": 2,
+      "explicacion_correcto": "Exacto. TLS estándar autentica solo al servidor. mTLS añade la verificación del cliente vía certificado, lo cual es requisito en FAPI 2.0 y en la mayoría de regulaciones Open Finance.",
+      "explicacion_incorrecto": "TLS estándar ya hace esa parte. El detalle que diferencia mTLS es que el servidor también verifica la identidad del cliente — y eso es lo que cierra el canal a TPPs no registrados."
+    },
+    {
+      "id": "q2",
+      "tipo": "single_choice",
+      "enunciado": "En el handshake TLS, ¿qué envía el servidor en el segundo paso (ServerHello)?",
+      "opciones": [
+        "Solo la versión TLS escogida",
+        "Su certificado X.509 firmado por una CA, junto con la versión TLS escogida",
+        "La clave privada del servidor",
+        "Las credenciales OAuth del cliente"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. El servidor envía su certificado público X.509 junto con la versión TLS acordada. La clave privada nunca viaja por el canal.",
+      "explicacion_incorrecto": "La clave privada nunca se transmite — es justo lo que el servidor protege. Lo que envía es el certificado público (X.509) firmado por una CA, que el cliente valida contra su lista de confianza."
+    },
+    {
+      "id": "q3",
+      "tipo": "single_choice",
+      "enunciado": "Un PSIP chileno intenta llamar a /payments del banco bajo el SFA. La llamada falla en el handshake mTLS. ¿Cuál es la causa más probable?",
+      "opciones": [
+        "El PSIP no tiene un access token OAuth válido",
+        "El certificado de cliente del PSIP no está emitido por la CA del directorio del SFA, o ha expirado",
+        "El consentimiento del usuario final no fue otorgado",
+        "El payload JSON tiene un campo mal formado"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. mTLS valida la cadena del certificado del cliente antes de que la petición llegue siquiera a la capa OAuth. Si el cert no es de la CA reconocida o está expirado, la conexión se cierra a nivel de red.",
+      "explicacion_incorrecto": "Esos errores ocurren después del handshake (en OAuth, en consentimientos o en el parser de la API). mTLS opera antes — si el cert no valida, ni siquiera hay request HTTP que procesar."
+    },
+    {
+      "id": "q4",
+      "tipo": "single_choice",
+      "enunciado": "¿Cuál de estos casos NO requiere mTLS?",
+      "opciones": [
+        "Un TPP autorizado conectándose al ASPSP bajo FAPI 2.0",
+        "Un PSIP llamando a /payments en el FAD chileno",
+        "Un usuario final accediendo a la web pública de su banco para ver el saldo",
+        "Una agregadora regulada accediendo a APIs de Open Finance Brasil"
+      ],
+      "correcta": 2,
+      "explicacion_correcto": "Correcto. La banca digital pública usa TLS estándar — la identidad del usuario se gestiona con login y sesión, no con cert de cliente. mTLS es para conexiones B2B reguladas entre instituciones.",
+      "explicacion_incorrecto": "En ese caso el usuario se autentica con login, no con certificado de cliente. mTLS aplica en conexiones B2B reguladas (TPP→ASPSP, PSIP→banco), no en la banca web del usuario final."
+    },
+    {
+      "id": "q5",
+      "tipo": "single_choice",
+      "enunciado": "¿Qué función cumple una CA (Certificate Authority) en este contexto?",
+      "opciones": [
+        "Almacenar las claves privadas de todos los TPPs",
+        "Emitir y firmar certificados, garantizando la identidad del titular ante terceros",
+        "Cifrar el contenido de las llamadas API",
+        "Validar el consentimiento del usuario final"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Así es. La CA actúa como autoridad de confianza: firma certificados que el resto del ecosistema reconoce. En Open Finance suele ser una CA específica del directorio (p. ej. la del FAD chileno o la del Open Finance Brasil).",
+      "explicacion_incorrecto": "La CA no almacena claves privadas (eso lo hace cada titular) ni cifra el tráfico (eso lo hace TLS) ni gestiona consentimientos (eso es OAuth). Su función única es firmar certificados para establecer cadenas de confianza."
+    },
+    {
+      "id": "q6",
+      "tipo": "single_choice",
+      "enunciado": "Un cliente arquitecto te dice: con OAuth y un buen IdP es suficiente, mTLS añade complejidad innecesaria. ¿Cuál es la mejor respuesta?",
+      "opciones": [
+        "Tiene razón, en muchos despliegues mTLS se omite por simplicidad",
+        "OAuth y mTLS resuelven cosas distintas: OAuth autoriza al usuario, mTLS prueba la identidad del cliente a nivel de red. FAPI 2.0 exige ambos porque son complementarios",
+        "mTLS solo se usa en sandbox, en producción se sustituye por OAuth puro",
+        "Depende del país: en LATAM se omite, en Europa se exige"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Esa es la respuesta limpia. OAuth y mTLS son capas complementarias, no alternativas. Y FAPI 2.0 — el perfil que la mayoría de Open Finance LATAM y EU adopta — exige las dos.",
+      "explicacion_incorrecto": "mTLS no es opcional ni se sustituye en producción ni varía por región en este punto: FAPI 2.0 lo exige y prácticamente todas las jurisdicciones de Open Finance reguladas lo adoptan (PSD2/EBA, OBIE, OFB, FAD chileno, etc.)."
+    },
+    {
+      "id": "q7",
+      "tipo": "single_choice",
+      "enunciado": "En el flujo DCR del FAD chileno descrito en el módulo, ¿qué acompaña al certificado mTLS del cliente para validar su identidad ante el Authorization Server?",
+      "opciones": [
+        "Un usuario y contraseña con client_secret_basic",
+        "Un Software Statement Assertion (SSA) — JWT firmado en PS256 por el Directorio CMF",
+        "Un access token OAuth previamente obtenido",
+        "Una API key generada por el banco"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. El SSA es un JWT firmado por el Directorio CMF que contiene los atributos verificados de la organización (organization_id, roles, jwks_uri). El Authorization Server valida la firma PS256 contra el JWKS del Directorio. El FAD prohíbe explícitamente client_secret_basic y client_secret_post.",
+      "explicacion_incorrecto": "El FAD prohíbe métodos basados en secretos compartidos. La identidad del cliente se valida en dos capas: el cert mTLS (capa de transporte) + el SSA (JWT firmado por el Directorio que prueba que la organización está autorizada). Sin SSA válido, el DCR rechaza el registro."
+    },
+    {
+      "id": "q8",
+      "tipo": "single_choice",
+      "enunciado": "Comparado con el handshake TLS estándar, ¿qué dos cambios añade el handshake mTLS?",
+      "opciones": [
+        "Cambia el algoritmo de cifrado y reduce el tamaño de la clave",
+        "El servidor envía un CertificateRequest, y el cliente responde con su propio certificado X.509",
+        "Añade un segundo cifrado encima del primero",
+        "Sustituye TLS 1.3 por TLS 1.2 para mayor compatibilidad"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. Los dos cambios son: (1) el servidor añade el mensaje CertificateRequest tras enviar su propio cert, y (2) el cliente responde enviando su Certificate. Todo lo demás (algoritmo, versión, derivación de clave) permanece igual.",
+      "explicacion_incorrecto": "mTLS no cambia los algoritmos ni añade cifrado adicional ni cambia versión de TLS. La única diferencia es la solicitud y entrega del certificado del cliente, que el servidor valida igual que el cliente valida el del servidor."
+    }
+  ]
+}

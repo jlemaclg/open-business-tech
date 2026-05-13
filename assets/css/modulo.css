@@ -1,0 +1,42 @@
+/* ============================================================
+   Open Business Tech Academy — modulo.css
+   Layout específico de páginas de módulo.
+   No define componentes — solo cómo se ensamblan en una página.
+   ============================================================ */
+
+.modulo-content {
+  max-width: 1200px;
+  margin: -40px auto 0;
+  padding: 0 40px 80px;
+  position: relative;
+  z-index: 3;
+}
+
+/* Hub (index.html) — layout principal */
+.hub-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+/* Espaciado entre secciones consecutivas dentro del módulo */
+.modulo-content > section + section,
+.modulo-content > section + .cmp-ejemplo-real,
+.modulo-content > .cmp-ejemplo-real + section,
+.modulo-content > .cmp-dialogo + section {
+  /* Cada componente ya define su margin-bottom; este selector queda
+     reservado para overrides de página si hiciese falta. */
+}
+
+/* Soporte responsive básico (≥1024px asumido en producto, este es
+   un colchón para anchos intermedios) */
+@media (max-width: 1100px) {
+  .modulo-content { padding: 0 24px 60px; }
+  .cmp-stepper-flow,
+  .cmp-comparativa-tabs,
+  .cmp-quiz {
+    padding: 32px;
+  }
+  .cmp-hero-modulo__title { font-size: 36px; }
+  .cmp-objetivos-grid__items { grid-template-columns: repeat(2, 1fr); }
+}

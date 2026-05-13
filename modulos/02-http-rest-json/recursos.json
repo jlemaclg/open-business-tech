@@ -1,0 +1,46 @@
+{
+  "modulo": "02-http-rest-json",
+  "videos": [
+    {
+      "titulo": "Anatomía de una request HTTP — narrado para perfil de negocio",
+      "duracion_min": 10,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/02-anatomia-request.mp4",
+      "obligatorio": true,
+      "descripcion": "Recorrido visual por cada parte de una request: método, URL, headers, body. TODO: Jonathan grabar y subir."
+    },
+    {
+      "titulo": "Leyendo el Swagger del Open Finance chileno — paseo guiado",
+      "duracion_min": 14,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/02-swagger-open-finance-chile.mp4",
+      "obligatorio": false,
+      "descripcion": "Demostración en pantalla del Swagger de una API del ecosistema chileno: cómo se interpreta cada endpoint, qué campos tiene cada response. TODO: Jonathan grabar."
+    }
+  ],
+  "lecturas": [
+    {
+      "titulo": "Especificación API de Cuentas — Open Finance Chile",
+      "url": "https://openfinancechile.atlassian.net/wiki/spaces/OFAC/overview",
+      "tipo": "spec",
+      "obligatorio": false,
+      "tiempo_min": 25,
+      "descripcion": "Portal del desarrollador del ecosistema chileno. Buscar la API de Cuentas — es el ejemplo más cercano al fragmento JSON del módulo."
+    },
+    {
+      "titulo": "MDN — HTTP Request Methods",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Methods",
+      "tipo": "referencia",
+      "obligatorio": false,
+      "tiempo_min": 15,
+      "descripcion": "Documentación oficial de los métodos HTTP en español. Referencia para resolver dudas concretas sobre verbos."
+    },
+    {
+      "titulo": "MDN — HTTP Status Codes",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Status",
+      "tipo": "referencia",
+      "obligatorio": false,
+      "tiempo_min": 15,
+      "descripcion": "Lista completa de códigos de estado con su significado. Útil cuando aparece uno raro en producción."
+    }
+  ],
+  "transcripciones": []
+}

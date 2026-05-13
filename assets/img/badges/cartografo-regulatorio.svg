@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Cartógrafo Regulatorio LATAM">
+  <defs>
+    <linearGradient id="crl-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F062A"/>
+      <stop offset="100%" stop-color="#260717"/>
+    </linearGradient>
+  </defs>
+
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55"
+           fill="url(#crl-bg)" stroke="#FF0054" stroke-width="3"/>
+  <polygon points="100,30 162,65 162,135 100,170 38,135 38,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.4"/>
+
+  <!-- Silueta estilizada de Sudamérica (esquemática) — solo trazo -->
+  <path d="M 95 60
+           Q 110 60 116 70
+           Q 124 80 122 92
+           Q 122 105 116 116
+           Q 114 128 108 140
+           Q 100 152 94 144
+           Q 92 132 86 122
+           Q 80 110 82 96
+           Q 80 80 86 70
+           Q 90 60 95 60 Z"
+        fill="none" stroke="#FF0054" stroke-width="2"/>
+
+  <!-- Cuatro puntos en posiciones de capitales LATAM -->
+  <circle cx="100" cy="76"  r="3" fill="#FF0054"/> <!-- aprox Bogotá / Lima superior -->
+  <circle cx="106" cy="92"  r="3" fill="#FF0054"/> <!-- aprox Brasil -->
+  <circle cx="98"  cy="108" r="3" fill="#FF0054"/> <!-- aprox Lima -->
+  <circle cx="100" cy="128" r="3" fill="#FF0054"/> <!-- aprox Santiago -->
+
+  <!-- Pin de marcador ancho arriba: simboliza "regulación" -->
+  <path d="M 60 50 L 60 62 L 64 58 Z" fill="#FF0054"/>
+  <path d="M 132 138 L 132 150 L 136 146 Z" fill="#FF0054" opacity="0.6"/>
+</svg>

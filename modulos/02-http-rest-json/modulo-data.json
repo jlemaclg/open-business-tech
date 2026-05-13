@@ -1,0 +1,341 @@
+{
+  "modulo": "02-http-rest-json",
+  "titulo_topbar": "HTTP, REST y JSON",
+  "duracion_min": 35,
+  "nivel": "fundamental",
+  "xp_lectura": 35,
+  "xp_quiz": 50,
+  "xp_quiz_perfecto": 20,
+  "badge": {
+    "id": "domador-del-json",
+    "nombre": "Domador del JSON",
+    "svg_url": "../../assets/img/badges/domador-del-json.svg",
+    "descripcion": "Has completado el módulo de HTTP, REST y JSON. Ya puedes leer un Swagger, distinguir un GET de un POST, interpretar un código 401 sin pánico, y entender qué pide y qué devuelve cada endpoint Open Finance."
+  },
+
+  "componentes": [
+    {
+      "tipo": "hero-modulo",
+      "eyebrow": "MÓDULO 02 · LENGUAJE",
+      "titulo_pre_accent": "El idioma en el que las APIs se hablan:",
+      "titulo_accent": "HTTP, REST y JSON",
+      "titulo_post_accent": "",
+      "subtitulo": "Verbos, URLs, códigos de estado, y la forma de los datos. Lo que te permite leer un Swagger del banco sin que el ojo se te desenfoque.",
+      "duracion_min": 35,
+      "nivel": "fundamental",
+      "badge_target": "Domador del JSON"
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "alerta",
+      "titulo": "Por qué este módulo importa para tu día a día",
+      "parrafos": [
+        "Tu cliente bancario abre su Swagger y empieza a pasar pantallas: <code>POST /accounts/{id}/transactions</code>, <code>GET /consents/{id}</code>, <code>DELETE /consents/{id}</code>. Cada línea tiene un verbo, una ruta, parámetros, y un cuerpo <span class=\"glosario-term\" data-term=\"JSON\">JSON</span>.",
+        "Si no entiendes esa estructura, no estás siguiendo la conversación — estás esperando a que termine. Este módulo cierra el gap exacto: qué hace cada verbo, qué significa cada código de respuesta, y cómo se lee un payload JSON de una API Open Finance."
+      ],
+      "cita": "Después de este módulo vas a poder abrir un Swagger del ecosistema Open Finance chileno o de la futura API Open Finance peruana y entender, sin ayuda, qué expone cada endpoint."
+    },
+
+    {
+      "tipo": "objetivos-grid",
+      "titulo": "Lo que vas a saber al final",
+      "subtitulo": "Cuatro piezas. Las cuatro son el lenguaje base de toda integración Open Finance.",
+      "items": [
+        { "num": "01", "titulo": "Anatomía de una request HTTP", "descripcion": "Método, URL, headers, body. Cómo se monta una petición y qué transporta cada parte." },
+        { "num": "02", "titulo": "Los verbos REST",              "descripcion": "GET, POST, PUT/PATCH, DELETE. Qué hace cada uno en Open Finance y cuándo importan." },
+        { "num": "03", "titulo": "Códigos de estado HTTP",       "descripcion": "Las familias 2xx, 4xx y 5xx. Qué significan, cuándo angustiarse y qué decirle al cliente." },
+        { "num": "04", "titulo": "JSON como lenguaje común",     "descripcion": "El formato en el que viajan los datos. Cómo se lee y por qué Open Finance lo eligió." }
+      ]
+    },
+
+    {
+      "tipo": "stepper-flow",
+      "numero_concepto": 1,
+      "titulo": "Anatomía de una request HTTP, paso a paso",
+      "subtitulo": "Una petición HTTP es siempre la misma estructura: método + URL + headers + body. Avanza para ver cada parte iluminándose.",
+      "actores": [
+        { "id": "client", "label": "Cliente",  "icono": "laptop", "sublabel": "App, agregador o sistema interno que consume la API" },
+        { "id": "server", "label": "Servidor", "icono": "server", "sublabel": "API del banco que recibe la petición y responde" }
+      ],
+      "pasos": [
+        {
+          "from": "client", "to": "client",
+          "titulo": "El cliente arma la request",
+          "snippet": "GET /accounts/12345/balance HTTP/1.1",
+          "explicacion": "Antes de mandar nada, el cliente compone cuatro piezas: el método (GET, POST, PUT, DELETE), la URL del endpoint, las cabeceras (headers — quién pregunta, qué formato espera) y opcionalmente un body con datos. Esto es la request: una pequeña carta con remitente, destinatario, asunto y contenido.",
+          "analogia": "Como redactar un correo: la línea de asunto (método + URL), las cabeceras (de, para, fecha) y el cuerpo del mensaje. Sin esa estructura, no llega a ningún lado."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "Cliente añade los headers de identidad",
+          "snippet": "Authorization: Bearer eyJ...\nAccept: application/json",
+          "explicacion": "Los headers son metadatos sobre la petición. En Open Finance los más importantes son <code>Authorization</code> (el token que prueba quién pide), <code>Accept</code> (el formato de respuesta esperado), <code>Content-Type</code> (el formato del body si lo hay) y <code>x-fapi-interaction-id</code> (un identificador único para que el cliente y el banco puedan rastrear esta llamada concreta en sus logs).",
+          "analogia": "Las pegatinas y sellos del sobre. No son la carta, pero sin ellas el correo no se procesa correctamente."
+        },
+        {
+          "from": "client", "to": "server",
+          "titulo": "La request viaja por la red",
+          "snippet": "TCP/IP → TLS → HTTP",
+          "explicacion": "La request se serializa como bytes y viaja por la red. En Open Finance siempre va sobre HTTPS (HTTP cifrado con TLS — ver módulo 03). El servidor la recibe, la deserializa, y empieza a procesarla.",
+          "analogia": "El sobre cruza el sistema postal. Va cerrado y cifrado: nadie lo abre por el camino."
+        },
+        {
+          "from": "server", "to": "server",
+          "titulo": "El servidor procesa",
+          "snippet": "Autentica → autoriza → ejecuta",
+          "explicacion": "El servidor sigue una cadena: primero comprueba que la request está bien formada (método válido, URL existente), luego que el token de autenticación es válido, luego que el cliente está autorizado para ese recurso concreto, y finalmente ejecuta la lógica de negocio.",
+          "analogia": "El destinatario abre el sobre, comprueba que es para él, que el remitente está en su agenda, y solo entonces lee y responde."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "El servidor devuelve la response",
+          "snippet": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"balance\": 1234567}",
+          "explicacion": "La respuesta tiene la misma estructura: un código de estado (200, 401, 500…), headers (formato del cuerpo, tracing) y opcionalmente un body con los datos. El cliente la lee y sabe inmediatamente, por el código, si todo fue bien.",
+          "analogia": "El destinatario te devuelve un sobre con su propia estructura: un sello (el código), pegatinas (headers) y el contenido."
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Los <span class=\"accent\">verbos REST</span> que importan en Open Finance",
+      "subtitulo": "REST se construye sobre cuatro verbos. Los vas a ver en cada Swagger del sector. Aquí entiendes qué hace cada uno.",
+      "tabs": [
+        {
+          "id": "get",
+          "titulo": "GET",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "GET — leer un recurso",
+            "subtitulo": "Pides información. No modificas nada.",
+            "items": [
+              { "check": true,  "texto": "<strong>Idempotente</strong>: llamar 10 veces da el mismo resultado que 1" },
+              { "check": true,  "texto": "Sin body: los parámetros van en la URL o en query strings" },
+              { "check": true,  "texto": "El servidor puede cachear la respuesta" },
+              { "check": false, "texto": "<strong>Nunca</strong> se usa para modificar datos — eso es POST/PUT/DELETE" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "EJEMPLO OPEN FINANCE",
+            "titulo": "Casos típicos",
+            "items": [
+              { "check": true, "texto": "<code>GET /accounts/{id}/balance</code> — consultar saldo" },
+              { "check": true, "texto": "<code>GET /accounts/{id}/transactions</code> — listar movimientos" },
+              { "check": true, "texto": "<code>GET /consents/{id}</code> — recuperar estado de consentimiento" },
+              { "check": true, "texto": "<code>GET /payments/{id}</code> — consultar estado de un pago iniciado" }
+            ]
+          }
+        },
+        {
+          "id": "post",
+          "titulo": "POST",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "POST — crear un recurso",
+            "subtitulo": "Pides al servidor que cree algo nuevo. Lleva body.",
+            "items": [
+              { "check": true,  "texto": "<strong>NO idempotente</strong>: llamar 2 veces puede crear 2 recursos" },
+              { "check": true,  "texto": "Lleva body con los datos del recurso a crear (típicamente JSON)" },
+              { "check": true,  "texto": "Devuelve normalmente <code>201 Created</code> + el recurso creado" },
+              { "check": true,  "texto": "Por eso en pagos usa cabecera de idempotencia (clave única)" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "EJEMPLO OPEN FINANCE",
+            "titulo": "Casos típicos",
+            "items": [
+              { "check": true, "texto": "<code>POST /consents</code> — crear un nuevo consentimiento" },
+              { "check": true, "texto": "<code>POST /payments</code> — iniciar un pago" },
+              { "check": true, "texto": "<code>POST /register</code> — registro DCR de un TPP" },
+              { "check": true, "texto": "<code>POST /token</code> — solicitar un access token a OAuth (módulo 04)" }
+            ]
+          }
+        },
+        {
+          "id": "put-patch",
+          "titulo": "PUT / PATCH",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "PUT — reemplazar un recurso entero",
+            "subtitulo": "Sustituyes todo el recurso por la versión que envías.",
+            "items": [
+              { "check": true,  "texto": "<strong>Idempotente</strong>: llamar 10 veces deja el recurso en el mismo estado" },
+              { "check": true,  "texto": "El body lleva el recurso completo, no parcial" },
+              { "check": true,  "texto": "Si el recurso no existe, algunos servidores lo crean (depende del contrato)" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "PATCH — modificar parcialmente",
+            "subtitulo": "Mandas solo los campos que cambian.",
+            "items": [
+              { "check": true, "texto": "Body con el subconjunto de campos a actualizar" },
+              { "check": true, "texto": "Más eficiente que PUT cuando el recurso es grande" },
+              { "check": true, "texto": "En Open Finance se usa poco — los recursos suelen ser inmutables o se reemplazan completos" }
+            ]
+          }
+        },
+        {
+          "id": "delete",
+          "titulo": "DELETE",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "DELETE — eliminar (o revocar) un recurso",
+            "subtitulo": "Pides al servidor que el recurso deje de existir o quede inactivo.",
+            "items": [
+              { "check": true,  "texto": "<strong>Idempotente</strong>: borrar algo dos veces deja el mismo estado final" },
+              { "check": true,  "texto": "Sin body en la mayoría de los casos" },
+              { "check": true,  "texto": "Devuelve <code>204 No Content</code> o el recurso en estado revocado" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "EJEMPLO OPEN FINANCE",
+            "titulo": "Casos típicos",
+            "items": [
+              { "check": true, "texto": "<code>DELETE /consents/{id}</code> — revocar un consentimiento" },
+              { "check": true, "texto": "<code>DELETE /tokens/{id}</code> — invalidar un token (revocación OAuth)" },
+              { "check": true, "texto": "Nota: en muchos sistemas Open Finance no se borra de verdad — se marca como revocado, por trazabilidad" }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Los <span class=\"accent\">códigos de estado</span> que vas a ver en producción",
+      "subtitulo": "Cada response HTTP empieza por un número de tres cifras. La primera te dice todo lo que necesitas saber: 2 = bien, 4 = tu culpa, 5 = mi culpa.",
+      "tabs": [
+        {
+          "id": "2xx",
+          "titulo": "2xx — Éxito",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "Los más frecuentes",
+            "items": [
+              "<strong>200 OK</strong> — la operación funcionó. Respuesta típica de un GET.",
+              "<strong>201 Created</strong> — recurso creado correctamente. Típico de un POST.",
+              "<strong>202 Accepted</strong> — recibido, en proceso. Típico en pagos asíncronos.",
+              "<strong>204 No Content</strong> — funcionó pero no devuelvo cuerpo. Típico de DELETE."
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "Qué hacer cuando los ves",
+            "items": [
+              "<strong>200 / 201</strong>: leer el body, todo OK.",
+              "<strong>202</strong>: el banco aceptó la operación pero aún no terminó. Hay que consultar el estado más tarde con un GET.",
+              "<strong>204</strong>: no esperar body. La cabecera de respuesta es todo."
+            ]
+          }
+        },
+        {
+          "id": "4xx",
+          "titulo": "4xx — Error del cliente",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "Los más frecuentes",
+            "items": [
+              "<strong>400 Bad Request</strong> — la request está mal formada (JSON inválido, campo faltante).",
+              "<strong>401 Unauthorized</strong> — no hay token, o el token expiró. Renueva y reintenta.",
+              "<strong>403 Forbidden</strong> — hay token pero no tiene permiso para este recurso.",
+              "<strong>404 Not Found</strong> — el recurso no existe. ¿La URL es correcta?",
+              "<strong>409 Conflict</strong> — el estado del recurso impide la operación (consentimiento ya revocado, etc.)",
+              "<strong>429 Too Many Requests</strong> — demasiadas llamadas, frenar."
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "Qué hacer cuando los ves",
+            "items": [
+              "<strong>400</strong>: el cliente armó mal la request. Revisar el contrato.",
+              "<strong>401</strong>: token caducado. Refrescar y reintentar.",
+              "<strong>403</strong>: el token es válido pero no para esto. Problema de scopes (módulo 04).",
+              "<strong>404</strong>: el recurso ya no existe o la URL está mal.",
+              "<strong>429</strong>: rate limit. Esperar y reintentar con backoff."
+            ]
+          }
+        },
+        {
+          "id": "5xx",
+          "titulo": "5xx — Error del servidor",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "Los más frecuentes",
+            "items": [
+              "<strong>500 Internal Server Error</strong> — algo se rompió en el banco.",
+              "<strong>502 Bad Gateway</strong> — un sistema intermedio (gateway, balanceador) falló.",
+              "<strong>503 Service Unavailable</strong> — el servicio está caído o en mantenimiento.",
+              "<strong>504 Gateway Timeout</strong> — un upstream tardó demasiado en responder."
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "Qué hacer cuando los ves",
+            "items": [
+              "5xx no es problema del cliente — algo falla en el lado del banco.",
+              "Reintentar con backoff exponencial es la estrategia estándar.",
+              "Si persiste, escalar al equipo técnico del banco con el <code>x-fapi-interaction-id</code>: ese identificador permite encontrar el error exacto en sus logs.",
+              "Importante: con 5xx en pagos, siempre consultar el estado antes de reintentar — quizás el pago se llegó a procesar."
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "ejemplo-real",
+      "etiqueta": "CASO REAL · CHILE — API DE CUENTAS DEL ECOSISTEMA",
+      "titulo_pre_accent": "Una request real al",
+      "titulo_accent": "ecosistema Open Finance chileno",
+      "titulo_post_accent": "leyendo un saldo, anotada paso a paso",
+      "parrafos": [
+        "Imagina un PSBI ya registrado y autorizado consumiendo la API de una IPI chilena. El usuario ha dado su consentimiento, el PSBI tiene un access token válido, y ahora quiere pedir el saldo. Esta es la conversación real, ligeramente simplificada — pero con la estructura que vas a ver en producción.",
+        "<strong>Request:</strong> el PSBI manda <code>GET /open-banking/accounts/v1/{accountId}/balances</code>, con un header de autorización Bearer (el access token), un header de identificador de interacción para trazabilidad, y un Accept que pide JSON.",
+        "<strong>Response:</strong> el banco devuelve <code>200 OK</code> con un JSON que contiene el saldo disponible, el saldo bloqueado, la moneda, y la fecha y hora de la consulta. Cada campo del JSON es un dato concreto que el PSBI puede usar inmediatamente."
+      ],
+      "flow_pasos": [
+        { "num": 1, "texto": "<strong>Método + URL:</strong> <code>GET /open-banking/accounts/v1/12345/balances</code> — el verbo es GET (solo lectura), la ruta identifica el recurso (saldos de la cuenta 12345)" },
+        { "num": 2, "texto": "<strong>Headers:</strong> <code>Authorization: Bearer eyJ...</code> (el access token), <code>x-fapi-interaction-id: 7e2a...</code> (trazabilidad), <code>Accept: application/json</code> (formato esperado)" },
+        { "num": 3, "texto": "<strong>Sin body</strong> — los GET no llevan cuerpo. Toda la información de la petición va en URL y headers" },
+        { "num": 4, "texto": "<strong>Response:</strong> código <code>200 OK</code> + header <code>Content-Type: application/json</code> + body con la estructura JSON del saldo" },
+        { "num": 5, "texto": "<strong>El JSON</strong> contiene típicamente: <code>{ \"data\": { \"balances\": [{ \"amount\": { \"value\": \"1234567\", \"currency\": \"CLP\" }, \"type\": \"AVAILABLE\", \"dateTime\": \"2026-05-10T14:32:00Z\" }] } }</code>" },
+        { "num": 6, "texto": "<strong>Lo importante:</strong> el PSBI no necesita saber cómo el banco calcula el saldo, ni en qué motor lo guarda, ni si pasa por un mainframe. Solo necesita el contrato — y el contrato dice <em>llama así, recibe esto</em>" }
+      ]
+    },
+
+    {
+      "tipo": "dialogo-transferencia",
+      "titulo": "Lo que tienes que poder explicar a un cliente",
+      "subtitulo": "El test real: si un arquitecto te lo pregunta, esto es lo que respondes. Tres preguntas que vas a oír en cada conversación.",
+      "intercambios": [
+        {
+          "cliente": "Mi equipo dice que esta API no es REST de verdad porque no implementa HATEOAS. ¿Importa eso para nuestro proyecto Open Finance?",
+          "tu": "En Open Finance regulado, no. La industria adoptó hace años un <em>REST pragmático</em>: rutas con sustantivos, los cuatro verbos con su semántica correcta, JSON como formato común, códigos de estado bien usados. HATEOAS — la idea de que cada respuesta lleve los enlaces a las acciones siguientes — es elegante en teoría pero no se ha extendido en el sector financiero, y los reguladores Open Finance no lo exigen. Lo que sí exigen es la otra parte: rutas predecibles, idempotencia donde toca, códigos de estado correctos, y un <code>x-fapi-interaction-id</code> trazable. Esa es la conversación que importa."
+        },
+        {
+          "cliente": "Los importes en el JSON vienen como string (<code>\"value\": \"1234567\"</code>), no como número. ¿No es un error de diseño?",
+          "tu": "Es la práctica estándar en finanzas, no un error. JSON usa números en formato de doble precisión — un <em>float</em> — y los floats pierden precisión decimal en ciertas operaciones. Para una moneda como 1.234.567,89 esa pérdida es inaceptable: te pueden faltar centavos al sumar. Mandar el importe como string preserva la representación exacta, y el consumidor lo convierte a un tipo numérico de precisión arbitraria (BigDecimal en Java, Decimal en Python) antes de operar. Es la solución que adoptaron OBIE, FAPI 2.0 y todos los ecosistemas Open Finance regulados."
+        },
+        {
+          "cliente": "El header <code>x-fapi-interaction-id</code> me parece sobrediseño. ¿Para qué sirve realmente en producción?",
+          "tu": "Para resolver incidencias. El cliente genera un UUID por cada llamada y lo manda en ese header; el banco lo registra en sus logs. Si algo falla — un timeout, un 5xx, un comportamiento inesperado — el cliente le pasa al equipo del banco ese identificador y el banco encuentra inmediatamente esa llamada concreta entre millones. Sin él, el cliente solo puede decir <em>fallaron mis pagos a las 14:32</em>, y el banco busca a ciegas. Es el equivalente al número de seguimiento en una mensajería: parece burocrático hasta que necesitas reclamar."
+        }
+      ]
+    },
+
+    { "tipo": "quiz-engine" },
+
+    {
+      "tipo": "footer-completar",
+      "titulo": "¿Listo para desbloquear el badge?",
+      "subtitulo": "Marca el módulo como completado para sumar 85 XP y desbloquear Domador del JSON"
+    },
+
+    { "tipo": "badge-modal" }
+  ]
+}

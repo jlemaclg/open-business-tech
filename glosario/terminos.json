@@ -1,0 +1,205 @@
+{
+  "estandares-tecnicos": {
+    "termino_completo": "Estándares técnicos Open Finance",
+    "definicion_corta": "Conjunto de especificaciones (TLS, OAuth 2.0, OpenID Connect, FAPI 2.0, ISO 20022, etc.) que definen cómo se construye y opera una API regulada Open Finance.",
+    "definicion_extendida": "No son una sola norma. Son un stack: capa de transporte (TLS/mTLS), autorización (OAuth 2.0 + extensiones FAPI: PAR, RAR, PKCE), identidad (OpenID Connect), formato de mensajería (JSON, ISO 20022 en pagos), y reglas regulatorias específicas de cada jurisdicción.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "04-oauth-openid-fapi"],
+    "etiquetas": ["concepto", "general"]
+  },
+  "TLS": {
+    "termino_completo": "Transport Layer Security",
+    "definicion_corta": "Protocolo que cifra la comunicación entre cliente y servidor sobre la red. Es la S de HTTPS.",
+    "definicion_extendida": "Sucesor de SSL. La versión actual recomendada es TLS 1.3 (RFC 8446). Antes de transmitir datos, cliente y servidor negocian versión, algoritmos y claves en un proceso llamado handshake. En TLS estándar solo el servidor presenta certificado.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls"],
+    "etiquetas": ["protocolo", "seguridad", "transporte"]
+  },
+  "mTLS": {
+    "termino_completo": "Mutual TLS",
+    "definicion_corta": "Variante de TLS donde tanto cliente como servidor presentan certificados. Requisito de FAPI 2.0.",
+    "definicion_extendida": "Mismo handshake que TLS pero el cliente también envía un certificado X.509. El servidor valida la cadena. Si el cert del cliente no fue emitido por una CA reconocida o ha expirado, la conexión se cierra antes de procesar la petición HTTP. Es la primera capa de filtrado en arquitecturas Open Finance reguladas.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "04-oauth-openid-fapi"],
+    "etiquetas": ["protocolo", "seguridad", "transporte", "FAPI"]
+  },
+  "handshake": {
+    "termino_completo": "Handshake TLS",
+    "definicion_corta": "Negociación inicial entre cliente y servidor donde se acuerdan versión, algoritmos y claves de cifrado.",
+    "definicion_extendida": "En TLS 1.3 el handshake típico tiene cuatro pasos: ClientHello, ServerHello + Certificado, Verificación + intercambio de claves, Finished. En mTLS añade un paso donde el cliente también presenta su certificado. Ocurre antes de cualquier intercambio HTTP.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls"],
+    "etiquetas": ["concepto", "protocolo", "transporte"]
+  },
+  "X.509": {
+    "termino_completo": "Certificado X.509",
+    "definicion_corta": "Estándar de certificados digitales. Contiene identidad del titular, clave pública, validez y firma de una CA.",
+    "definicion_extendida": "Define el formato y los campos de los certificados digitales utilizados en TLS, mTLS, firmado JWT y muchos otros protocolos de seguridad. Los certificados se distribuyen en formatos PEM (texto base64) o DER (binario). En Open Finance los emiten CAs específicas del directorio regulatorio.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls"],
+    "etiquetas": ["estándar", "criptografía", "PKI"]
+  },
+  "CA": {
+    "termino_completo": "Certificate Authority",
+    "definicion_corta": "Entidad que emite y firma certificados digitales, garantizando la identidad del titular ante terceros.",
+    "definicion_extendida": "En Internet público las CAs son comerciales (DigiCert, Let's Encrypt, etc.). En Open Finance regulado son CAs específicas del directorio: la CA del FAD chileno, la del Open Finance Brasil, eIDAS QTSPs en Europa, etc. Solo certificados firmados por la CA reconocida son aceptados por las APIs reguladas.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
+    "etiquetas": ["actor", "PKI", "regulación"]
+  },
+  "FAPI": {
+    "termino_completo": "Financial-grade API (FAPI 2.0)",
+    "definicion_corta": "Perfil de seguridad que endurece OAuth 2.0 para el sector financiero. Exige mTLS, PAR, PKCE y otros refuerzos.",
+    "definicion_extendida": "Mantenido por OpenID Foundation. FAPI 2.0 (2022) simplifica y robustece sobre FAPI 1.0. Es el perfil adoptado por OBIE (UK), PSD2/EBA (UE), Open Finance Brasil, FAD chileno NCG 514, y la mayoría de iniciativas Open Finance maduras. No es opcional cuando una regulación lo invoca explícitamente.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "04-oauth-openid-fapi", "06-estandares-regulatorios"],
+    "etiquetas": ["estándar", "seguridad", "OAuth"]
+  },
+  "ASPSP": {
+    "termino_completo": "Account Servicing Payment Service Provider",
+    "definicion_corta": "El banco u otra entidad financiera que opera las cuentas y expone APIs reguladas Open Finance.",
+    "definicion_extendida": "Terminología de PSD2 que se ha extendido a otras jurisdicciones. Es la entidad que sostiene la cuenta del usuario y debe permitir el acceso regulado a TPPs autorizados, mediante APIs estandarizadas, mTLS y consentimiento explícito.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance", "06-estandares-regulatorios"],
+    "etiquetas": ["actor", "PSD2", "regulación"]
+  },
+  "TPP": {
+    "termino_completo": "Third Party Provider",
+    "definicion_corta": "Tercero autorizado a consumir APIs Open Finance del ASPSP, con consentimiento del usuario.",
+    "definicion_extendida": "Categoría general que agrupa AISP (Account Information Service Providers, agregadores) y PISP (Payment Initiation Service Providers, iniciadores de pago). En el FAD chileno se usan los términos paralelos PSIP y PSBI. Para operar deben estar registrados regulatoriamente y obtener cert mTLS de la CA del directorio.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance"],
+    "etiquetas": ["actor", "PSD2"]
+  },
+  "PSIP": {
+    "termino_completo": "Proveedor de Servicios de Iniciación de Pagos",
+    "definicion_corta": "Equivalente chileno a PISP en PSD2 — TPP autorizado a iniciar pagos en cuenta del usuario, con su consentimiento.",
+    "definicion_extendida": "Terminología utilizada en la NCG 514 del FAD chileno (CMF). Junto a los PSBI (equivalentes a AISP), forman la categoría de terceros autorizados que consumen APIs reguladas en Chile.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
+    "etiquetas": ["actor", "Chile", "regulación"]
+  },
+  "DCR": {
+    "termino_completo": "Dynamic Client Registration",
+    "definicion_corta": "Mecanismo estándar (RFC 7591) por el que un cliente OAuth se registra programáticamente contra un servidor de autorización o directorio.",
+    "definicion_extendida": "En Open Finance se usa para que un TPP, ya autorizado regulatoriamente, obtenga sus credenciales (incluyendo el certificado de cliente) del directorio del ecosistema. El FAD chileno y Open Finance Brasil usan DCR para emitir certs mTLS a los TPPs registrados.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance"],
+    "etiquetas": ["protocolo", "OAuth", "RFC"]
+  },
+  "SSA": {
+    "termino_completo": "Software Statement Assertion",
+    "definicion_corta": "JWT firmado por el Directorio del ecosistema que contiene los atributos verificados de una organización autorizada (organization_id, roles, jwks_uri).",
+    "definicion_extendida": "Definida en RFC 7591 sección 2.3. Es la prueba criptográfica de que un cliente que pide registrarse vía DCR está realmente autorizado regulatoriamente. El Authorization Server valida la firma del SSA contra el JWKS del Directorio. En el FAD chileno se exige firma PS256 y validación de exp, aud y jti.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "04-oauth-openid-fapi"],
+    "etiquetas": ["JWT", "DCR", "FAD", "regulación"]
+  },
+  "FAD": {
+    "termino_completo": "Finanzas Abiertas Chile (espacio técnico)",
+    "definicion_corta": "Iniciativa pública chilena que documenta los perfiles, estándares y especificaciones técnicas del Sistema de Finanzas Abiertas (SFA).",
+    "definicion_extendida": "Aterriza en documentos versionados (FAD vX.Y.Z) las disposiciones de la NCG 514 de la CMF. Por ejemplo: FAD v1.0.1 define el flujo Dynamic Client Registration. El equipo de Open Business de Minsait participa en su construcción. Su Confluence público es la mejor referencia LATAM viva sobre Open Finance regulado.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
+    "etiquetas": ["regulación", "Chile", "estándar"]
+  },
+  "NCG-514": {
+    "termino_completo": "Norma de Carácter General 514 (CMF Chile)",
+    "definicion_corta": "Norma de la Comisión para el Mercado Financiero (CMF) que regula el Sistema de Finanzas Abiertas chileno.",
+    "definicion_extendida": "Establece roles (IPI, IPC, PSBI, PSIP), obligaciones, esquemas de consentimiento y disposiciones técnicas. Sus anexos técnicos remiten al FAD para los detalles operativos. El Anexo 3 cubre APIs y mecanismos de registro de clientes.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
+    "etiquetas": ["regulación", "Chile"]
+  },
+  "PSBI": {
+    "termino_completo": "Prestador de Servicios Basados en Información",
+    "definicion_corta": "Equivalente chileno a AISP (PSD2). TPP autorizado a acceder a información de cuentas con consentimiento del usuario.",
+    "definicion_extendida": "Terminología CMF. Junto a los PSIP (iniciación de pagos), forman las dos categorías principales de terceros que consumen APIs reguladas en el SFA chileno. Para operar deben estar registrados en el Directorio CMF y obtener su SSA + cert mTLS.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
+    "etiquetas": ["actor", "Chile", "regulación"]
+  },
+  "IPI": {
+    "termino_completo": "Institución Proveedora de Información",
+    "definicion_corta": "Entidad chilena que opera APIs reguladas para que PSBI accedan a información de cuentas (terminología NCG 514).",
+    "definicion_extendida": "Equivalente conceptual al ASPSP de PSD2 cuando atiende consultas de información. Implementa el Authorization Server del SFA y recibe los DCR. Convive con el rol IPC para iniciación de pagos.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance"],
+    "etiquetas": ["actor", "Chile", "regulación"]
+  },
+  "IPC": {
+    "termino_completo": "Institución Proveedora de Cuentas de Pago",
+    "definicion_corta": "Entidad chilena que opera APIs reguladas para que PSIP inicien pagos en cuentas del usuario (terminología NCG 514).",
+    "definicion_extendida": "Equivalente conceptual al ASPSP de PSD2 cuando atiende iniciación de pagos. Implementa el Authorization Server del SFA y recibe los DCR para PSIP.",
+    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance"],
+    "etiquetas": ["actor", "Chile", "regulación"]
+  },
+  "API": {
+    "termino_completo": "Application Programming Interface",
+    "definicion_corta": "Contrato entre dos sistemas que define qué se puede pedir y cómo se entrega la respuesta. No es código que se descarga; es una promesa publicada por un servidor.",
+    "definicion_extendida": "Una API expone endpoints (direcciones concretas) que reciben peticiones de un tipo específico y devuelven respuestas en un formato acordado. En Open Finance las APIs son la base de toda integración: bancos exponen cuentas, pagos y consentimientos; TPPs los consumen. La API esconde la implementación interna del banco — solo importa el contrato.",
+    "modulos_relacionados": ["01-fundamentos-api", "02-http-rest-json", "05-arquitectura-open-finance"],
+    "etiquetas": ["concepto", "fundamentos"]
+  },
+  "endpoint": {
+    "termino_completo": "Endpoint",
+    "definicion_corta": "Dirección concreta dentro de una API que recibe peticiones de un tipo específico. Ejemplo: GET /accounts/{id}/balance.",
+    "definicion_extendida": "Un endpoint se identifica por su método HTTP + ruta. Cada uno tiene su propia documentación: qué parámetros acepta, qué devuelve cuando todo va bien, qué errores puede producir. Una API completa es el conjunto de sus endpoints. En Open Finance los endpoints están estandarizados por el regulador (FAD chileno, OBIE británico, etc.) para que cualquier consumidor se integre sin sorpresas.",
+    "modulos_relacionados": ["01-fundamentos-api", "02-http-rest-json"],
+    "etiquetas": ["concepto", "fundamentos"]
+  },
+  "contrato-api": {
+    "termino_completo": "Contrato de una API",
+    "definicion_corta": "Documentación formal que describe todos los endpoints de una API: qué piden, qué devuelven, qué errores producen.",
+    "definicion_extendida": "Habitualmente publicado en formato OpenAPI (también llamado Swagger). Permite a cualquier consumidor entender la API sin escribir código previo. En Open Finance regulado el contrato es de obligado cumplimiento — el banco no puede cambiar la forma de un endpoint sin versionar.",
+    "modulos_relacionados": ["01-fundamentos-api", "02-http-rest-json"],
+    "etiquetas": ["concepto", "fundamentos"]
+  },
+  "SDK": {
+    "termino_completo": "Software Development Kit",
+    "definicion_corta": "Librería de código que envuelve las llamadas a una API para que los desarrolladores no las escriban a mano. Atado a un lenguaje (SDK Java, SDK Python).",
+    "definicion_extendida": "El SDK no es la API: es una capa de conveniencia que se descarga y se integra en la aplicación cliente. Una API puede tener varios SDKs (uno por lenguaje) o ninguno. En Open Finance no son obligatorios — el contrato OpenAPI es lo que vincula. Los SDKs son una facilidad opcional que ofrecen algunos bancos o iniciativas.",
+    "modulos_relacionados": ["01-fundamentos-api"],
+    "etiquetas": ["concepto", "fundamentos"]
+  },
+  "HTTP": {
+    "termino_completo": "Hypertext Transfer Protocol",
+    "definicion_corta": "Protocolo sobre el que se transmiten las peticiones y respuestas entre cliente y servidor en la web y en las APIs.",
+    "definicion_extendida": "Define la estructura de una request (método + URL + headers + body) y de una response (código de estado + headers + body). En Open Finance siempre va sobre HTTPS — HTTP cifrado con TLS (módulo 03). Las versiones modernas son HTTP/1.1, HTTP/2 y HTTP/3.",
+    "modulos_relacionados": ["02-http-rest-json", "03-seguridad-tls-mtls"],
+    "etiquetas": ["protocolo", "fundamentos"]
+  },
+  "REST": {
+    "termino_completo": "Representational State Transfer",
+    "definicion_corta": "Estilo arquitectónico para construir APIs sobre HTTP usando rutas con sustantivos y los verbos GET, POST, PUT, DELETE con su semántica correcta.",
+    "definicion_extendida": "Definido por Roy Fielding en 2000. En Open Finance se adopta una versión pragmática: rutas predecibles, idempotencia donde corresponde, códigos de estado bien usados, JSON como formato. La pureza académica (HATEOAS) no es exigencia regulatoria. FAD chileno, OBIE, Open Finance Brasil y PSD2 todos se basan en REST pragmático.",
+    "modulos_relacionados": ["02-http-rest-json"],
+    "etiquetas": ["concepto", "estilo", "fundamentos"]
+  },
+  "metodo-HTTP": {
+    "termino_completo": "Método HTTP (verbo)",
+    "definicion_corta": "GET, POST, PUT, PATCH, DELETE. Cada uno tiene una semántica propia que en REST se respeta a rajatabla.",
+    "definicion_extendida": "GET para leer (idempotente, sin body). POST para crear (no idempotente, con body). PUT para reemplazar entero (idempotente). PATCH para modificar parcialmente. DELETE para eliminar o revocar (idempotente). En Open Finance el verbo correcto es parte del contrato — un endpoint que crea pagos es siempre POST.",
+    "modulos_relacionados": ["02-http-rest-json"],
+    "etiquetas": ["concepto", "fundamentos"]
+  },
+  "codigo-estado": {
+    "termino_completo": "Código de estado HTTP",
+    "definicion_corta": "Número de tres cifras al inicio de toda respuesta HTTP. La primera cifra dice todo: 2 = bien, 4 = tu culpa, 5 = mi culpa.",
+    "definicion_extendida": "2xx (200, 201, 202, 204) éxito. 4xx (400, 401, 403, 404, 409, 429) error del cliente. 5xx (500, 502, 503, 504) error del servidor. En Open Finance los códigos importan: una mala interpretación puede hacer reintentar un pago que ya se procesó.",
+    "modulos_relacionados": ["02-http-rest-json"],
+    "etiquetas": ["concepto", "fundamentos"]
+  },
+  "header": {
+    "termino_completo": "Header HTTP",
+    "definicion_corta": "Metadatos de una petición o respuesta: autenticación, formato esperado, identificadores de trazabilidad.",
+    "definicion_extendida": "Los headers más relevantes en Open Finance: Authorization (token de acceso), Content-Type (formato del body), Accept (formato esperado de respuesta), x-fapi-interaction-id (UUID de trazabilidad por llamada — el banco lo registra y permite encontrar el error exacto si hay problemas).",
+    "modulos_relacionados": ["02-http-rest-json", "04-oauth-openid-fapi"],
+    "etiquetas": ["concepto", "fundamentos"]
+  },
+  "payload": {
+    "termino_completo": "Payload (body)",
+    "definicion_corta": "Contenido principal de una petición o respuesta HTTP. En Open Finance, casi siempre un objeto JSON.",
+    "definicion_extendida": "El body se acompaña del header Content-Type que describe su formato (típicamente application/json). Las requests POST y PUT llevan body con los datos a crear o reemplazar. Las responses 2xx llevan body con los datos pedidos. Los GET y los DELETE típicamente no llevan body.",
+    "modulos_relacionados": ["02-http-rest-json"],
+    "etiquetas": ["concepto", "fundamentos"]
+  },
+  "JSON": {
+    "termino_completo": "JavaScript Object Notation",
+    "definicion_corta": "Formato textual estandarizado para representar datos estructurados. El lenguaje común de los payloads en Open Finance.",
+    "definicion_extendida": "Definido en RFC 8259. Se construye con objetos delimitados por llaves, arrays por corchetes, valores como strings, números, booleanos o null. En Open Finance las convenciones son: wrapping data/meta, importes como string para evitar pérdida de precisión, fechas en ISO 8601 UTC, moneda separada del monto.",
+    "modulos_relacionados": ["02-http-rest-json"],
+    "etiquetas": ["formato", "fundamentos"]
+  },
+  "idempotencia": {
+    "termino_completo": "Idempotencia",
+    "definicion_corta": "Propiedad por la que llamar varias veces a una operación produce el mismo estado final que llamarla una vez.",
+    "definicion_extendida": "GET, PUT y DELETE son idempotentes por diseño REST. POST no lo es: dos POST a /payments pueden crear dos pagos. Por eso en Open Finance los POST sensibles llevan cabecera x-idempotency-key con UUID único — si el cliente reintenta tras un error de red, el banco detecta la clave repetida y devuelve la respuesta original sin duplicar la operación.",
+    "modulos_relacionados": ["02-http-rest-json"],
+    "etiquetas": ["concepto", "fundamentos"]
+  }
+}

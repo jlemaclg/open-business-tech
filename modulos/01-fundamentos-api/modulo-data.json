@@ -1,0 +1,206 @@
+{
+  "modulo": "01-fundamentos-api",
+  "titulo_topbar": "Fundamentos de APIs",
+  "duracion_min": 25,
+  "nivel": "fundamental",
+  "xp_lectura": 25,
+  "xp_quiz": 40,
+  "xp_quiz_perfecto": 15,
+  "badge": {
+    "id": "hablante-de-apis",
+    "nombre": "Hablante de APIs",
+    "svg_url": "../../assets/img/badges/hablante-de-apis.svg",
+    "descripcion": "Has completado el módulo de Fundamentos de APIs. Ya puedes definir qué es una API, distinguir cliente y servidor, leer un endpoint y entender qué significa el contrato de una API."
+  },
+
+  "componentes": [
+    {
+      "tipo": "hero-modulo",
+      "eyebrow": "MÓDULO 01 · FUNDAMENTOS",
+      "titulo_pre_accent": "Qué es exactamente",
+      "titulo_accent": "una API",
+      "titulo_post_accent": "y por qué la oyes en cada conversación con un cliente bancario",
+      "subtitulo": "El concepto que escuchas todas las semanas, finalmente desambiguado. Sin tecnicismos innecesarios — pero con precisión.",
+      "duracion_min": 25,
+      "nivel": "fundamental",
+      "badge_target": "Hablante de APIs"
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "alerta",
+      "titulo": "Por qué este módulo importa para tu día a día",
+      "parrafos": [
+        "Cuando un cliente bancario te dice <em>“estamos exponiendo nuestra API a los TPPs”</em>, hay tres palabras técnicas en esa frase. La primera es <span class=\"glosario-term\" data-term=\"API\">API</span>. Si no la tienes clara, no entiendes qué está exponiendo, ni a quién, ni qué controla.",
+        "El módulo 03 (TLS y mTLS) ya está disponible. Pero entrar al 03 sin tener cerrado el concepto de API es como llegar a una clase de seguridad de aviones sin saber qué es un avión. Por eso este es el módulo cero del bagaje técnico — el que te permite asentir con conocimiento, no por compromiso."
+      ],
+      "cita": "Si tu cliente abre un Swagger y empieza a hablar de endpoints, contratos y consumidores, este módulo es la diferencia entre seguir la conversación y empezar a perder pie."
+    },
+
+    {
+      "tipo": "objetivos-grid",
+      "titulo": "Lo que vas a saber al final",
+      "subtitulo": "Cuatro conceptos básicos. Si no los tienes claros al terminar, no completaste el módulo.",
+      "items": [
+        { "num": "01", "titulo": "Qué es una API",         "descripcion": "Definición sin trampa: una interfaz para que un sistema le pida cosas a otro de forma estandarizada." },
+        { "num": "02", "titulo": "Cliente y servidor",     "descripcion": "Los dos roles de toda llamada API. Quién pide, quién responde, y por qué importa la distinción." },
+        { "num": "03", "titulo": "Endpoint y contrato",    "descripcion": "Dónde se pide cada cosa y qué se promete devolver. La base de cualquier integración Open Finance." },
+        { "num": "04", "titulo": "Caso real LATAM",        "descripcion": "Cómo el Directorio Open Finance chileno expone su información como API a TPPs y bancos del ecosistema." }
+      ]
+    },
+
+    {
+      "tipo": "stepper-flow",
+      "numero_concepto": 1,
+      "titulo": "Una llamada a una API, paso a paso",
+      "subtitulo": "Antes de meternos con HTTP o JSON (eso es el módulo 02), entiende la dinámica básica: una parte pide, la otra responde. Avanza con el botón.",
+      "actores": [
+        { "id": "client", "label": "Cliente",  "icono": "laptop", "sublabel": "App móvil del banco, agregador, integración interna — quien necesita el dato" },
+        { "id": "server", "label": "Servidor", "icono": "server", "sublabel": "El sistema del banco que tiene el dato y decide si lo entrega" }
+      ],
+      "pasos": [
+        {
+          "from": "client", "to": "server",
+          "titulo": "El cliente formula la petición",
+          "snippet": "Necesito el saldo de la cuenta 12345.",
+          "explicacion": "El cliente sabe qué quiere y conoce la dirección donde pedirlo (el endpoint). Construye una petición concreta — no le pide al banco “muéstrame todo”, le pide algo específico que la API publica como disponible.",
+          "analogia": "Como llamar al servicio de información del aeropuerto y preguntar “¿a qué hora sale el vuelo IB-6840?”. No pides el horario completo, pides un dato preciso de los que el servicio sabe responder."
+        },
+        {
+          "from": "server", "to": "server",
+          "titulo": "El servidor procesa internamente",
+          "snippet": "¿Quién pregunta? ¿Tiene permiso? ¿La cuenta existe?",
+          "explicacion": "El servidor no responde a ciegas. Verifica quién pregunta, si está autorizado para ese dato, y si lo que pide existe. Toda la lógica de negocio del banco vive en este paso — pero está oculta al cliente. La API es la fachada; el motor está detrás.",
+          "analogia": "El operador del aeropuerto no te lee la pantalla literal: revisa el sistema interno, comprueba que el vuelo no se cambió, y solo entonces responde."
+        },
+        {
+          "from": "server", "to": "client",
+          "titulo": "El servidor responde",
+          "snippet": "El saldo de la cuenta 12345 es 1.234.567 CLP.",
+          "explicacion": "El servidor devuelve el dato pedido en un formato acordado de antemano (típicamente JSON, lo verás en el módulo 02). La forma exacta de la respuesta está documentada en el contrato de la API: el cliente sabe qué campos esperar, qué tipo tienen, y qué pasa si algo falla.",
+          "analogia": "El operador te da la respuesta clara y estructurada, no te narra todo lo que tuvo que mirar. Lo que importa es el dato, en el formato pactado."
+        },
+        {
+          "from": "client", "to": "client",
+          "titulo": "El cliente usa la respuesta",
+          "snippet": "Pinta el saldo en la app del usuario.",
+          "explicacion": "Con la respuesta en mano, el cliente hace su trabajo: mostrarla en pantalla, sumarla a un agregador, decidir si autoriza un pago. El cliente y el servidor no se conocen — solo conocen el contrato. Esa es la magia de las APIs: cualquier cliente compatible puede consumir cualquier servidor compatible."
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "API vs <span class=\"accent\">SDK</span> vs librería — tres palabras que se mezclan",
+      "subtitulo": "Tres conceptos que el cliente bancario va a usar como sinónimos. No lo son.",
+      "tabs": [
+        {
+          "id": "lado-a-lado",
+          "titulo": "Lado a lado",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "API",
+            "subtitulo": "El contrato — qué se puede pedir y cómo",
+            "items": [
+              { "check": true,  "texto": "Define <strong>endpoints</strong>, parámetros y formato de respuesta" },
+              { "check": true,  "texto": "Es agnóstica al lenguaje: cualquier cliente puede consumirla" },
+              { "check": true,  "texto": "Vive en un servidor — accedes por red" },
+              { "check": false, "texto": "<strong>No</strong> es código que descargas a tu máquina" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "EL CONFUSO",
+            "titulo": "SDK",
+            "subtitulo": "Una caja de herramientas para consumir una API",
+            "items": [
+              { "check": true,  "texto": "Es <strong>código</strong> que descargas e integras en tu aplicación" },
+              { "check": true,  "texto": "Está atado a un lenguaje (SDK Java, SDK Python, etc.)" },
+              { "check": true,  "texto": "Te ahorra escribir las llamadas a la API a mano" },
+              { "check": true,  "texto": "Una API puede tener varios SDKs (uno por lenguaje); o ninguno" }
+            ]
+          }
+        },
+        {
+          "id": "visual",
+          "titulo": "Visualmente",
+          "tipo_contenido": "svg-inline",
+          "svg": "<svg viewBox='0 0 800 280' xmlns='http://www.w3.org/2000/svg'><text x='50' y='30' font-family='Georgia' font-size='15' fill='#4F062A'>API — vive en el servidor, accedes por red</text><rect x='50' y='50' width='90' height='50' rx='6' fill='white' stroke='#4F062A' stroke-width='2'/><text x='95' y='80' text-anchor='middle' font-size='11' fill='#4F062A'>Tu app</text><line x1='140' y1='75' x2='620' y2='75' stroke='#4F062A' stroke-width='2'/><polygon points='620,70 630,75 620,80' fill='#4F062A'/><text x='380' y='65' text-anchor='middle' font-size='10' fill='#666'>llamada por red (HTTPS)</text><rect x='620' y='50' width='130' height='50' rx='6' fill='#4F062A'/><text x='685' y='80' text-anchor='middle' font-size='11' fill='white'>API del banco</text><text x='50' y='150' font-family='Georgia' font-size='15' fill='#4F062A'>SDK — código dentro de tu app</text><rect x='50' y='170' width='200' height='80' rx='6' fill='white' stroke='#FF0054' stroke-width='2' stroke-dasharray='4,2'/><text x='150' y='195' text-anchor='middle' font-size='11' fill='#4F062A'>Tu app</text><rect x='70' y='205' width='160' height='35' rx='4' fill='#FFE5EE' stroke='#FF0054' stroke-width='1'/><text x='150' y='227' text-anchor='middle' font-size='10' fill='#FF0054'>SDK del banco (Java/Python)</text><line x1='250' y1='220' x2='620' y2='220' stroke='#FF0054' stroke-width='2'/><polygon points='620,215 630,220 620,225' fill='#FF0054'/><text x='435' y='210' text-anchor='middle' font-size='10' fill='#666'>el SDK llama a la API por dentro</text><rect x='620' y='195' width='130' height='50' rx='6' fill='#4F062A'/><text x='685' y='225' text-anchor='middle' font-size='11' fill='white'>API del banco</text></svg>"
+        },
+        {
+          "id": "cuando",
+          "titulo": "¿Cuándo se usa cada uno?",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "Hablas de API cuando…",
+            "items": [
+              "El cliente menciona endpoints, contratos, métodos",
+              "Discutes qué expone el banco y a quién",
+              "El tema es Open Finance, integración entre sistemas",
+              "Importan latencia, autenticación, cuotas, versiones"
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "Hablas de SDK cuando…",
+            "items": [
+              "El cliente quiere ahorrar trabajo a sus desarrolladores",
+              "Necesitas integrar la API en una app concreta (Java, Python, iOS)",
+              "El banco ofrece libraries oficiales para sus consumidores",
+              "Discutes versiones, lenguajes soportados, dependencias"
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "ejemplo-real",
+      "etiqueta": "CASO REAL · CHILE — DIRECTORIO OPEN FINANCE",
+      "titulo_pre_accent": "El",
+      "titulo_accent": "Directorio Open Finance chileno",
+      "titulo_post_accent": "es, en sí mismo, una API",
+      "parrafos": [
+        "En Chile, el Sistema de Finanzas Abiertas mantiene un Directorio donde están registrados todos los actores autorizados: <span class=\"glosario-term\" data-term=\"PSIP\">PSIPs</span>, <span class=\"glosario-term\" data-term=\"PSBI\">PSBIs</span>, <span class=\"glosario-term\" data-term=\"IPI\">IPIs</span>, <span class=\"glosario-term\" data-term=\"IPC\">IPCs</span>. Cuando un banco quiere saber si un TPP que pide conectarse es legítimo, no llama a la CMF por teléfono — consulta el Directorio.",
+        "Y lo consulta como API. El <strong>portal del desarrollador del ecosistema Open Finance chileno</strong> publica los endpoints disponibles: listar organizaciones, recuperar atributos de una en particular, y obtener su <span class=\"glosario-term\" data-term=\"SSA\">SSA</span> firmado para validar el registro <span class=\"glosario-term\" data-term=\"DCR\">DCR</span>. Cada banco escribe el código que consume esos endpoints, sin saber qué hay detrás del Directorio: solo conoce el contrato.",
+        "Este es el patrón que vas a ver en cada ecosistema Open Finance regulado de la región: una API central del directorio, y APIs por banco para sus cuentas. La integración entre ellas se sostiene únicamente sobre los contratos publicados — nada más."
+      ],
+      "flow_pasos": [
+        { "num": 1, "texto": "Un PSIP autorizado por la CMF aparece en el Directorio del ecosistema con sus atributos, su <code>jwks_uri</code> y su SSA disponibles" },
+        { "num": 2, "texto": "Cuando ese PSIP intenta registrarse contra el banco vía DCR, el banco consulta la API del Directorio para validar que es realmente quien dice ser" },
+        { "num": 3, "texto": "El Directorio responde con los datos publicados. Si el PSIP fue revocado, ya no aparece. Si está vigente, el banco continúa" },
+        { "num": 4, "texto": "Lo importante: el banco <strong>no ve el código</strong> del Directorio. No descarga un SDK. Solo llama a los endpoints publicados en el portal del desarrollador — y esa es la promesa de una API" }
+      ]
+    },
+
+    {
+      "tipo": "dialogo-transferencia",
+      "titulo": "Lo que tienes que poder explicar a un cliente",
+      "subtitulo": "El test real: si un arquitecto te lo pregunta, esto es lo que respondes. Tres preguntas que vas a oír en cada conversación.",
+      "intercambios": [
+        {
+          "cliente": "Si nuestros datos ya están en el portal web, ¿para qué necesitamos exponer una API encima?",
+          "tu": "Porque el portal web está pensado para personas — un humano lee, hace clic, decide. La API está pensada para sistemas — otra aplicación llama, recibe datos estructurados y opera con ellos sin intervención humana. En Open Finance el consumidor es <em>siempre</em> otro sistema (un agregador, un iniciador de pagos, un banco competidor). Sin API no hay forma de que ese sistema acceda a sus datos de forma segura, auditada y controlada por el usuario."
+        },
+        {
+          "cliente": "¿Y si simplemente damos acceso directo a nuestra base de datos a los TPPs? Sería más rápido que montar APIs.",
+          "tu": "Sería un desastre técnico y regulatorio. Tres problemas concretos: <strong>uno</strong>, exponer la base rompe el aislamiento — el consumidor vería todo, sin granularidad por usuario ni por <em>scope</em>. <strong>Dos</strong>, ata al TPP a tu schema interno: cuando modifiques una tabla, le rompes la integración. <strong>Tres</strong>, no hay forma de auditar quién consultó qué — y el regulador lo exige. La API resuelve los tres: expone solo lo permitido, mantiene un contrato estable aunque cambies el motor por dentro, y registra cada llamada con identificador único."
+        },
+        {
+          "cliente": "Entonces si exponemos la API, ¿cualquiera puede llamarla?",
+          "tu": "No — la API publica el contrato, pero el acceso está controlado en varias capas. <strong>Primero</strong>, solo los TPPs registrados por el regulador entran al ecosistema (se valida con certificado a nivel de red — módulo 03). <strong>Segundo</strong>, cada llamada lleva un token que demuestra que el usuario final autorizó ese acceso concreto (eso es OAuth — módulo 04). <strong>Tercero</strong>, los <em>scopes</em> del token limitan qué endpoints puede usar. Cualquiera puede leer la documentación pública; muy pocos pueden ejecutar las llamadas."
+        }
+      ]
+    },
+
+    { "tipo": "quiz-engine" },
+
+    {
+      "tipo": "footer-completar",
+      "titulo": "¿Listo para desbloquear el badge?",
+      "subtitulo": "Marca el módulo como completado para sumar 65 XP y desbloquear Hablante de APIs"
+    },
+
+    { "tipo": "badge-modal" }
+  ]
+}

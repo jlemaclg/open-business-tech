@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Guardián del Túnel">
+  <defs>
+    <linearGradient id="gdt-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F062A"/>
+      <stop offset="100%" stop-color="#260717"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hexágono exterior granate con borde rosa -->
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55"
+           fill="url(#gdt-bg)" stroke="#FF0054" stroke-width="3"/>
+
+  <!-- Hexágono interior decorativo -->
+  <polygon points="100,30 162,65 162,135 100,170 38,135 38,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.4"/>
+
+  <!-- Túnel: dos paredes paralelas en perspectiva, evocando un canal cifrado -->
+  <g stroke="#FF0054" fill="none" stroke-width="1.6" opacity="0.45">
+    <line x1="62"  y1="78"  x2="76"  y2="120"/>
+    <line x1="138" y1="78"  x2="124" y2="120"/>
+    <line x1="62"  y1="78"  x2="138" y2="78"/>
+    <line x1="76"  y1="120" x2="124" y2="120"/>
+  </g>
+
+  <!-- Escudo central (silueta) -->
+  <path d="M 100 60 L 132 75 L 132 108 Q 132 130 100 142 Q 68 130 68 108 L 68 75 Z"
+        fill="#FF0054" opacity="0.12"/>
+  <path d="M 100 60 L 132 75 L 132 108 Q 132 130 100 142 Q 68 130 68 108 L 68 75 Z"
+        fill="none" stroke="#FF0054" stroke-width="2"/>
+
+  <!-- Candado central -->
+  <rect x="86" y="96" width="28" height="22" rx="3" fill="#FF0054"/>
+  <path d="M 91 96 L 91 86 Q 91 78 100 78 Q 109 78 109 86 L 109 96"
+        fill="none" stroke="#FF0054" stroke-width="2.6"/>
+  <circle cx="100" cy="107" r="2.4" fill="#FFFFFF"/>
+</svg>

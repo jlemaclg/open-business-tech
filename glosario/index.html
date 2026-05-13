@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Glosario | Open Business Tech Academy</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/modulo.css">
+  <style>
+    .glosario-page { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+    .glosario-header { margin-bottom: 32px; }
+    .glosario-header h1 {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 400;
+      color: var(--morado);
+      margin-bottom: 6px;
+    }
+    .glosario-header h1 .accent { color: var(--accent); }
+    .glosario-header p { color: #666; font-size: 14px; }
+    .glosario-search {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+      align-items: center;
+    }
+    .glosario-search input {
+      flex: 1;
+      padding: 14px 18px;
+      border: 2px solid var(--gris);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-family: inherit;
+      background: white;
+      color: var(--texto);
+      transition: border-color 0.15s;
+    }
+    .glosario-search input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .glosario-search .count {
+      font-size: 13px;
+      color: #666;
+      min-width: 90px;
+    }
+    .glosario-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .glosario-entry {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+      border-left: 3px solid var(--accent);
+    }
+    .glosario-entry h3 {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      color: var(--morado);
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+    .glosario-entry .key {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .glosario-entry p {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--texto);
+      margin-bottom: 8px;
+    }
+    .glosario-entry .extendida {
+      color: #444;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    .glosario-entry .tags {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .glosario-entry .tag {
+      font-size: 10.5px;
+      background: var(--gris-claro);
+      color: var(--morado);
+      padding: 3px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+    }
+    .glosario-entry .modulos {
+      margin-top: 8px;
+      font-size: 11.5px;
+      color: #888;
+    }
+    .glosario-entry .modulos a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .glosario-entry .modulos a:hover { text-decoration: underline; }
+    @media (max-width: 900px) { .glosario-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="../index.html" class="topbar-back">← Ruta de aprendizaje</a>
+      <span class="topbar-title">Glosario · <span class="accent">términos técnicos</span></span>
+    </div>
+    <div class="topbar-right">
+      <div class="consultor-info">Consultor · Nivel 1 · <span class="consultor-xp">0 XP</span></div>
+    </div>
+  </header>
+
+  <main class="glosario-page">
+    <div class="glosario-header">
+      <h1>Glosario <span class="accent">vivo</span></h1>
+      <p>Crece con cada módulo. Si un término aparece subrayado en cualquier página, está aquí.</p>
+    </div>
+
+    <div class="glosario-search">
+      <input type="text" id="glosarioSearch" placeholder="Buscar un término — ej. mTLS, FAPI, ASPSP…">
+      <span class="count" id="glosarioCount"></span>
+    </div>
+
+    <div class="glosario-grid" id="glosarioGrid"></div>
+  </main>
+
+  <script src="../assets/js/progress.js"></script>
+  <script src="../assets/js/glossary.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    function modulosLabel(ms) {
+      if (!ms || !ms.length) return '';
+      const links = ms.map(m =>
+        `<a href="../modulos/${m}/index.html">${m.split('-').slice(1).join(' ')}</a>`
+      ).join(', ');
+      return `<div class="modulos">Aparece en: ${links}</div>`;
+    }
+    function tagsHTML(tags) {
+      if (!tags || !tags.length) return '';
+      return `<div class="tags">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`;
+    }
+    function pintar(filtro) {
+      const grid = document.getElementById('glosarioGrid');
+      const count = document.getElementById('glosarioCount');
+      Glossary.cargar().then(terminos => {
+        const keys = Object.keys(terminos).sort();
+        const f = (filtro || '').trim().toLowerCase();
+        const visibles = keys.filter(k => {
+          if (!f) return true;
+          const t = terminos[k];
+          return (k + ' ' + (t.termino_completo || '') + ' ' + (t.definicion_corta || '')).toLowerCase().includes(f);
+        });
+        count.textContent = visibles.length + ' término' + (visibles.length === 1 ? '' : 's');
+        grid.innerHTML = visibles.map(k => {
+          const t = terminos[k];
+          return `
+            <article class="glosario-entry">
+              <div class="key">${k}</div>
+              <h3>${t.termino_completo || k}</h3>
+              <p>${t.definicion_corta || ''}</p>
+              ${t.definicion_extendida ? `<p class="extendida">${t.definicion_extendida}</p>` : ''}
+              ${modulosLabel(t.modulos_relacionados)}
+              ${tagsHTML(t.etiquetas)}
+            </article>`;
+        }).join('') || '<p style="color:#999;padding:40px;text-align:center;">Sin resultados.</p>';
+      });
+    }
+    pintar('');
+    document.getElementById('glosarioSearch').addEventListener('input', e => pintar(e.target.value));
+  </script>
+</body>
+</html>

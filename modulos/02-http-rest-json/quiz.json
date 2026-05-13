@@ -1,0 +1,103 @@
+{
+  "modulo": "02-http-rest-json",
+  "preguntas": [
+    {
+      "id": "q1",
+      "tipo": "single_choice",
+      "enunciado": "¿Cuál de estas piezas <strong>no</strong> forma parte de una request HTTP?",
+      "opciones": [
+        "Método (GET, POST, PUT, DELETE…)",
+        "URL del endpoint",
+        "Headers con metadatos de la petición",
+        "Schema de la base de datos del servidor"
+      ],
+      "correcta": 3,
+      "explicacion_correcto": "Exacto. La estructura de la base de datos del servidor está oculta detrás del contrato — el cliente no la ve. Una request HTTP se compone de método + URL + headers + body opcional. La forma de los datos en la base es problema del banco, no del consumidor.",
+      "explicacion_incorrecto": "Las otras tres opciones (método, URL, headers) son piezas reales y obligatorias de cualquier request HTTP. La que sobra es el schema de la base de datos: el contrato de la API esconde precisamente eso al cliente."
+    },
+    {
+      "id": "q2",
+      "tipo": "single_choice",
+      "enunciado": "Tu cliente quiere <strong>iniciar un pago</strong> en la API de un banco. ¿Qué verbo HTTP corresponde?",
+      "opciones": [
+        "GET — porque consulta los pagos disponibles",
+        "POST — porque crea un nuevo recurso (el pago) en el servidor",
+        "PUT — porque reemplaza un pago anterior",
+        "DELETE — porque elimina la operación pendiente"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. POST se usa para crear recursos nuevos. Iniciar un pago es crear un nuevo objeto <em>payment</em> en el banco, así que el endpoint típico es <code>POST /payments</code> con un body JSON con los datos del pago.",
+      "explicacion_incorrecto": "GET es solo lectura — no puede crear recursos. PUT reemplaza un recurso existente entero. DELETE elimina. Para crear un nuevo pago, el verbo correcto es POST. Esto es una de las primeras cosas que un arquitecto va a esperar que conozcas."
+    },
+    {
+      "id": "q3",
+      "tipo": "single_choice",
+      "enunciado": "Estás integrando con la API de un banco y obtienes <code>401 Unauthorized</code>. ¿Qué pasó?",
+      "opciones": [
+        "El banco está caído — esperar y reintentar",
+        "El recurso solicitado no existe",
+        "El token de autenticación falta, está mal formado o ha expirado",
+        "El endpoint no soporta el verbo que usaste"
+      ],
+      "correcta": 2,
+      "explicacion_correcto": "Exacto. 401 significa que la autenticación falló: o no mandaste token, o el que mandaste ya no es válido (típicamente por expiración). La acción habitual es renovar el access token y reintentar.",
+      "explicacion_incorrecto": "Confusión frecuente: caída del banco es 5xx, recurso no existe es 404, y verbo no soportado es 405. El 401 es muy específico — siempre tiene que ver con la autenticación."
+    },
+    {
+      "id": "q4",
+      "tipo": "single_choice",
+      "enunciado": "¿Cuál de estos verbos es <strong>idempotente</strong> (llamarlo varias veces produce el mismo resultado final)?",
+      "opciones": [
+        "POST — porque siempre crea el mismo recurso",
+        "GET — porque solo lee, no modifica nada",
+        "Ninguno: por definición HTTP no tiene operaciones idempotentes",
+        "Todos los verbos REST son idempotentes"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Correcto. GET es idempotente: leer 100 veces el saldo no cambia el saldo. PUT y DELETE también son idempotentes en su semántica REST. El verbo que <strong>no</strong> es idempotente es POST: dos POST a /payments crean dos pagos. Por eso en Open Finance los POST sensibles llevan cabecera de idempotencia con clave única.",
+      "explicacion_incorrecto": "POST no es idempotente — esa es la trampa. Llamarlo dos veces puede crear dos recursos. Y la idempotencia sí existe en HTTP: GET, PUT y DELETE la cumplen por diseño. POST es la excepción y por eso requiere cuidado especial."
+    },
+    {
+      "id": "q5",
+      "tipo": "single_choice",
+      "enunciado": "Recibes una respuesta con <code>202 Accepted</code> al iniciar un pago. ¿Qué significa?",
+      "opciones": [
+        "El pago se ejecutó y se acreditó al destinatario",
+        "El banco recibió la petición pero el pago aún no se procesó — tienes que consultar el estado más tarde",
+        "El pago fue rechazado por falta de fondos",
+        "El banco aceptó el formato pero no validó los datos"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. 202 Accepted es típico en operaciones asíncronas: el servidor recibió la petición, la encoló, pero el resultado final no está aún. La práctica estándar es consultar después con un GET sobre el recurso para conocer el estado real (PENDING, ACCEPTED, REJECTED, SETTLED, etc.).",
+      "explicacion_incorrecto": "202 no significa éxito final ni rechazo — significa <em>recibido y en proceso</em>. Un pago acreditado típicamente devuelve 200 o 201 con el detalle. Un pago rechazado da un 4xx. El 202 obliga a hacer follow-up con GET."
+    },
+    {
+      "id": "q6",
+      "tipo": "single_choice",
+      "enunciado": "Mira este fragmento de respuesta JSON:<br><br><code>{ \"data\": { \"balances\": [{ \"amount\": { \"value\": \"1234567\", \"currency\": \"CLP\" }, \"type\": \"AVAILABLE\" }] } }</code><br><br>¿Qué te dice?",
+      "opciones": [
+        "Hay un saldo disponible de 1.234.567 pesos chilenos",
+        "Hay un error en la petición porque el value es texto, no número",
+        "El campo currency no es válido en Open Finance",
+        "La estructura es incorrecta — los saldos no van en arrays"
+      ],
+      "correcta": 0,
+      "explicacion_correcto": "Correcto. La estructura típica de Open Finance: un campo <code>data</code> que envuelve la respuesta, dentro un array <code>balances</code> (porque una cuenta puede tener varios tipos de saldo), y cada saldo trae <code>amount</code> con <code>value</code> y <code>currency</code> separados. Que <code>value</code> esté en string no es error — es la práctica estándar para no perder precisión decimal en monedas.",
+      "explicacion_incorrecto": "Aunque suene contraintuitivo, los importes monetarios se mandan como string en Open Finance precisamente para evitar pérdida de precisión decimal con floats. Y es normal que balances sea un array (puedes tener saldo disponible, bloqueado, autorizado, etc.). La estructura del fragmento es correcta y es lo que ves en producción."
+    },
+    {
+      "id": "q7",
+      "tipo": "single_choice",
+      "enunciado": "Un arquitecto te dice: <em>“Esta API no es REST de verdad, no usa HATEOAS”</em>. En el contexto de un proyecto Open Finance regulado, ¿qué deberías responder?",
+      "opciones": [
+        "Tiene razón — sin HATEOAS no podemos llamarla REST y debemos rediseñarla",
+        "El sector financiero adoptó un REST pragmático sin HATEOAS, y los reguladores Open Finance no lo exigen — lo que sí exigen es semántica correcta de verbos, idempotencia y trazabilidad",
+        "HATEOAS es un requisito de FAPI 2.0",
+        "No importa, REST es opcional en Open Finance"
+      ],
+      "correcta": 1,
+      "explicacion_correcto": "Exacto. Los reguladores (CMF Chile, OBIE, EBA, Banco Central de Brasil) no exigen HATEOAS. Exigen rutas predecibles, verbos con semántica correcta, idempotencia donde corresponde, códigos de estado bien usados y trazabilidad vía <code>x-fapi-interaction-id</code>. HATEOAS es un debate académico interesante pero no operativo en el sector.",
+      "explicacion_incorrecto": "HATEOAS no es exigencia regulatoria, no es parte de FAPI 2.0, y REST no es opcional — es el estilo arquitectónico estándar. Lo correcto es saber distinguir lo que el regulador pide de la pureza académica del estilo REST original."
+    }
+  ]
+}
