@@ -304,7 +304,7 @@
   gap: 0;
   align-items: stretch;
   position: relative;
-  height: 320px;
+  min-height: 320px;
 }
 .cmp-stepper-flow__actor {
   display: flex;
@@ -406,6 +406,8 @@
   justify-content: center;
   gap: 16px;
   margin-top: 20px;
+  position: relative;
+  z-index: 1;
 }
 .cmp-stepper-flow__btn {
   background: var(--morado);
@@ -443,6 +445,8 @@
   min-height: 100px;
   border-left: 3px solid var(--accent);
   transition: opacity 0.3s;
+  position: relative;
+  z-index: 1;
 }
 .cmp-stepper-flow__explanation h4 {
   font-family: var(--font-serif);
