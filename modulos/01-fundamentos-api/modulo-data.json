@@ -195,6 +195,8 @@
 
     { "tipo": "quiz-engine" },
 
+    { "tipo": "recursos-panel" },
+
     {
       "tipo": "footer-completar",
       "titulo": "¿Listo para desbloquear el badge?",

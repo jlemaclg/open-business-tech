@@ -125,6 +125,11 @@
         montarComponente('quiz-engine', wrap, Object.assign({}, comp, {
           quiz: quizDatos
         }), contexto);
+      } else if (comp.tipo === 'recursos-panel') {
+        // Inyectar datos de recursos.json
+        montarComponente('recursos-panel', wrap, Object.assign({}, comp, {
+          recursos: recursos
+        }), contexto);
       } else {
         montarComponente(comp.tipo, wrap, comp, contexto);
       }
