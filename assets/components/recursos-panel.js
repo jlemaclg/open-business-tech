@@ -64,6 +64,20 @@
     var videosItems = '';
     if (videos.length > 0) {
       videosItems = videos.map(function (v) {
+        if (v.pendiente) {
+          return '<div class="cmp-recursos__item cmp-recursos__item--pendiente">' +
+            '<div class="cmp-recursos__item-icon">' + ICONO_VIDEO + '</div>' +
+            '<div class="cmp-recursos__item-body">' +
+              '<div class="cmp-recursos__item-meta">' +
+                '<span class="cmp-recursos__badge-tipo">Vídeo</span>' +
+                '<span class="cmp-recursos__badge-pronto">Próximamente</span>' +
+                '<span class="cmp-recursos__tiempo">' + ICONO_RELOJ + ' ~' + (v.duracion_min || '?') + ' min</span>' +
+              '</div>' +
+              '<span class="cmp-recursos__titulo cmp-recursos__titulo--nolink">' + v.titulo + '</span>' +
+              (v.descripcion ? '<p class="cmp-recursos__desc">' + v.descripcion.replace(/ TODO:[^.]+\.?/g, '').trim() + '</p>' : '') +
+            '</div>' +
+          '</div>';
+        }
         var tituloEl = v.url
           ? '<a class="cmp-recursos__titulo" href="' + v.url + '" target="_blank" rel="noopener">' + v.titulo + '</a>'
           : '<span class="cmp-recursos__titulo cmp-recursos__titulo--nolink">' + v.titulo + '</span>';

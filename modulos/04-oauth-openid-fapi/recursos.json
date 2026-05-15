@@ -5,25 +5,25 @@
       "titulo": "Authorization Code Flow + PKCE — recorrido completo",
       "duracion_min": 14,
       "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/oauth-authcode-pkce.mp4",
+      "pendiente": true,
       "obligatorio": true,
-      "descripcion": "Animación del Authorization Code Flow con PKCE, comentado por Jonathan. Cubre los 6 pasos del flujo base y el cierre del ataque por interceptación del code.",
-      "verificar_con_jonathan": true
+      "descripcion": "Animación del Authorization Code Flow con PKCE, comentado por Jonathan. Cubre los 6 pasos del flujo base y el cierre del ataque por interceptación del code."
     },
     {
       "titulo": "PAR + RAR + Grant Management en el SFA chileno",
       "duracion_min": 22,
       "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/fapi-sfa-completo.mp4",
+      "pendiente": true,
       "obligatorio": true,
-      "descripcion": "Recorrido del flujo de 11 pasos del FAD desde un PSBI registrado hasta la primera llamada a la API. Incluye pantallas reales del AS de referencia.",
-      "verificar_con_jonathan": true
+      "descripcion": "Recorrido del flujo de 11 pasos del FAD desde un PSBI registrado hasta la primera llamada a la API. Incluye pantallas reales del AS de referencia."
     },
     {
       "titulo": "Anatomía de un JWT — claims FAPI explicados",
       "duracion_min": 9,
       "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/jwt-claims-fapi.mp4",
+      "pendiente": true,
       "obligatorio": false,
-      "descripcion": "Recorrido rápido por los claims registrados y los específicos de FAPI 2.0 (cnf, grant_id, authorization_details).",
-      "verificar_con_jonathan": true
+      "descripcion": "Recorrido rápido por los claims registrados y los específicos de FAPI 2.0 (cnf, grant_id, authorization_details)."
     }
   ],
   "lecturas": [

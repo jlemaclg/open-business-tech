@@ -5,15 +5,17 @@
       "titulo": "¿Qué es una API? — explicación para perfil de negocio",
       "duracion_min": 8,
       "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/01-que-es-una-api.mp4",
+      "pendiente": true,
       "obligatorio": true,
-      "descripcion": "Introducción narrada por Jonathan, sin tecnicismos. Pensada para verse antes de entrar al módulo. TODO: Jonathan grabar y subir."
+      "descripcion": "Introducción narrada por Jonathan, sin tecnicismos. Pensada para verse antes de entrar al módulo."
     },
     {
       "titulo": "Recorrido por el Directorio Open Finance chileno",
       "duracion_min": 12,
       "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/01-directorio-open-finance-chile.mp4",
+      "pendiente": true,
       "obligatorio": false,
-      "descripcion": "Demostración en pantalla del Directorio del ecosistema chileno: qué endpoints expone, qué devuelve, cómo lo consume un banco. TODO: Jonathan grabar."
+      "descripcion": "Demostración en pantalla del Directorio del ecosistema chileno: qué endpoints expone, qué devuelve, cómo lo consume un banco."
     }
   ],
   "lecturas": [

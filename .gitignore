@@ -5,6 +5,7 @@ desktop.ini
 
 # Editor
 .vscode/
+*.code-workspace
 
 # Logs
 *.log

@@ -5,15 +5,17 @@
       "titulo": "Anatomía de una request HTTP — narrado para perfil de negocio",
       "duracion_min": 10,
       "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/02-anatomia-request.mp4",
+      "pendiente": true,
       "obligatorio": true,
-      "descripcion": "Recorrido visual por cada parte de una request: método, URL, headers, body. TODO: Jonathan grabar y subir."
+      "descripcion": "Recorrido visual por cada parte de una request: método, URL, headers, body."
     },
     {
       "titulo": "Leyendo el Swagger del Open Finance chileno — paseo guiado",
       "duracion_min": 14,
       "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/02-swagger-open-finance-chile.mp4",
+      "pendiente": true,
       "obligatorio": false,
-      "descripcion": "Demostración en pantalla del Swagger de una API del ecosistema chileno: cómo se interpreta cada endpoint, qué campos tiene cada response. TODO: Jonathan grabar."
+      "descripcion": "Demostración en pantalla del Swagger de una API del ecosistema chileno: cómo se interpreta cada endpoint, qué campos tiene cada response."
     }
   ],
   "lecturas": [

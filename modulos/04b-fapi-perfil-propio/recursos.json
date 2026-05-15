@@ -5,9 +5,9 @@
       "titulo": "Cómo facilitar el taller — recorrido por el constructor",
       "duracion_min": 18,
       "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/04b-taller-facilitacion.mp4",
+      "pendiente": true,
       "obligatorio": false,
-      "descripcion": "Recorrido por las 12 decisiones en modo Vista Taller, con guía para el facilitador sobre cómo abrir cada decisión, votar y cerrar.",
-      "verificar_con_jonathan": true
+      "descripcion": "Recorrido por las 12 decisiones en modo Vista Taller, con guía para el facilitador sobre cómo abrir cada decisión, votar y cerrar."
     }
   ],
   "lecturas": [
