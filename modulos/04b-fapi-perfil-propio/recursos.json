@@ -1,0 +1,83 @@
+{
+  "modulo": "04b-fapi-perfil-propio",
+  "videos": [
+    {
+      "titulo": "Cómo facilitar el taller — recorrido por el constructor",
+      "duracion_min": 18,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/04b-taller-facilitacion.mp4",
+      "obligatorio": false,
+      "descripcion": "Recorrido por las 12 decisiones en modo Vista Taller, con guía para el facilitador sobre cómo abrir cada decisión, votar y cerrar.",
+      "verificar_con_jonathan": true
+    }
+  ],
+  "lecturas": [
+    {
+      "titulo": "FAPI 2.0 Security Profile (OpenID Foundation)",
+      "url": "https://openid.net/specs/fapi-2_0-security-profile.html",
+      "tipo": "spec",
+      "obligatorio": true,
+      "tiempo_min": 25,
+      "descripcion": "El Baseline obligatorio sobre el que se construyen las decisiones."
+    },
+    {
+      "titulo": "FAPI 2.0 Message Signing (Advanced)",
+      "url": "https://openid.net/specs/fapi-2_0-message-signing.html",
+      "tipo": "spec",
+      "obligatorio": false,
+      "tiempo_min": 20,
+      "descripcion": "El perfil Advanced que incluye JARM y otros refuerzos."
+    },
+    {
+      "titulo": "Grant Management for OAuth 2.0 (OpenID Foundation)",
+      "url": "https://openid.net/specs/fapi-grant-management.html",
+      "tipo": "spec",
+      "obligatorio": true,
+      "tiempo_min": 20,
+      "descripcion": "Define las seis operaciones del ciclo de vida del grant."
+    },
+    {
+      "titulo": "RFC 9126 — Pushed Authorization Requests (PAR)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc9126",
+      "tipo": "rfc",
+      "obligatorio": true,
+      "tiempo_min": 20
+    },
+    {
+      "titulo": "RFC 9396 — Rich Authorization Requests (RAR)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc9396",
+      "tipo": "rfc",
+      "obligatorio": true,
+      "tiempo_min": 25
+    },
+    {
+      "titulo": "RFC 8705 — Mutual-TLS Client Authentication and Certificate-Bound Access Tokens",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8705",
+      "tipo": "rfc",
+      "obligatorio": false,
+      "tiempo_min": 20
+    },
+    {
+      "titulo": "RFC 9449 — Demonstrating Proof of Possession (DPoP)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc9449",
+      "tipo": "rfc",
+      "obligatorio": false,
+      "tiempo_min": 25
+    },
+    {
+      "titulo": "OpenID Connect Client-Initiated Backchannel Authentication (CIBA)",
+      "url": "https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html",
+      "tipo": "spec",
+      "obligatorio": false,
+      "tiempo_min": 30,
+      "descripcion": "Especificación CIBA. Útil si la decisión 11 va por habilitar canales sin navegador."
+    }
+  ],
+  "documentos_apoyo": [
+    {
+      "titulo": "Guía de facilitación del taller (pendiente)",
+      "tipo": "markdown",
+      "estado": "por_publicar",
+      "descripcion": "Documento aparte con tiempos sugeridos, dinámicas por decisión, plantilla de votación y casos de uso del facilitador. Se publicará en una iteración posterior del módulo."
+    }
+  ]
+}

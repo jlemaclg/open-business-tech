@@ -390,5 +390,26 @@
     "definicion_extendida": "Obligatorio cuando recurringIndicator=true. Sintaxis: R/<fecha-inicio>/<periodo-ISO-8601>. P1D = 1 día, P1M = 1 mes, P1Y = 1 año. Si recurringIndicator=false, no se incluye frequency — el consentimiento es de uso único.",
     "modulos_relacionados": ["04-oauth-openid-fapi", "07-casos-uso-tecnicos"],
     "etiquetas": ["RAR", "RFC", "consentimiento"]
+  },
+  "FAPI-2-Baseline": {
+    "termino_completo": "FAPI 2.0 Baseline",
+    "definicion_corta": "Núcleo obligatorio de FAPI 2.0: mTLS o DPoP, PAR, PKCE S256, sender-constrained tokens, algoritmos asimétricos (PS256/ES256), Authorization Code Flow.",
+    "definicion_extendida": "Es el punto de partida no negociable de cualquier perfil FAPI 2.0. Cubre los vectores de ataque principales y permite certificación. Sobre él se construyen las decisiones que cada jurisdicción debe completar (granularidad del consentimiento, alcance de Grant Management, vigencia, multi-autorización, etc.).",
+    "modulos_relacionados": ["04-oauth-openid-fapi", "04b-fapi-perfil-propio"],
+    "etiquetas": ["FAPI", "estándar", "seguridad"]
+  },
+  "FAPI-2-Advanced": {
+    "termino_completo": "FAPI 2.0 Advanced",
+    "definicion_corta": "Perfil extendido sobre FAPI 2.0 Baseline que añade JARM y refuerzos adicionales de no repudio.",
+    "definicion_extendida": "Mantenido por OpenID Foundation. Suma JWT Secured Authorization Response Mode (JARM) y request objects firmados con requisitos adicionales. Cierra ataques de manipulación de la respuesta del Authorization Server. Su adopción es una decisión de cada perfil — no es obligatorio para certificar FAPI 2.0.",
+    "modulos_relacionados": ["04-oauth-openid-fapi", "04b-fapi-perfil-propio"],
+    "etiquetas": ["FAPI", "estándar", "seguridad", "JARM"]
+  },
+  "refresh-rotation": {
+    "termino_completo": "Refresh token rotation",
+    "definicion_corta": "Política según la cual cada canje del refresh_token emite uno nuevo e invalida el anterior. Permite detectar usos indebidos de un refresh comprometido.",
+    "definicion_extendida": "Si el Authorization Server detecta dos usos del mismo refresh_token, asume compromiso y revoca el grant. Mayor complejidad de gestión de estado en el cliente, pero defensa en profundidad significativa. Recomendado especialmente cuando el refresh tiene vida larga.",
+    "modulos_relacionados": ["04-oauth-openid-fapi", "04b-fapi-perfil-propio"],
+    "etiquetas": ["seguridad", "token", "OAuth"]
   }
 }

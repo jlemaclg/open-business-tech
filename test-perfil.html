@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test aislado — perfil-builder + perfil-resumen</title>
+  <link rel="stylesheet" href="assets/css/theme.css?v=2026051502">
+  <link rel="stylesheet" href="assets/css/components.css?v=2026051502">
+  <style>
+    body { padding: 24px 40px 60px; max-width: 1200px; margin: 0 auto; }
+    .test-header {
+      background: var(--gris-claro);
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      border-radius: 6px;
+      margin-bottom: 24px;
+    }
+    .test-header h1 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      color: var(--morado);
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .test-header p { font-size: 13.5px; color: #444; line-height: 1.55; margin-bottom: 6px; }
+    .test-status {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .status-item {
+      background: white;
+      padding: 12px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--gris);
+      font-size: 12.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #ccc; flex-shrink: 0;
+    }
+    .status-item.is-ok    .status-dot { background: var(--ok); }
+    .status-item.is-fail  .status-dot { background: var(--error); }
+    .status-item code { font-size: 11.5px; color: #555; }
+    .test-instructions {
+      margin-top: 32px;
+      background: var(--morado);
+      color: white;
+      padding: 20px 24px;
+      border-radius: 6px;
+    }
+    .test-instructions h2 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .test-instructions p, .test-instructions li {
+      font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.85);
+    }
+    .test-instructions ul { padding-left: 22px; }
+    .test-instructions strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div class="test-header">
+    <h1>Test aislado — perfil-builder + perfil-resumen</h1>
+    <p>Esta página carga los dos componentes nuevos del módulo 04b directamente, <strong>sin pasar por modulo-loader.js ni leer modulo-data.json</strong>. Sirve para aislar el problema: si aquí se ven, el problema en el módulo real es de caché o sincronización del JSON. Si aquí tampoco se ven, el problema está en el JS de los componentes.</p>
+    <div class="test-status" id="testStatus"></div>
+  </div>
+
+  <h2 style="font-family:var(--font-serif);font-weight:400;color:var(--morado);font-size:20px;margin:24px 0 12px">1. perfil-builder (con 3 decisiones de prueba)</h2>
+  <div id="builderHost"></div>
+
+  <h2 style="font-family:var(--font-serif);font-weight:400;color:var(--morado);font-size:20px;margin:32px 0 12px">2. perfil-resumen (refleja lo elegido arriba)</h2>
+  <div id="resumenHost"></div>
+
+  <div class="test-instructions">
+    <h2>Cómo interpretar este test</h2>
+    <ul>
+      <li>Si arriba aparecen <strong>tres cards de decisión</strong> (con encabezado "Tu perfil FAPI 2.0" + toggle "Modo individual / Vista taller" + barra de progreso) y debajo una <strong>ficha granate con botón "Exportar a Markdown"</strong> → los componentes funcionan. El problema en el módulo 04b real es caché del JSON o sync OneDrive. Acción: <code>Ctrl+Shift+R</code> en el navegador o forzar sync de OneDrive en la carpeta <code>assets/components/</code>.</li>
+      <li>Si arriba ves los <strong>indicadores en rojo</strong> ("Estado de los componentes"), significa que los <code>.js</code> no se cargaron. Es problema de path o sincronización. Verifica que existen físicamente en disco: <code>assets/components/perfil-builder.js</code> y <code>assets/components/perfil-resumen.js</code>.</li>
+      <li>Si los indicadores están verdes pero los <code>div</code> de abajo siguen vacíos → hay un error en el JS de los componentes. Abre DevTools (F12) → Console y pégame el error exacto.</li>
+    </ul>
+  </div>
+
+  <!-- ============ Componentes ============ -->
+  <script src="assets/components/perfil-builder.js"></script>
+  <script src="assets/components/perfil-resumen.js"></script>
+
+  <script>
+    // ------- Status panel -------
+    function renderStatus() {
+      const host = document.getElementById('testStatus');
+      const checks = [
+        { label: 'window.PerfilBuilder cargado',  ok: typeof window.PerfilBuilder === 'object' && typeof window.PerfilBuilder.montar === 'function' },
+        { label: 'window.PerfilResumen cargado',  ok: typeof window.PerfilResumen === 'object' && typeof window.PerfilResumen.montar === 'function' },
+        { label: 'localStorage disponible',       ok: (function(){ try { localStorage.setItem('_t','1'); localStorage.removeItem('_t'); return true; } catch(e){ return false; } })() },
+        { label: 'Clave usada',                   ok: true, code: (window.PerfilBuilder && window.PerfilBuilder.STORAGE_KEY) || 'no-disponible' }
+      ];
+      host.innerHTML = checks.map(c =>
+        '<div class="status-item ' + (c.ok ? 'is-ok' : 'is-fail') + '">' +
+          '<span class="status-dot"></span>' +
+          '<span><strong>' + c.label + '</strong>' +
+          (c.code ? ' <code>' + c.code + '</code>' : '') +
+          (c.ok ? '' : ' — <em>FALLO</em>') +
+          '</span>' +
+        '</div>'
+      ).join('');
+    }
+
+    // ------- Configuración mínima del test -------
+    const TEST_DECISIONES = [
+      {
+        id: 'test-sender',
+        num: '01',
+        categoria: 'Seguridad',
+        pregunta_corta: '¿Sender-constraining?',
+        pregunta: '¿Qué mecanismo de sender-constraining adopta el perfil?',
+        contexto: 'Decisión de prueba número uno. Esta es la opción que pone el access token bajo control del cliente.',
+        opciones: [
+          { id: 'mtls', label: 'Solo mTLS-bound', tag: 'Estricto', descripcion: 'El token lleva cnf.x5t#S256 atado al cert mTLS.', trade_offs: ['Más simple de auditar.', 'Inviable para clientes públicos.'] },
+          { id: 'dpop', label: 'Solo DPoP',         tag: 'Flexible', descripcion: 'El cliente firma cada llamada con un JWT.',     trade_offs: ['Habilita clientes públicos.', 'Mayor complejidad de validación.'] },
+          { id: 'ambos', label: 'Ambos permitidos', tag: 'Híbrido',  descripcion: 'El perfil acepta ambos mecanismos.',           trade_offs: ['Máxima flexibilidad.', 'Doble lógica de validación.'] }
+        ]
+      },
+      {
+        id: 'test-vida',
+        num: '02',
+        categoria: 'Seguridad',
+        pregunta_corta: '¿Vida del access token?',
+        pregunta: '¿Cuánto vive el access token tras su emisión?',
+        contexto: 'Tokens más cortos reducen exposición pero aumentan tráfico contra /token.',
+        opciones: [
+          { id: '5min',  label: '5 minutos',  tag: 'Estricto',  descripcion: 'Mínima ventana de exposición.',   trade_offs: ['Menor superficie.', 'Más tráfico al refresh.'] },
+          { id: '15min', label: '15 minutos', tag: 'Equilibrio',descripcion: 'Punto medio común en banca.',     trade_offs: ['Balance entre exposición y carga.', 'Aceptado en certificaciones.'] },
+          { id: '60min', label: '60 minutos', tag: 'Laxo',      descripcion: 'Ventana extendida.',              trade_offs: ['Menor presión sobre AS.', 'Mayor exposición si se filtra.'] }
+        ]
+      },
+      {
+        id: 'test-rar',
+        num: '03',
+        categoria: 'Granularidad',
+        pregunta_corta: '¿Modelo de granularidad?',
+        pregunta: '¿Cómo se expresa el alcance del consentimiento?',
+        contexto: 'OAuth ofrece scope plano. RAR ofrece authorization_details estructurado.',
+        opciones: [
+          { id: 'scope',  label: 'Scope clásico',       tag: 'OAuth puro',    descripcion: 'Etiquetas planas.',           trade_offs: ['Mínimo coste.', 'Granularidad limitada.'] },
+          { id: 'rar-g',  label: 'RAR genérico',        tag: 'RFC 9396',     descripcion: 'authorization_details libre.', trade_offs: ['Granularidad sin imponer.', 'Riesgo de divergencia.'] },
+          { id: 'rar-s',  label: 'RAR estructurado',    tag: 'Esquema propio',descripcion: 'Campos obligatorios.',         trade_offs: ['Máxima trazabilidad.', 'Coste alto de implementación.'] }
+        ]
+      }
+    ];
+
+    const TEST_CONFIG = {
+      titulo: 'Tu perfil FAPI 2.0 (TEST)',
+      subtitulo: 'Tres decisiones de prueba. Si las ves y son interactivas, los componentes funcionan.',
+      titulo_export: 'Perfil de prueba',
+      decisiones: TEST_DECISIONES
+    };
+
+    // ------- Montar -------
+    document.addEventListener('DOMContentLoaded', () => {
+      renderStatus();
+      try {
+        if (window.PerfilBuilder) {
+          window.PerfilBuilder.montar(document.getElementById('builderHost'), TEST_CONFIG);
+        }
+      } catch(e) {
+        document.getElementById('builderHost').innerHTML =
+          '<div style="background:#ffe;padding:14px;border:1px solid #c33;color:#c33">' +
+          'ERROR al montar perfil-builder: ' + e.message + '</div>';
+        console.error('perfil-builder error:', e);
+      }
+      try {
+        if (window.PerfilResumen) {
+          window.PerfilResumen.montar(document.getElementById('resumenHost'), TEST_CONFIG);
+        }
+      } catch(e) {
+        document.getElementById('resumenHost').innerHTML =
+          '<div style="background:#ffe;padding:14px;border:1px solid #c33;color:#c33">' +
+          'ERROR al montar perfil-resumen: ' + e.message + '</div>';
+        console.error('perfil-resumen error:', e);
+      }
+    });
+  </script>
+</body>
+</html>

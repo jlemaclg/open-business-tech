@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" aria-hidden="true">
+  <!-- Outer hexagon (granate Minsait) -->
+  <polygon points="100,8 184,55 184,145 100,192 16,145 16,55"
+           fill="#4F062A" stroke="#FF0054" stroke-width="3"/>
+  <!-- Inner subtle hexagon for depth -->
+  <polygon points="100,28 167,65 167,135 100,172 33,135 33,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.35"/>
+  <!-- Central blueprint mark: T-square + ruler suggesting "perfil diseñado" -->
+  <g stroke="#FF0054" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Document base -->
+    <rect x="62" y="60" width="76" height="92" rx="3" stroke-width="2.5"/>
+    <!-- Horizontal lines representing parameters -->
+    <line x1="74" y1="78" x2="126" y2="78" stroke-width="2" opacity="0.6"/>
+    <line x1="74" y1="92" x2="116" y2="92" stroke-width="2" opacity="0.6"/>
+    <line x1="74" y1="106" x2="122" y2="106" stroke-width="2" opacity="0.6"/>
+    <line x1="74" y1="120" x2="108" y2="120" stroke-width="2" opacity="0.6"/>
+    <line x1="74" y1="134" x2="118" y2="134" stroke-width="2" opacity="0.6"/>
+    <!-- Checkmark anchored at the bottom indicating "perfil validado" -->
+    <polyline points="86,140 96,150 116,128" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+  </g>
+  <!-- Corner accent dots representing decisions -->
+  <g fill="#FF0054">
+    <circle cx="50" cy="50" r="3"/>
+    <circle cx="150" cy="50" r="3"/>
+    <circle cx="50" cy="150" r="3"/>
+    <circle cx="150" cy="150" r="3"/>
+  </g>
+</svg>

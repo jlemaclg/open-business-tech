@@ -189,6 +189,16 @@
       border-top-color: transparent;
     }
     .modulo-card.is-completado { border-top-color: var(--ok); }
+    .modulo-card.is-profundizacion {
+      background: linear-gradient(180deg, #fff 0%, #FAFAF4 100%);
+      border: 1px dashed rgba(79, 6, 42, 0.18);
+      border-top: 3px solid rgba(255, 0, 84, 0.5);
+    }
+    .modulo-card.is-profundizacion .num { font-size: 22px; }
+    .modulo-card.is-profundizacion .pill {
+      background: rgba(255, 0, 84, 0.1);
+      color: var(--accent);
+    }
     .modulo-card .num {
       font-family: var(--font-serif);
       font-size: 26px;
@@ -417,6 +427,8 @@
         descripcion: 'TLS, mTLS, certificados X.509. Por qué FAPI 2.0 los exige.' },
       { id: '04-oauth-openid-fapi',         num: '04', titulo: 'OAuth, OpenID Connect, FAPI 2.0',    badge: 'maestro-del-token',          disponible: true,
         descripcion: 'Authorization Code, PKCE, JWT, PAR, RAR y Grant Management. El consentimiento granular del SFA chileno por dentro.' },
+      { id: '04b-fapi-perfil-propio',       num: '04b', titulo: 'Construyendo un perfil FAPI 2.0 propio', badge: 'disenador-perfil-fapi',  disponible: true, tipo: 'profundizacion',
+        descripcion: 'Doce decisiones que toda jurisdicción tiene encima de la mesa al adoptar FAPI 2.0. Diseñado para autoformación y para taller facilitado.' },
       { id: '05-arquitectura-open-finance', num: '05', titulo: 'Arquitectura Open Finance',          badge: 'arquitecto-del-ecosistema', disponible: false },
       { id: '06-estandares-regulatorios',   num: '06', titulo: 'Estándares y mapeo regulatorio LATAM', badge: 'cartografo-regulatorio',  disponible: false },
       { id: '07-casos-uso-tecnicos',        num: '07', titulo: 'Casos de uso técnicos',              badge: 'embajador-open-finance',    disponible: false }
@@ -428,6 +440,7 @@
       'domador-del-json':           { nombre: 'Domador del JSON',             svg_url: 'assets/img/badges/domador-del-json.svg' },
       'guardian-del-tunel':         { nombre: 'Guardián del Túnel',           svg_url: 'assets/img/badges/guardian-del-tunel.svg' },
       'maestro-del-token':          { nombre: 'Maestro del Token',            svg_url: 'assets/img/badges/maestro-del-token.svg' },
+      'disenador-perfil-fapi':      { nombre: 'Diseñador de Perfil FAPI 2.0', svg_url: 'assets/img/badges/disenador-perfil-fapi.svg' },
       'arquitecto-del-ecosistema':  { nombre: 'Arquitecto del Ecosistema',    svg_url: 'assets/img/badges/arquitecto-del-ecosistema.svg' },
       'cartografo-regulatorio':     { nombre: 'Cartógrafo Regulatorio LATAM', svg_url: 'assets/img/badges/cartografo-regulatorio.svg' },
       'embajador-open-finance':     { nombre: 'Embajador Open Finance',       svg_url: 'assets/img/badges/embajador-open-finance.svg' }
@@ -452,14 +465,15 @@
         ? (max - estado.progreso.xp_total) + ' XP a ' + next.nombre
         : 'Nivel máximo';
 
-      // Ruta
+      // Ruta — solo cuenta los módulos principales, no las profundizaciones opcionales
+      const rutaPrincipal = RUTA.filter(m => m.tipo !== 'profundizacion');
       let completados = 0;
-      RUTA.forEach(m => {
+      rutaPrincipal.forEach(m => {
         const p = Progress.progresoModulo(m.id);
         if (p.completado) completados++;
       });
-      const pctRuta = Math.round(completados / RUTA.length * 100);
-      document.getElementById('dashCompletados').textContent = completados + ' / ' + RUTA.length;
+      const pctRuta = Math.round(completados / rutaPrincipal.length * 100);
+      document.getElementById('dashCompletados').textContent = completados + ' / ' + rutaPrincipal.length;
       document.getElementById('dashRutaBar').style.width = pctRuta + '%';
       document.getElementById('dashRutaPct').textContent = pctRuta + '%';
       document.getElementById('dashBadgesCount').textContent =
@@ -502,8 +516,11 @@
         const cls = ['modulo-card'];
         if (completado) cls.push('is-completado');
         if (!disponible && !completado) cls.push('is-locked');
+        if (m.tipo === 'profundizacion') cls.push('is-profundizacion');
         const desc = m.descripcion || (disponible ? 'Disponible — pulsa para entrar.' : 'Próximamente.');
-        const pillTxt = completado ? 'COMPLETADO' : disponible ? 'DISPONIBLE' : 'BLOQUEADO';
+        const pillTxt = completado ? 'COMPLETADO' :
+                        (m.tipo === 'profundizacion' && disponible) ? 'PROFUNDIZACIÓN' :
+                        disponible ? 'DISPONIBLE' : 'BLOQUEADO';
         const href = disponible ? `modulos/${m.id}/index.html` : 'javascript:void(0)';
         return `
           <a href="${href}" class="${cls.join(' ')}" ${!disponible && !completado ? 'aria-disabled="true"' : ''}>

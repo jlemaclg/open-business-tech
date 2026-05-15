@@ -1,0 +1,711 @@
+{
+  "modulo": "04b-fapi-perfil-propio",
+  "titulo_topbar": "Construyendo un perfil FAPI 2.0",
+  "duracion_min": 60,
+  "nivel": "avanzado",
+  "tipo": "profundizacion",
+  "xp_lectura": 30,
+  "xp_quiz": 30,
+  "xp_quiz_perfecto": 0,
+  "badge": {
+    "id": "disenador-perfil-fapi",
+    "nombre": "Diseñador de Perfil FAPI 2.0",
+    "svg_url": "../../assets/img/badges/disenador-perfil-fapi.svg",
+    "descripcion": "Has completado el ejercicio de diseño de un perfil FAPI 2.0 propio. Conoces las decisiones que toda jurisdicción tiene encima de la mesa cuando construye su Sistema de Finanzas Abiertas, entiendes los trade-offs de cada opción y puedes facilitar un taller donde un equipo regulatorio o un banco construya su propio borrador de perfil."
+  },
+
+  "componentes": [
+
+    {
+      "tipo": "hero-modulo",
+      "eyebrow": "MÓDULO 04b · PROFUNDIZACIÓN",
+      "titulo_pre_accent": "Construyendo un",
+      "titulo_accent": "perfil FAPI 2.0",
+      "titulo_post_accent": "propio para tu jurisdicción",
+      "subtitulo": "FAPI 2.0 fija un núcleo de seguridad obligatorio y deja un conjunto de decisiones abiertas a cada regulador. Este módulo presenta esas decisiones de forma estructurada y permite construir un borrador de perfil — individualmente o en un taller con un equipo regulatorio o bancario.",
+      "duracion_min": 60,
+      "nivel": "Profundización",
+      "badge_target": "Diseñador de Perfil FAPI 2.0"
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "objetivo",
+      "titulo": "Por qué este módulo existe",
+      "parrafos": [
+        "Una jurisdicción que decide implementar Open Finance no parte de cero. <span class=\"glosario-term\" data-term=\"FAPI\">FAPI 2.0</span> es un estándar mantenido por OpenID Foundation, ampliamente adoptado, certificado, y con perfiles certificadores públicos. Pero <strong>FAPI 2.0 no es un documento prescriptivo cerrado</strong>: define un Baseline obligatorio y deja un conjunto de extensiones y parámetros operativos a la discreción de quien lo adopta.",
+        "Este módulo presenta esas decisiones de forma estructurada, sin proponer una respuesta correcta. Cada decisión se acompaña de sus opciones, su descripción técnica y sus implicaciones operativas. El producto final es un <strong>borrador de perfil</strong> que el regulador o el banco puede usar como punto de partida para su documento normativo o técnico — no un perfil oficial.",
+        "El uso primario previsto es un <strong>taller facilitado</strong> con un equipo regulatorio o un equipo de implementación bancario. Cada decisión se discute, se vota, y el constructor recoge el resultado en una ficha exportable."
+      ],
+      "cita": "Adoptar FAPI 2.0 no es elegir un producto cerrado; es completar un patrón que la propia especificación deja deliberadamente abierto. Las decisiones que se toman aquí condicionan el coste de implementación, la interoperabilidad regional y el nivel de protección efectivo del usuario final."
+    },
+
+    {
+      "tipo": "objetivos-grid",
+      "titulo": "Lo que vas a saber al final",
+      "subtitulo": "Cuatro puntos concretos. Si los cubres, puedes facilitar el ejercicio con un equipo regulatorio o de implementación.",
+      "items": [
+        { "num": "01", "titulo": "Qué fija FAPI 2.0 Baseline", "descripcion": "El núcleo no negociable: mTLS o DPoP, PAR, PKCE S256, sender-constrained, PS256/ES256, Authorization Code Flow." },
+        { "num": "02", "titulo": "Qué deja abierto FAPI 2.0", "descripcion": "Las 12 decisiones agrupadas en cinco categorías: seguridad, granularidad, ciclo de vida, canales y alcance funcional." },
+        { "num": "03", "titulo": "Trade-offs de cada opción", "descripcion": "Para cada decisión, las implicaciones operativas, regulatorias y de interoperabilidad." },
+        { "num": "04", "titulo": "Cómo construir un borrador coherente", "descripcion": "Producir una ficha resumen exportable que sirva de punto de partida para la documentación normativa o técnica." }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Lo que FAPI 2.0 <span class=\"accent\">fija</span> y lo que <span class=\"accent\">deja abierto</span>",
+      "subtitulo": "Antes de entrar en las decisiones, conviene tener claro qué punto de partida es no negociable. Todo lo que aparece en la columna izquierda viene dado; sobre eso se construye el resto.",
+      "tabs": [
+        {
+          "id": "fijo-vs-abierto",
+          "titulo": "Núcleo vs decisiones",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "titulo": "Lo que FAPI 2.0 Baseline fija",
+            "subtitulo": "No es decisión de la jurisdicción",
+            "items": [
+              { "check": true, "texto": "mTLS o DPoP para autenticar al cliente" },
+              { "check": true, "texto": "PAR (RFC 9126) obligatorio antes del /authorize" },
+              { "check": true, "texto": "PKCE con method=S256" },
+              { "check": true, "texto": "Sender-constrained access tokens" },
+              { "check": true, "texto": "Algoritmos asimétricos (PS256 o ES256), nunca HS256 ni none" },
+              { "check": true, "texto": "Authorization Code Flow como flujo principal" },
+              { "check": true, "texto": "OIDC como capa de identidad cuando hay usuario humano" }
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "tag": "12 decisiones",
+            "titulo": "Lo que la jurisdicción decide",
+            "subtitulo": "El menú abierto que este módulo cubre",
+            "items": [
+              { "check": true, "texto": "Qué mecanismo de sender-constraining adopta (solo mTLS, solo DPoP, ambos)" },
+              { "check": true, "texto": "Algoritmos de firma exigidos y vida del access token" },
+              { "check": true, "texto": "Modelo de granularidad del consentimiento: scope, RAR genérico o RAR estructurado" },
+              { "check": true, "texto": "Modelo de privilegios y profundidad de datos" },
+              { "check": true, "texto": "Alcance de Grant Management y rotación de refresh tokens" },
+              { "check": true, "texto": "Vigencia máxima y modelo multi-autorización para personas jurídicas" },
+              { "check": true, "texto": "Adopción de JARM y CIBA según canales" },
+              { "check": true, "texto": "Catálogo de APIs cubierto por la primera fase" }
+            ]
+          }
+        },
+        {
+          "id": "categorias",
+          "titulo": "Las cinco categorías de decisión",
+          "tipo_contenido": "grid-2-listas",
+          "izquierda": {
+            "titulo": "Seguridad y tiempos",
+            "items": [
+              "Sender-constraining (mTLS / DPoP / ambos)",
+              "Algoritmos de firma (PS256 / ES256 / ambos)",
+              "Vida del access token (5 / 15 / 60 min)"
+            ]
+          },
+          "derecha": {
+            "destacada": true,
+            "titulo": "Consentimiento y alcance",
+            "items": [
+              "Granularidad — scope / RAR / RAR estructurado",
+              "Privilegios — ninguno / jerárquico / por dominio",
+              "Grant Management — ninguno / mínimo / completo",
+              "Refresh rotation, vigencia, multi-autorización",
+              "JARM, CIBA, catálogo de APIs fase 1"
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "perfil-builder",
+      "titulo": "Constructor del perfil",
+      "subtitulo": "Doce decisiones agrupadas en cuatro categorías. Cada decisión se puede tomar de forma independiente, en cualquier orden, y modificar después. El modo \"Vista taller\" presenta una decisión a la vez con tipografía amplificada, pensado para proyectar.",
+      "decisiones": [
+        {
+          "id": "sender-constraining",
+          "num": "01",
+          "categoria": "Seguridad",
+          "pregunta_corta": "¿Sender-constraining?",
+          "pregunta": "¿Qué mecanismo de sender-constraining adopta el perfil?",
+          "contexto": "FAPI 2.0 exige que los access tokens estén atados al cliente que los solicitó. Existen dos mecanismos estandarizados, y el perfil puede aceptar uno, otro o ambos.",
+          "opciones": [
+            {
+              "id": "mtls-only",
+              "label": "Solo mTLS-bound",
+              "tag": "Estricto",
+              "descripcion": "El access token lleva cnf.x5t#S256 atado al certificado mTLS del cliente. En cada llamada API el Resource Server compara el hash del cert presentado.",
+              "trade_offs": [
+                "Más simple de auditar — el mismo cert sirve para autenticar y para ligar el token.",
+                "Exige que el cliente gestione un certificado X.509 emitido por la CA del Directorio.",
+                "Inviable para clientes públicos (apps móviles puras, SPAs).",
+                "Predominante en banca regulada con Directorio."
+              ]
+            },
+            {
+              "id": "dpop-only",
+              "label": "Solo DPoP",
+              "tag": "Flexible",
+              "descripcion": "El cliente genera un par de claves asimétricas y firma cada llamada con un DPoP proof. El token lleva cnf.jkt con el hash de la clave pública.",
+              "trade_offs": [
+                "Habilita clientes públicos sin certificado X.509.",
+                "Mayor complejidad de validación en el Resource Server (firma por request).",
+                "Menos extendido en banca con Directorio establecido.",
+                "Auditoría más compleja al no haber un cert estable."
+              ]
+            },
+            {
+              "id": "ambos",
+              "label": "Ambos permitidos",
+              "tag": "Híbrido",
+              "descripcion": "El perfil acepta mTLS-bound y DPoP. El cliente elige según su naturaleza (TPP regulado con cert vs. cliente público sin cert).",
+              "trade_offs": [
+                "Máxima flexibilidad: cobertura tanto de TPPs corporativos como de clientes públicos.",
+                "Doble lógica de validación en cada Resource Server.",
+                "Requiere claridad sobre qué tipos de cliente pueden usar cada mecanismo.",
+                "Mayor coste de implementación inicial."
+              ]
+            }
+          ],
+          "nota": "En jurisdicciones donde el Directorio del ecosistema emite certificados X.509 a todos los TPPs autorizados, mTLS-bound suele bastar. DPoP entra al menú cuando el alcance incluye clientes públicos que el regulador no quiere obligar a gestionar certificados."
+        },
+        {
+          "id": "algoritmos-firma",
+          "num": "02",
+          "categoria": "Seguridad",
+          "pregunta_corta": "¿Algoritmos de firma?",
+          "pregunta": "¿Qué algoritmos de firma asimétrica acepta el perfil para JWTs?",
+          "contexto": "FAPI 2.0 prohíbe HS256 y none. Entre los algoritmos asimétricos aceptados, la jurisdicción puede restringir a uno o permitir varios.",
+          "opciones": [
+            {
+              "id": "ps256-only",
+              "label": "Solo PS256",
+              "tag": "RSA-PSS",
+              "descripcion": "Firma RSA con esquema PSS, SHA-256. Algoritmo histórico recomendado por FAPI desde 1.0.",
+              "trade_offs": [
+                "Mayor disponibilidad en HSMs y librerías de gestión de claves.",
+                "Tamaño de firma mayor que ECDSA.",
+                "Coste de verificación mayor que ECDSA.",
+                "Curva de adopción amplia en banca."
+              ]
+            },
+            {
+              "id": "es256-only",
+              "label": "Solo ES256",
+              "tag": "ECDSA",
+              "descripcion": "Firma ECDSA sobre la curva P-256, SHA-256. Adopción creciente en estándares modernos.",
+              "trade_offs": [
+                "Firmas más cortas y verificación más rápida.",
+                "Requiere generación cuidadosa de nonce — implementaciones débiles han causado fugas de clave en el pasado.",
+                "Menor disponibilidad histórica en algunos HSMs.",
+                "Más alineado con OIDC moderno."
+              ]
+            },
+            {
+              "id": "ambos-firma",
+              "label": "PS256 y ES256",
+              "tag": "Ambos",
+              "descripcion": "El perfil acepta cualquiera de los dos. El cliente y el AS negocian el algoritmo concreto vía metadata.",
+              "trade_offs": [
+                "Mayor compatibilidad con clientes y stacks existentes.",
+                "Obliga al AS a soportar ambas familias de claves.",
+                "Las certificaciones FAPI suelen permitir esta dualidad.",
+                "Recomendable cuando hay heterogeneidad de proveedores."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "vida-access-token",
+          "num": "03",
+          "categoria": "Seguridad",
+          "pregunta_corta": "¿Vida del access token?",
+          "pregunta": "¿Cuánto vive un access token tras su emisión?",
+          "contexto": "FAPI 2.0 recomienda expiraciones cortas. La jurisdicción define el valor concreto. Tokens más cortos reducen ventana de exposición pero aumentan llamadas a /token con refresh_token.",
+          "opciones": [
+            {
+              "id": "5min",
+              "label": "5 minutos",
+              "tag": "Estricto",
+              "descripcion": "Ventana mínima razonable. Recomendado por FAPI 2.0 para escenarios sensibles.",
+              "trade_offs": [
+                "Menor superficie de ataque ante token robado.",
+                "Aumenta el tráfico contra /token vía refresh_token.",
+                "Requiere refresh_token de vida más larga y rotación robusta.",
+                "Carga adicional sobre el Authorization Server."
+              ]
+            },
+            {
+              "id": "15min",
+              "label": "15 minutos",
+              "tag": "Equilibrio",
+              "descripcion": "Punto medio común en perfiles bancarios. Suficiente para la mayoría de flujos de UX continuos.",
+              "trade_offs": [
+                "Balance entre exposición y carga operativa.",
+                "Aceptado en certificaciones FAPI estándar.",
+                "Requiere refresh para sesiones largas.",
+                "Compatible con la mayoría de implementaciones existentes."
+              ]
+            },
+            {
+              "id": "60min",
+              "label": "60 minutos",
+              "tag": "Laxo",
+              "descripcion": "Ventana extendida. Reduce carga sobre /token pero amplía exposición.",
+              "trade_offs": [
+                "Menor presión sobre el AS.",
+                "Ventana de exposición significativa si el token se filtra.",
+                "Aceptable solo cuando el sender-constraining es muy robusto.",
+                "Habitual en perfiles más conservadores o no bancarios."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "granularidad-consentimiento",
+          "num": "04",
+          "categoria": "Granularidad",
+          "pregunta_corta": "¿Modelo de granularidad?",
+          "pregunta": "¿Cómo se expresa el alcance del consentimiento solicitado por el cliente?",
+          "contexto": "OAuth 2.0 ofrece scope como etiqueta plana. RAR (RFC 9396) lo reemplaza por authorization_details estructurado. La jurisdicción decide si adopta RAR y cuán específico es su esquema.",
+          "opciones": [
+            {
+              "id": "scope-clasico",
+              "label": "Scope clásico",
+              "tag": "OAuth puro",
+              "descripcion": "Cadena de scopes textuales (accounts, payments). El cliente solicita; el AS valida contra el catálogo.",
+              "trade_offs": [
+                "Mínimo coste de implementación.",
+                "Granularidad limitada: no permite acotar por recurso concreto ni por finalidad.",
+                "Dificulta el cumplimiento del principio de mínimo privilegio.",
+                "Inadecuado para iniciación de pagos donde el monto y cuenta destino deben formar parte del consentimiento."
+              ]
+            },
+            {
+              "id": "rar-generico",
+              "label": "RAR genérico (RFC 9396)",
+              "tag": "Estándar abierto",
+              "descripcion": "Adopta authorization_details como array JSON estructurado, pero deja libre la forma de cada objeto. Cada perfil sectorial define su esquema.",
+              "trade_offs": [
+                "Habilita granularidad sin imponer estructura.",
+                "Permite interoperabilidad con otros perfiles RAR.",
+                "Exige que el catálogo de schemas se publique aparte.",
+                "Riesgo de divergencia entre actores si no hay schemas claros."
+              ]
+            },
+            {
+              "id": "rar-estructurado",
+              "label": "RAR estructurado",
+              "tag": "Esquema propio",
+              "descripcion": "Adopta RAR y define un esquema explícito con campos obligatorios (type, actions, identifier, privileges, purpose, vigencia, recurrencia).",
+              "trade_offs": [
+                "Máxima granularidad y trazabilidad de auditoría.",
+                "Habilita pantallas de consentimiento ricas y verificables.",
+                "Requiere especificación detallada por parte del regulador.",
+                "Coste de implementación mayor, especialmente para TPPs sin experiencia previa."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "modelo-privilegios",
+          "num": "05",
+          "categoria": "Granularidad",
+          "pregunta_corta": "¿Modelo de privilegios?",
+          "pregunta": "¿Cómo se acota la profundidad de datos accedida sobre cada recurso?",
+          "contexto": "Una vez decidida la granularidad por recurso (RAR), queda otra dimensión: la profundidad. ¿Listado, detalle o sub-recursos? Hay tres modelos predominantes.",
+          "opciones": [
+            {
+              "id": "sin-niveles",
+              "label": "Sin modelo de privilegios",
+              "tag": "Plano",
+              "descripcion": "El consentimiento se otorga al recurso completo. El cliente accede a todos los sub-recursos disponibles dentro del scope.",
+              "trade_offs": [
+                "Mínima carga conceptual para el usuario y para los TPPs.",
+                "Granularidad limitada — no se puede pedir solo balance sin transacciones.",
+                "Dificulta el principio de mínimo privilegio.",
+                "Reduce trabajo en el Authorization Server."
+              ]
+            },
+            {
+              "id": "jerarquico",
+              "label": "Jerárquico por niveles",
+              "tag": "Acumulativo",
+              "descripcion": "Tres niveles acumulativos (level1, level2, level3) que reflejan la profundidad de la ruta del endpoint. No se puede pedir level3 sin incluir level1 y level2.",
+              "trade_offs": [
+                "Modelo predecible y fácil de mapear a endpoints.",
+                "Granularidad fina sin atomizar excesivamente al usuario.",
+                "Acumulativo — el usuario aprueba con menos pantallas.",
+                "Requiere que el catálogo de APIs siga consistentemente la jerarquía."
+              ]
+            },
+            {
+              "id": "por-dominio",
+              "label": "Por dominio",
+              "tag": "Atómico",
+              "descripcion": "Cada operación tiene su permiso específico, independiente. El consentimiento se compone como un set de permisos atómicos.",
+              "trade_offs": [
+                "Máxima flexibilidad y granularidad.",
+                "Pantallas de consentimiento pueden volverse densas para el usuario.",
+                "Mayor sofisticación en la documentación del catálogo.",
+                "Habitual en perfiles con APIs muy diversificadas."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "grant-management",
+          "num": "06",
+          "categoria": "Ciclo de vida",
+          "pregunta_corta": "¿Grant Management?",
+          "pregunta": "¿Qué alcance de Grant Management for OAuth 2.0 adopta el perfil?",
+          "contexto": "Una vez creado un grant tras la aprobación del usuario, ¿qué operaciones puede ejecutar el cliente y el usuario sobre él? La especificación OpenID define seis operaciones; la jurisdicción decide cuáles habilita.",
+          "opciones": [
+            {
+              "id": "no-gm",
+              "label": "No adopta Grant Management",
+              "tag": "Mínimo",
+              "descripcion": "El grant se crea con el flujo Authorization Code y solo se puede revocar. Sin Update, Replace, Merge, ni Query.",
+              "trade_offs": [
+                "Menor coste de implementación inicial.",
+                "Cada modificación de alcance exige reautorización completa.",
+                "Sin endpoint estándar de consulta del estado del grant.",
+                "Adecuado cuando los consentimientos son simples y de corta duración."
+              ]
+            },
+            {
+              "id": "gm-minimo",
+              "label": "Mínimo: Create + Revoke",
+              "tag": "Básico",
+              "descripcion": "Habilita la creación de grants vía RAR y la revocación explícita. Sin operaciones de modificación.",
+              "trade_offs": [
+                "Cubre el ciclo básico de consentimiento.",
+                "Sin posibilidad de prorrogar vigencia ni ampliar alcance sin nuevo flujo completo.",
+                "Coste medio de implementación.",
+                "Suficiente para fases iniciales."
+              ]
+            },
+            {
+              "id": "gm-completo",
+              "label": "Completo: las 6 operaciones",
+              "tag": "Estándar",
+              "descripcion": "Habilita Create, Update, Replace, Merge, Query y Revoke según la especificación OpenID.",
+              "trade_offs": [
+                "Permite ampliar, reducir y prorrogar consentimientos sin nuevo flujo completo.",
+                "Habilita un Panel de Control de Consentimientos rico para el usuario.",
+                "Coste de implementación mayor, especialmente la operación merge con validación jerárquica de privilegios.",
+                "Recomendado para fases maduras del Open Finance."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "refresh-rotation",
+          "num": "07",
+          "categoria": "Ciclo de vida",
+          "pregunta_corta": "¿Rotación de refresh token?",
+          "pregunta": "¿Se rota el refresh_token cada vez que se canjea?",
+          "contexto": "Cada uso del refresh_token puede o no generar un nuevo refresh_token e invalidar el anterior. La rotación reduce el impacto de un refresh_token comprometido.",
+          "opciones": [
+            {
+              "id": "sin-rotacion",
+              "label": "Sin rotación",
+              "tag": "Estable",
+              "descripcion": "El mismo refresh_token sirve hasta su expiración natural.",
+              "trade_offs": [
+                "Más simple operativamente para el cliente.",
+                "Mayor ventana de exposición si el refresh_token se filtra.",
+                "Sin mecanismo de detección de uso indebido posterior.",
+                "Habitual en perfiles que combinan vida corta del refresh y sender-constraining robusto."
+              ]
+            },
+            {
+              "id": "con-rotacion",
+              "label": "Con rotación obligatoria",
+              "tag": "Robusto",
+              "descripcion": "Cada canje del refresh_token emite uno nuevo e invalida el anterior. Si el AS detecta dos usos del mismo refresh, revoca el grant completo.",
+              "trade_offs": [
+                "Detecta uso indebido si el refresh ha sido robado.",
+                "Mayor complejidad de gestión de estado en el cliente.",
+                "Requiere endpoint y reglas de error claras ante reintentos legítimos.",
+                "Recomendado en perfiles con refresh tokens de vida larga."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "vigencia-maxima",
+          "num": "08",
+          "categoria": "Ciclo de vida",
+          "pregunta_corta": "¿Vigencia máxima del consentimiento?",
+          "pregunta": "¿Cuál es la vigencia máxima permitida para un consentimiento de acceso a datos?",
+          "contexto": "El consentimiento no es indefinido. La jurisdicción define un tope, que típicamente diferencia entre acceso a datos (largo) e iniciación de pagos (corto o de uso único).",
+          "opciones": [
+            {
+              "id": "90-dias",
+              "label": "90 días",
+              "tag": "Conservador",
+              "descripcion": "Tope corto que obliga a reautorización trimestral. Modelo histórico de algunas regulaciones de servicios de pago.",
+              "trade_offs": [
+                "Alta frecuencia de renovación reduce riesgo de consentimientos olvidados.",
+                "Mayor fricción de UX para servicios de uso continuo.",
+                "Modelo conservador adecuado para fases iniciales.",
+                "Habitual cuando el regulador prioriza control sobre fluidez."
+              ]
+            },
+            {
+              "id": "12-meses",
+              "label": "12 meses",
+              "tag": "Equilibrio",
+              "descripcion": "Vigencia anual. Balance entre fluidez de uso continuado y revisión periódica obligatoria.",
+              "trade_offs": [
+                "Reduce fricción de renovación frente al modelo trimestral.",
+                "Obliga al usuario a revisar el consentimiento al menos anualmente.",
+                "Frecuente en perfiles maduros.",
+                "Compatible con la mayoría de servicios PFM."
+              ]
+            },
+            {
+              "id": "36-meses",
+              "label": "36 meses",
+              "tag": "Extenso",
+              "descripcion": "Vigencia de tres años. Adoptado por jurisdicciones que apuestan por relación de larga duración con revocación voluntaria del usuario como contrapeso.",
+              "trade_offs": [
+                "Mínima fricción para servicios de uso continuado.",
+                "Mayor riesgo de consentimientos olvidados.",
+                "Requiere Panel de Control de Consentimientos prominente.",
+                "Recomendable solo con Grant Management completo y revocación accesible."
+              ]
+            },
+            {
+              "id": "configurable",
+              "label": "Configurable por tipo",
+              "tag": "Por caso de uso",
+              "descripcion": "El perfil define topes diferenciados: corto para iniciación de pagos, largo para acceso a datos, distinto para acceso recurrente vs uso único.",
+              "trade_offs": [
+                "Máximo ajuste al riesgo real de cada tipo de operación.",
+                "Documentación normativa más extensa.",
+                "Requiere matriz pública de vigencias por tipo de recurso.",
+                "Modelo predominante en perfiles maduros."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "multi-autorizacion",
+          "num": "09",
+          "categoria": "Ciclo de vida",
+          "pregunta_corta": "¿Multi-autorización para PJ?",
+          "pregunta": "¿Cómo se gestiona el consentimiento cuando el cliente bancario es una persona jurídica con apoderados múltiples?",
+          "contexto": "Una empresa con dos firmas conjuntas no encaja en el flujo individual de Authorization Code. El perfil decide si habilita multi-autorización y bajo qué modalidad.",
+          "opciones": [
+            {
+              "id": "no-multi",
+              "label": "No habilitada",
+              "tag": "Solo PN",
+              "descripcion": "Solo se permite consentimiento individual. Las empresas con firmas conjuntas quedan fuera del Open Finance regulado.",
+              "trade_offs": [
+                "Mínimo coste de implementación.",
+                "Excluye al sector corporativo con apoderados múltiples.",
+                "Limita el alcance económico del Open Finance.",
+                "Aceptable en fases iniciales centradas en persona natural."
+              ]
+            },
+            {
+              "id": "multi-sincronica",
+              "label": "Sincrónica",
+              "tag": "Sesión única",
+              "descripcion": "Todos los apoderados firman en la misma sesión, secuencialmente o en paralelo. El grant se completa al final.",
+              "trade_offs": [
+                "Implementación más simple que la asíncrona.",
+                "Coordinación logística entre apoderados puede ser difícil en la práctica.",
+                "Adecuada para empresas pequeñas o con apoderados accesibles.",
+                "Limitada para corporativos grandes."
+              ]
+            },
+            {
+              "id": "multi-asincronica",
+              "label": "Asíncrona",
+              "tag": "Por separado",
+              "descripcion": "Cada apoderado firma en su tiempo. El grant queda en estado AwaitingMultiAuthorisation hasta completarse, con TTL definido.",
+              "trade_offs": [
+                "Habilita el sector corporativo real.",
+                "Mayor complejidad del Authorization Server (estado intermedio, notificaciones).",
+                "Requiere TTL del estado intermedio y políticas de caducidad parcial.",
+                "Recomendado para perfiles con cobertura corporativa robusta."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jarm",
+          "num": "10",
+          "categoria": "Canales",
+          "pregunta_corta": "¿JARM?",
+          "pregunta": "¿Se adopta JARM (JWT Secured Authorization Response Mode)?",
+          "contexto": "En FAPI 2.0 Baseline, la respuesta del /authorize devuelve code y state como query params. JARM empuja toda la respuesta dentro de un JWT firmado por el AS, cerrando manipulaciones del navegador. JARM está en FAPI 2.0 Advanced.",
+          "opciones": [
+            {
+              "id": "baseline-sin-jarm",
+              "label": "Sin JARM (Baseline)",
+              "tag": "FAPI 2.0 Baseline",
+              "descripcion": "La respuesta del AS viaja como query params estándar. Sender-constraining más PAR cubren los vectores principales.",
+              "trade_offs": [
+                "Implementación más simple para clientes existentes.",
+                "Compatibilidad amplia con stacks OAuth/OIDC clásicos.",
+                "No protege contra manipulación de la respuesta en el navegador.",
+                "Aceptable cuando el cliente valida estrictamente state y nonce."
+              ]
+            },
+            {
+              "id": "advanced-con-jarm",
+              "label": "Con JARM (Advanced)",
+              "tag": "FAPI 2.0 Advanced",
+              "descripcion": "La respuesta del /authorize llega dentro de un JWT firmado. El cliente la valida con la clave pública del AS antes de procesarla.",
+              "trade_offs": [
+                "Cierra manipulación de la respuesta del AS en tránsito.",
+                "Mayor coste para clientes — necesitan validar firma de respuesta.",
+                "Refuerzo recomendado en perfiles con exposición a entornos no controlados.",
+                "Suma capacidad de no repudio del lado del AS."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ciba",
+          "num": "11",
+          "categoria": "Canales",
+          "pregunta_corta": "¿CIBA?",
+          "pregunta": "¿Se habilita CIBA para canales sin navegador?",
+          "contexto": "Authorization Code Flow asume que el usuario está delante de un navegador. CIBA (Client Initiated Backchannel Authentication) permite que el cliente inicie la autenticación por el backchannel y el usuario apruebe en otro dispositivo registrado.",
+          "opciones": [
+            {
+              "id": "ciba-no",
+              "label": "No habilitado",
+              "tag": "Solo navegador",
+              "descripcion": "Todos los flujos requieren navegador del usuario. Sin soporte para cajeros, IVR, call center o comercio físico sin app.",
+              "trade_offs": [
+                "Modelo más simple, alcance solo a banca digital con navegador.",
+                "Excluye canales tradicionales y físicos.",
+                "Adecuado para fases iniciales digital-first.",
+                "Limita la cobertura de inclusión financiera."
+              ]
+            },
+            {
+              "id": "ciba-canales",
+              "label": "Habilitado para canales sin navegador",
+              "tag": "Canales extendidos",
+              "descripcion": "CIBA disponible para iniciación desde cajeros, IVR, call center, comercio físico. El usuario aprueba en su app del banco u otro dispositivo de autenticación registrado.",
+              "trade_offs": [
+                "Habilita Open Finance fuera del navegador.",
+                "Coste de implementación significativo del lado del AS.",
+                "Requiere infraestructura de notificación push al dispositivo de autenticación.",
+                "Suma valor especialmente en mercados con alta presencia de canales no digitales."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "catalogo-fase-1",
+          "num": "12",
+          "categoria": "Alcance",
+          "pregunta_corta": "¿Catálogo fase 1?",
+          "pregunta": "¿Qué clústeres de APIs cubre la primera fase del Open Finance en la jurisdicción?",
+          "contexto": "Adoptar todo el catálogo en fase 1 es ambicioso. La mayoría de jurisdicciones avanzan por fases. La decisión condiciona el roadmap de los próximos 18–36 meses.",
+          "opciones": [
+            {
+              "id": "solo-cuentas",
+              "label": "Solo Cuentas",
+              "tag": "Mínimo",
+              "descripcion": "APIs de Accounts (listado, detalle, balance, transacciones). Equivalente a la primera ola de Open Banking PSD2.",
+              "trade_offs": [
+                "Alcance mínimo, menor riesgo regulatorio.",
+                "Habilita casos de uso de agregación y PFM.",
+                "Excluye iniciación de pagos y productos.",
+                "Adecuado cuando el ecosistema TPP está en formación."
+              ]
+            },
+            {
+              "id": "cuentas-pagos",
+              "label": "Cuentas + Pagos",
+              "tag": "Estándar",
+              "descripcion": "Suma APIs de iniciación de pagos (SinglePayments, ScheduledPayments, RecurringPayments). Cobertura habitual de Open Banking maduro.",
+              "trade_offs": [
+                "Habilita los casos de uso más rentables (iniciación P2B/B2B).",
+                "Requiere infraestructura de pagos del banco lista para Open Finance.",
+                "Mayor complejidad regulatoria (validación de fondos, multi-autorización en B2B).",
+                "Estándar de mercado en perfiles maduros."
+              ]
+            },
+            {
+              "id": "cuentas-pagos-productos",
+              "label": "Cuentas + Pagos + Productos",
+              "tag": "Open Finance",
+              "descripcion": "Suma APIs de Loans, Cards, Investments. Cobertura típica de Open Finance ampliado.",
+              "trade_offs": [
+                "Habilita scoring crediticio, gestión patrimonial agregada, e insights cruzados.",
+                "Requiere coordinación entre áreas del banco que tradicionalmente no comparten contrato API.",
+                "Mayor coste de adopción para los bancos.",
+                "Posiciona a la jurisdicción en la frontera Open Finance."
+              ]
+            },
+            {
+              "id": "stack-completo",
+              "label": "Stack completo",
+              "tag": "Open X",
+              "descripcion": "Cobertura completa: + Insurances, + Pensiones, + Reportes de Pago, + Confirmación de Fondos.",
+              "trade_offs": [
+                "Alcance maximalista. Refleja una visión Open X (no solo banca).",
+                "Coste de implementación muy elevado para los bancos.",
+                "Requiere alineamiento con regulación sectorial fuera de la banca.",
+                "Recomendable solo con un cronograma de implantación realista por sub-fase."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "tipo": "perfil-resumen",
+      "titulo": "Ficha del perfil construido",
+      "subtitulo": "Esta ficha refleja en tiempo real las decisiones tomadas arriba. Cuando el grupo termine, exporta el borrador como Markdown para llevarlo a la documentación normativa o técnica.",
+      "titulo_export": "Borrador de perfil FAPI 2.0"
+    },
+
+    {
+      "tipo": "dialogo-transferencia",
+      "titulo": "Lo que el equipo regulatorio o bancario va a preguntar",
+      "subtitulo": "Cuatro preguntas que típicamente surgen al facilitar este ejercicio. Son las que conviene tener resueltas antes del taller.",
+      "intercambios": [
+        {
+          "cliente": "Si FAPI 2.0 ya está certificado, ¿por qué tengo que tomar todas estas decisiones? ¿No basta con adoptar el estándar?",
+          "tu": "FAPI 2.0 Baseline fija un núcleo de seguridad obligatorio: mTLS o DPoP, PAR, PKCE S256, sender-constrained, PS256 o ES256, Authorization Code Flow. Eso no se discute. Pero el estándar deja explícitamente abiertas las decisiones operativas — qué algoritmos exigir, qué vida de token, qué granularidad de consentimiento, qué alcance de Grant Management, qué catálogo de APIs cubrir. Esas decisiones las toma cada jurisdicción según su madurez regulatoria, su ecosistema TPP y su estrategia. Si no se toman, no hay implementación posible."
+        },
+        {
+          "cliente": "¿Hay decisiones que sean incompatibles entre sí? ¿Puedo elegir cualquier combinación?",
+          "tu": "Hay compatibilidad lógica pero también coherencia operativa. Por ejemplo: una vigencia de 36 meses sin Grant Management completo es técnicamente posible, pero deja al usuario sin manera fluida de modificar el consentimiento — solo le queda revocar y reautorizar entero. O elegir DPoP only y no habilitar clientes públicos es desaprovechar la opción. La ficha resumen del módulo no bloquea combinaciones, pero cuando el grupo termina conviene revisar si la combinación es coherente con los casos de uso prioritarios."
+        },
+        {
+          "cliente": "¿Esto reemplaza el trabajo del equipo legal y normativo?",
+          "tu": "No. Este ejercicio produce un borrador técnico de perfil. La documentación normativa final exige redacción legal, alineamiento con la ley marco (cuando existe), consulta pública, y aprobación del organismo regulador. El valor del ejercicio es que el equipo legal y normativo recibe del equipo técnico un punto de partida estructurado, con decisiones explícitas y trade-offs documentados, en lugar de empezar desde una hoja en blanco o desde una copia de otro perfil sin entender las opciones."
+        },
+        {
+          "cliente": "¿Y si más adelante queremos cambiar una decisión? ¿Cuán costoso es?",
+          "tu": "Depende de la decisión. Cambiar la vigencia máxima de 12 a 36 meses es una modificación de parámetro — bajo coste técnico, requiere comunicación a TPPs y usuarios. Cambiar de scope clásico a RAR estructurado es una migración de fondo — exige rehacer toda la integración del cliente y del Authorization Server. Por eso conviene tomar las decisiones de granularidad (4, 5, 6) con horizonte de medio plazo, mientras que las de tiempos (3) y vigencia (8) admiten ajustes operativos. El módulo no formaliza esa distinción, pero en el taller conviene marcar qué decisiones son estructurales y cuáles son operativas."
+        }
+      ]
+    },
+
+    {
+      "tipo": "footer-completar",
+      "titulo": "Completar el ejercicio",
+      "subtitulo": "Marca el módulo como completado cuando hayas recorrido las 12 decisiones — individualmente o en taller. Se desbloquea el badge Diseñador de Perfil FAPI 2.0 (30 XP)."
+    },
+
+    {
+      "tipo": "badge-modal"
+    }
+  ]
+}

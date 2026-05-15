@@ -17,9 +17,12 @@
     'objetivos-grid':         'ObjetivosGrid',
     'stepper-flow':           'StepperFlow',
     'comparativa-tabs':       'ComparativaTabs',
+    'perfil-builder':         'PerfilBuilder',
+    'perfil-resumen':         'PerfilResumen',
     'token-inspector':        'TokenInspector',
     'ejemplo-real':           'EjemploReal',
     'dialogo-transferencia':  'DialogoTransferencia',
+    'recursos-panel':         'RecursosPanel',
     'quiz-engine':            'QuizEngine',
     'footer-completar':       'FooterCompletar',
     'badge-modal':            'BadgeModal'

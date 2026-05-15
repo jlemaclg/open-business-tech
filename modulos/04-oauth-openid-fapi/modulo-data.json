@@ -675,6 +675,20 @@
     },
 
     {
+      "tipo": "comparativa-tabs",
+      "titulo": "¿Y si tu jurisdicción tiene que <span class=\"accent\">construir su propio perfil</span>?",
+      "subtitulo": "Existe un módulo de profundización que recorre las 12 decisiones que toda jurisdicción tiene encima de la mesa cuando adopta FAPI 2.0. Diseñado para autoformación y para facilitar talleres con equipos regulatorios o bancarios.",
+      "tabs": [
+        {
+          "id": "salida-04b",
+          "titulo": "Módulo 04b — Construyendo un perfil FAPI 2.0 propio",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch\"><div style=\"background:#F5F4EE;padding:24px 26px;border-radius:8px;border-left:3px solid #FF0054\"><div style=\"font-size:11px;letter-spacing:1.5px;color:#FF0054;font-weight:700;margin-bottom:8px\">PROFUNDIZACIÓN · OPCIONAL</div><div style=\"font-family:Georgia,serif;font-size:22px;color:#4F062A;line-height:1.25;margin-bottom:12px\">Las 12 decisiones que separan dos perfiles FAPI 2.0</div><p style=\"font-size:14px;color:#444;line-height:1.6;margin:0\">FAPI 2.0 fija un núcleo de seguridad obligatorio (mTLS o DPoP, PAR, PKCE, sender-constrained) pero deja abierto el resto: granularidad del consentimiento, alcance de Grant Management, vigencias, multi-autorización, JARM, CIBA, catálogo de APIs. Cada jurisdicción tiene que completar esas decisiones para que haya implementación.</p></div><div style=\"background:#4F062A;color:white;padding:24px 26px;border-radius:8px;display:flex;flex-direction:column;justify-content:space-between\"><div><div style=\"font-size:11px;letter-spacing:1.5px;color:#FF0054;font-weight:700;margin-bottom:8px\">PARA QUÉ TE SIRVE</div><ul style=\"list-style:none;padding:0;margin:0;font-size:13.5px;line-height:1.65\"><li style=\"padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.1)\">· Recorrer las 12 decisiones con sus opciones y trade-offs</li><li style=\"padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.1)\">· Construir un borrador de perfil para tu jurisdicción</li><li style=\"padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.1)\">· Exportar el borrador como Markdown</li><li style=\"padding:6px 0\">· Facilitar un taller con un equipo regulatorio o bancario</li></ul></div><a href=\"../04b-fapi-perfil-propio/index.html\" style=\"display:inline-block;margin-top:18px;background:#FF0054;color:white;padding:14px 22px;border-radius:6px;text-decoration:none;font-weight:700;font-size:14px;letter-spacing:0.3px;text-align:center\">Entrar al taller →</a></div></div>"
+        }
+      ]
+    },
+
+    {
       "tipo": "quiz-engine"
     },
 
