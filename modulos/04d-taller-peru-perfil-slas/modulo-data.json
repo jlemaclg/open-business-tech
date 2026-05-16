@@ -1,0 +1,504 @@
+{
+  "modulo": "04d-taller-peru-perfil-slas",
+  "titulo_topbar": "Taller Perú · Perfil + SLAs",
+  "duracion_min": 240,
+  "nivel": "avanzado",
+  "tipo": "taller",
+  "xp_lectura": 0,
+  "xp_quiz": 0,
+  "xp_quiz_perfecto": 0,
+  "badge": {
+    "id": "co-creador-peru",
+    "nombre": "Co-creador del Ecosistema Peruano",
+    "svg_url": "../../assets/img/badges/co-creador-peru.svg",
+    "descripcion": "Has facilitado o participado en el taller presencial de co-creación del perfil FAPI 2.0 peruano y los SLAs del ecosistema. Te llevas un borrador estructurado de la posición técnica de la mesa, ancla­da en la práctica brasileña, y un acta operativa con los gaps que la SBS necesita resolver."
+  },
+
+  "componentes": [
+
+    {
+      "tipo": "hero-modulo",
+      "eyebrow": "MÓDULO 04d · TALLER PRESENCIAL",
+      "titulo_pre_accent": "Perfil FAPI 2.0 + SLAs ·",
+      "titulo_accent": "co-creación del ecosistema peruano",
+      "titulo_post_accent": "anclado en la práctica brasileña",
+      "subtitulo": "Taller de día completo para una mesa mixta (entidades financieras, fintechs, regulador, cámaras). Cada decisión arranca con lo que Open Finance Brasil ya sostiene y el ecosistema discute hasta dónde Perú adopta esa práctica, dónde se aparta, y a qué coste.",
+      "duracion_min": 240,
+      "nivel": "Taller",
+      "badge_target": "Co-creador del Ecosistema Peruano"
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "objetivo",
+      "titulo": "Por qué este taller existe",
+      "parrafos": [
+        "Perú ha confirmado que la <strong>SBS</strong> lanzará un Directorio peruano para Open Finance. Cuando el ecosistema arranca sin propuesta regulatoria pre-cocinada, la conversación inicial tiende a paralizarse: cada actor lleva su agenda, no hay punto común de referencia, y la mesa termina discutiendo principios en lugar de decisiones operativas.",
+        "Este taller resuelve eso anclando cada decisión en <strong>la práctica brasileña</strong> — el ecosistema más maduro y con mayor volumen transaccional de LATAM, con BACEN como referencia regulatoria respetada. La pregunta de la mesa deja de ser \"¿qué SLA queremos?\" y se convierte en <strong>\"¿hasta dónde adoptamos Brasil? ¿Dónde nos apartamos y por qué?\"</strong>.",
+        "La sala discute en bloque pero el peso de los inputs no es igual: solo las <strong>Entidades Financieras</strong> son obligadas a exponer APIs y, por tanto, las únicas que tienen que cumplir SLAs. Las fintechs, cámaras y regulador discuten, validan, priorizan — pero no votan capacidad. Esto evita que la mesa se quede en consensos cómodos que las EFs no pueden sostener."
+      ],
+      "cita": "El output del taller no es un perfil oficial — es el borrador estructurado que la SBS necesita para abrir consulta pública, los compromisos operativos que las EFs asumen, y la lista de gaps que requieren decisión regulatoria explícita."
+    },
+
+    {
+      "tipo": "objetivos-grid",
+      "titulo": "Lo que la mesa se lleva",
+      "subtitulo": "Cuatro entregables concretos al cierre del día.",
+      "items": [
+        { "num": "01", "titulo": "Borrador del perfil FAPI 2.0 peruano", "descripcion": "12 decisiones técnicas tomadas y documentadas, con esfuerzo de cumplimiento declarado por las EFs y prioridad declarada por consumidores." },
+        { "num": "02", "titulo": "Matriz de capacidad SLA del ecosistema", "descripcion": "8 dimensiones × 3 horizontes (corto, medio, largo plazo) con inputs de capacidad EF, necesidad consumidor y umbral regulador." },
+        { "num": "03", "titulo": "Lista de banderas levantadas", "descripcion": "Combinaciones de gap positivo + esfuerzo alto + prioridad crítica que requieren decisión explícita del regulador (plazo, escalonamiento, subsidio)." },
+        { "num": "04", "titulo": "Ficha-resumen + acta detallada exportables", "descripcion": "Dos archivos Markdown para circular y para archivar. La SBS los usa como evidencia del taller y como base de la consulta pública posterior." }
+      ]
+    },
+
+    {
+      "tipo": "taller-setup",
+      "eyebrow": "Bloque 0 · Setup",
+      "titulo": "Configura la sala antes de arrancar",
+      "subtitulo": "El facilitador (Minsait) registra la composición de la mesa y firma las reglas del juego. Esto queda guardado para el acta final.",
+      "titulo_default": "Taller Perú — FAPI 2.0 + SLAs",
+      "facilitador_default": "Minsait · Open Business"
+    },
+
+    {
+      "tipo": "perfil-builder",
+      "modo_cocreacion": true,
+      "gate": {
+        "requiere": "taller-setup",
+        "label": "Bloque 1 bloqueado",
+        "descripcion": "Configura primero la sala en el Bloque 0 · Setup y pulsa 'Guardar configuración y empezar taller' para desbloquear el bloque 1 (Perfil FAPI 2.0)."
+      },
+      "titulo": "Bloque 1 · Perfil FAPI 2.0 peruano",
+      "subtitulo": "Doce decisiones técnicas. Cada una arranca con la opción que Open Finance Brasil sostiene hoy. La mesa decide si Perú la adopta tal cual, la modifica, o se aparta — y captura el esfuerzo que supone para las EFs y la prioridad que tiene para los consumidores.",
+      "decisiones": [
+        {
+          "id": "sender-constraining",
+          "num": "01",
+          "categoria": "Seguridad",
+          "pregunta_corta": "¿Sender-constraining?",
+          "pregunta": "¿Qué mecanismo de sender-constraining adopta el perfil peruano?",
+          "contexto": "FAPI 2.0 exige que los access tokens estén atados al cliente que los solicitó. Existen dos mecanismos estandarizados; el perfil puede aceptar uno, otro o ambos.",
+          "anchor_brasil": {
+            "opcion": "mtls-only",
+            "nota": "Open Finance Brasil exige mTLS-bound vía BACEN con cert X.509 emitido por la CA del Directorio. DPoP no se contempla en producción."
+          },
+          "opciones": [
+            { "id": "mtls-only", "label": "Solo mTLS-bound", "tag": "Estricto",
+              "descripcion": "Token con cnf.x5t#S256 atado al cert mTLS del cliente. El Resource Server compara hash del cert en cada llamada.",
+              "trade_offs": ["Simple de auditar y de operar con Directorio.", "Exige cert X.509 emitido por la CA del Directorio peruano.", "Inviable para clientes públicos puros.", "Estándar en banca regulada con Directorio."] },
+            { "id": "dpop-only", "label": "Solo DPoP", "tag": "Flexible",
+              "descripcion": "Cliente firma cada llamada con un DPoP proof. Token con cnf.jkt.",
+              "trade_offs": ["Habilita clientes públicos sin cert.", "Validación por request más compleja.", "Menos extendido en banca con Directorio.", "Auditoría más compleja."] },
+            { "id": "ambos", "label": "Ambos permitidos", "tag": "Híbrido",
+              "descripcion": "Perfil acepta mTLS-bound y DPoP. Cliente elige.",
+              "trade_offs": ["Máxima flexibilidad.", "Doble lógica de validación.", "Mayor coste inicial.", "Reglas claras sobre quién usa qué."] }
+          ]
+        },
+        {
+          "id": "algoritmos-firma",
+          "num": "02",
+          "categoria": "Seguridad",
+          "pregunta_corta": "¿Algoritmos de firma?",
+          "pregunta": "¿Qué algoritmos asimétricos acepta el perfil peruano para JWTs?",
+          "contexto": "FAPI 2.0 prohíbe HS256 y none. La jurisdicción decide qué algoritmos asimétricos acepta.",
+          "anchor_brasil": {
+            "opcion": "ps256-only",
+            "nota": "Brasil mandata PS256 desde el origen. ES256 no está en el perfil obligatorio."
+          },
+          "opciones": [
+            { "id": "ps256-only", "label": "Solo PS256", "tag": "RSA-PSS",
+              "descripcion": "Firma RSA-PSS SHA-256. Recomendación histórica de FAPI desde 1.0.",
+              "trade_offs": ["Amplia disponibilidad en HSMs y librerías.", "Firma más larga que ECDSA.", "Coste de verificación mayor.", "Adopción amplia en banca."] },
+            { "id": "es256-only", "label": "Solo ES256", "tag": "ECDSA",
+              "descripcion": "ECDSA curva P-256 SHA-256. Adopción creciente en estándares modernos.",
+              "trade_offs": ["Firmas más cortas, verificación más rápida.", "Requiere nonce robusto.", "Menor disponibilidad en algunos HSMs.", "Alineado con OIDC moderno."] },
+            { "id": "ambos-firma", "label": "PS256 y ES256", "tag": "Ambos",
+              "descripcion": "Perfil acepta cualquiera de los dos. Cliente y AS negocian.",
+              "trade_offs": ["Máxima compatibilidad.", "AS soporta ambas familias.", "Aceptado en certificaciones.", "Recomendable con heterogeneidad."] }
+          ]
+        },
+        {
+          "id": "vida-access-token",
+          "num": "03",
+          "categoria": "Seguridad",
+          "pregunta_corta": "¿Vida del access token?",
+          "pregunta": "¿Cuánto vive un access token tras su emisión en el perfil peruano?",
+          "contexto": "FAPI 2.0 recomienda expiraciones cortas. La jurisdicción define el valor.",
+          "anchor_brasil": {
+            "opcion": "15min",
+            "nota": "Brasil opera con TTL de access_token de aprox. 15 minutos en la mayoría de APIs."
+          },
+          "opciones": [
+            { "id": "5min", "label": "5 minutos", "tag": "Estricto",
+              "descripcion": "Ventana mínima. Recomendado para escenarios sensibles.",
+              "trade_offs": ["Menor superficie de ataque.", "Aumenta tráfico contra /token.", "Refresh robusto requerido.", "Más carga sobre AS."] },
+            { "id": "15min", "label": "15 minutos", "tag": "Equilibrio",
+              "descripcion": "Punto medio común en perfiles bancarios.",
+              "trade_offs": ["Balance exposición / operación.", "Aceptado en certificaciones FAPI.", "Refresh para sesiones largas.", "Compatible con la mayoría."] },
+            { "id": "60min", "label": "60 minutos", "tag": "Laxo",
+              "descripcion": "Ventana extendida. Menor carga sobre /token.",
+              "trade_offs": ["Menor presión sobre AS.", "Mayor ventana de exposición.", "Aceptable con sender-constraining robusto.", "Habitual en perfiles no bancarios."] }
+          ]
+        },
+        {
+          "id": "granularidad-consentimiento",
+          "num": "04",
+          "categoria": "Granularidad",
+          "pregunta_corta": "¿Modelo de granularidad?",
+          "pregunta": "¿Cómo se expresa el alcance del consentimiento solicitado?",
+          "contexto": "OAuth ofrece scope plano. RAR (RFC 9396) lo reemplaza por authorization_details estructurado.",
+          "anchor_brasil": {
+            "opcion": "rar-generico",
+            "nota": "Brasil adopta RAR como mecanismo de granularidad, con esquemas propios por fase (cuentas, pagos, seguros)."
+          },
+          "opciones": [
+            { "id": "scope-clasico", "label": "Scope clásico", "tag": "OAuth puro",
+              "descripcion": "Cadena de scopes textuales. Cliente solicita; AS valida contra catálogo.",
+              "trade_offs": ["Mínimo coste.", "Granularidad limitada.", "Difícil acotar por recurso.", "Inadecuado para iniciación de pagos."] },
+            { "id": "rar-generico", "label": "RAR genérico (RFC 9396)", "tag": "Estándar abierto",
+              "descripcion": "authorization_details como array JSON estructurado, forma libre por objeto.",
+              "trade_offs": ["Habilita granularidad sin imponer estructura.", "Interoperable con perfiles RAR.", "Catálogo de schemas se publica aparte.", "Riesgo de divergencia."] },
+            { "id": "rar-estructurado", "label": "RAR estructurado", "tag": "Esquema propio",
+              "descripcion": "RAR con esquema explícito y campos obligatorios.",
+              "trade_offs": ["Máxima granularidad y trazabilidad.", "Pantallas de consentimiento ricas.", "Requiere especificación detallada.", "Mayor coste para TPPs."] }
+          ]
+        },
+        {
+          "id": "modelo-privilegios",
+          "num": "05",
+          "categoria": "Granularidad",
+          "pregunta_corta": "¿Modelo de privilegios?",
+          "pregunta": "¿Cómo se acota la profundidad de datos accedida sobre cada recurso?",
+          "contexto": "Tres modelos predominantes: sin niveles, jerárquico, por dominio.",
+          "anchor_brasil": {
+            "opcion": "por-dominio",
+            "nota": "Brasil aplica permisos atómicos por operación (ACCOUNTS_READ, ACCOUNTS_BALANCES_READ, etc.), no niveles jerárquicos como Chile."
+          },
+          "opciones": [
+            { "id": "sin-niveles", "label": "Sin modelo de privilegios", "tag": "Plano",
+              "descripcion": "Consentimiento al recurso completo.",
+              "trade_offs": ["Mínima carga conceptual.", "Granularidad limitada.", "Difícil mínimo privilegio.", "Reduce trabajo AS."] },
+            { "id": "jerarquico", "label": "Jerárquico por niveles", "tag": "Acumulativo",
+              "descripcion": "Tres niveles acumulativos por profundidad de endpoint.",
+              "trade_offs": ["Predecible y fácil de mapear.", "Granularidad fina.", "Acumulativo en pantallas.", "Catálogo coherente requerido."] },
+            { "id": "por-dominio", "label": "Por dominio", "tag": "Atómico",
+              "descripcion": "Permiso específico por operación, independiente.",
+              "trade_offs": ["Máxima flexibilidad.", "Pantallas pueden densificarse.", "Documentación sofisticada.", "Habitual en perfiles diversificados."] }
+          ]
+        },
+        {
+          "id": "grant-management",
+          "num": "06",
+          "categoria": "Ciclo de vida",
+          "pregunta_corta": "¿Grant Management?",
+          "pregunta": "¿Qué alcance de Grant Management adopta el perfil peruano?",
+          "contexto": "OpenID define seis operaciones de ciclo de vida del grant. La jurisdicción decide cuáles habilita.",
+          "anchor_brasil": {
+            "opcion": "gm-minimo",
+            "nota": "Brasil opera un modelo intermedio: creación de consentimientos vía /consents, revocación explícita, sin Update/Replace/Merge estándar OpenID."
+          },
+          "opciones": [
+            { "id": "no-gm", "label": "No adopta Grant Management", "tag": "Mínimo",
+              "descripcion": "Solo flujo Authorization Code y revocación.",
+              "trade_offs": ["Menor coste inicial.", "Cada modificación exige reautorización completa.", "Sin endpoint estándar de consulta.", "Adecuado para consentimientos simples."] },
+            { "id": "gm-minimo", "label": "Mínimo: Create + Revoke", "tag": "Básico",
+              "descripcion": "Creación vía RAR y revocación explícita.",
+              "trade_offs": ["Cubre ciclo básico.", "Sin modificación sin nuevo flujo.", "Coste medio.", "Suficiente para fases iniciales."] },
+            { "id": "gm-completo", "label": "Completo: las 6 operaciones", "tag": "Estándar OpenID",
+              "descripcion": "Create, Update, Replace, Merge, Query y Revoke.",
+              "trade_offs": ["Ampliar/reducir/prorrogar sin nuevo flujo.", "Panel de Control rico.", "Mayor coste, merge complejo.", "Recomendado en fases maduras."] }
+          ]
+        },
+        {
+          "id": "refresh-rotation",
+          "num": "07",
+          "categoria": "Ciclo de vida",
+          "pregunta_corta": "¿Rotación de refresh token?",
+          "pregunta": "¿Se rota el refresh_token cada vez que se canjea?",
+          "contexto": "Cada uso del refresh_token puede o no generar uno nuevo e invalidar el anterior.",
+          "anchor_brasil": {
+            "opcion": "con-rotacion",
+            "nota": "Brasil mandata rotación de refresh tokens en cada canje."
+          },
+          "opciones": [
+            { "id": "sin-rotacion", "label": "Sin rotación", "tag": "Estable",
+              "descripcion": "Mismo refresh_token hasta su expiración natural.",
+              "trade_offs": ["Más simple operativamente.", "Mayor ventana de exposición.", "Sin detección de uso indebido.", "Aceptable con vida corta del refresh."] },
+            { "id": "con-rotacion", "label": "Con rotación obligatoria", "tag": "Robusto",
+              "descripcion": "Cada canje emite uno nuevo e invalida el anterior. Doble uso → revoca grant.",
+              "trade_offs": ["Detección de uso indebido.", "Mayor complejidad de estado.", "Reglas de error claras ante reintentos.", "Recomendado con refresh largo."] }
+          ]
+        },
+        {
+          "id": "vigencia-maxima",
+          "num": "08",
+          "categoria": "Ciclo de vida",
+          "pregunta_corta": "¿Vigencia máxima del consentimiento?",
+          "pregunta": "¿Cuál es la vigencia máxima permitida para un consentimiento de acceso a datos?",
+          "contexto": "La jurisdicción define un tope, típicamente diferenciado entre datos y pagos.",
+          "anchor_brasil": {
+            "opcion": "12-meses",
+            "nota": "Brasil opera con vigencia de 12 meses por defecto para acceso a datos, con renovación obligatoria."
+          },
+          "opciones": [
+            { "id": "90-dias", "label": "90 días", "tag": "Conservador",
+              "descripcion": "Tope corto. Reautorización trimestral.",
+              "trade_offs": ["Reduce consentimientos olvidados.", "Mayor fricción UX.", "Modelo conservador.", "Prioriza control sobre fluidez."] },
+            { "id": "12-meses", "label": "12 meses", "tag": "Equilibrio",
+              "descripcion": "Vigencia anual. Balance fluidez / revisión.",
+              "trade_offs": ["Reduce fricción.", "Revisión anual obligatoria.", "Frecuente en perfiles maduros.", "Compatible con PFM."] },
+            { "id": "36-meses", "label": "36 meses", "tag": "Extenso",
+              "descripcion": "Tres años. Relación de larga duración.",
+              "trade_offs": ["Mínima fricción para uso continuado.", "Mayor riesgo de olvidados.", "Panel de Control prominente requerido.", "Solo con Grant Management completo."] },
+            { "id": "configurable", "label": "Configurable por tipo", "tag": "Por caso de uso",
+              "descripcion": "Topes diferenciados: corto para pagos, largo para datos.",
+              "trade_offs": ["Ajuste al riesgo real.", "Documentación más extensa.", "Matriz pública requerida.", "Modelo predominante en perfiles maduros."] }
+          ]
+        },
+        {
+          "id": "multi-autorizacion",
+          "num": "09",
+          "categoria": "Ciclo de vida",
+          "pregunta_corta": "¿Multi-autorización para PJ?",
+          "pregunta": "¿Cómo se gestiona el consentimiento cuando el cliente es persona jurídica con apoderados múltiples?",
+          "contexto": "Una empresa con firmas conjuntas no encaja en el flujo individual.",
+          "anchor_brasil": {
+            "opcion": "multi-sincronica",
+            "nota": "Brasil habilita multi-autorización con flujo sincrónico para empresas pequeñas; modelo asíncrono está en roadmap."
+          },
+          "opciones": [
+            { "id": "no-multi", "label": "No habilitada", "tag": "Solo PN",
+              "descripcion": "Solo consentimiento individual.",
+              "trade_offs": ["Mínimo coste.", "Excluye corporativo con firmas conjuntas.", "Limita alcance económico.", "Aceptable en fases iniciales PN."] },
+            { "id": "multi-sincronica", "label": "Sincrónica", "tag": "Sesión única",
+              "descripcion": "Todos los apoderados firman en la misma sesión.",
+              "trade_offs": ["Implementación más simple.", "Coordinación logística difícil.", "Adecuada para empresas pequeñas.", "Limitada para corporativos grandes."] },
+            { "id": "multi-asincronica", "label": "Asíncrona", "tag": "Por separado",
+              "descripcion": "Cada apoderado firma en su tiempo. Grant en estado AwaitingMultiAuthorisation con TTL.",
+              "trade_offs": ["Habilita corporativo real.", "Mayor complejidad AS.", "TTL y caducidad parcial requeridos.", "Recomendado para cobertura corporativa robusta."] }
+          ]
+        },
+        {
+          "id": "jarm",
+          "num": "10",
+          "categoria": "Canales",
+          "pregunta_corta": "¿JARM?",
+          "pregunta": "¿Se adopta JARM (JWT Secured Authorization Response Mode)?",
+          "contexto": "JARM empuja la respuesta del /authorize dentro de un JWT firmado. Está en FAPI 2.0 Advanced.",
+          "anchor_brasil": {
+            "opcion": "baseline-sin-jarm",
+            "nota": "Brasil opera sobre FAPI 2.0 Baseline en producción. JARM no está mandatorio."
+          },
+          "opciones": [
+            { "id": "baseline-sin-jarm", "label": "Sin JARM (Baseline)", "tag": "FAPI 2.0 Baseline",
+              "descripcion": "Respuesta /authorize como query params estándar.",
+              "trade_offs": ["Implementación más simple.", "Compatibilidad amplia.", "No cierra manipulación de respuesta en navegador.", "Aceptable con state y nonce estrictos."] },
+            { "id": "advanced-con-jarm", "label": "Con JARM (Advanced)", "tag": "FAPI 2.0 Advanced",
+              "descripcion": "Respuesta del /authorize llega dentro de un JWT firmado.",
+              "trade_offs": ["Cierra manipulación en tránsito.", "Mayor coste para clientes.", "Refuerzo recomendado en entornos no controlados.", "No repudio del AS."] }
+          ]
+        },
+        {
+          "id": "ciba",
+          "num": "11",
+          "categoria": "Canales",
+          "pregunta_corta": "¿CIBA?",
+          "pregunta": "¿Se habilita CIBA para canales sin navegador?",
+          "contexto": "CIBA permite que el cliente inicie autenticación por backchannel y el usuario apruebe en otro dispositivo registrado.",
+          "anchor_brasil": {
+            "opcion": "ciba-no",
+            "nota": "Brasil no contempla CIBA como estándar obligatorio. Roadmap futuro lo evalúa para inclusión financiera y canales físicos."
+          },
+          "opciones": [
+            { "id": "ciba-no", "label": "No habilitado", "tag": "Solo navegador",
+              "descripcion": "Todos los flujos requieren navegador.",
+              "trade_offs": ["Modelo más simple.", "Excluye canales tradicionales y físicos.", "Adecuado para fases digital-first.", "Limita inclusión financiera."] },
+            { "id": "ciba-canales", "label": "Habilitado para canales sin navegador", "tag": "Canales extendidos",
+              "descripcion": "CIBA disponible para cajeros, IVR, call center, comercio físico.",
+              "trade_offs": ["Habilita Open Finance fuera del navegador.", "Coste significativo de implementación.", "Infraestructura push requerida.", "Valor en mercados con canales no digitales fuertes."] }
+          ]
+        },
+        {
+          "id": "catalogo-fase-1",
+          "num": "12",
+          "categoria": "Alcance",
+          "pregunta_corta": "¿Catálogo fase 1?",
+          "pregunta": "¿Qué clústeres de APIs cubre la primera fase peruana?",
+          "contexto": "La mayoría de jurisdicciones avanzan por fases. La decisión condiciona el roadmap a 18–36 meses.",
+          "anchor_brasil": {
+            "opcion": "cuentas-pagos",
+            "nota": "Brasil arrancó con Cuentas + Pagos (Fase 1 y 2), y avanzó posteriormente a Productos (créditos, tarjetas, inversiones) y Seguros (Open Insurance)."
+          },
+          "opciones": [
+            { "id": "solo-cuentas", "label": "Solo Cuentas", "tag": "Mínimo",
+              "descripcion": "APIs de Accounts (listado, detalle, balance, transacciones).",
+              "trade_offs": ["Alcance mínimo, menor riesgo.", "Habilita PFM y agregación.", "Excluye iniciación de pagos.", "Adecuado con TPP en formación."] },
+            { "id": "cuentas-pagos", "label": "Cuentas + Pagos", "tag": "Estándar",
+              "descripcion": "Suma APIs de iniciación de pagos (Single/Scheduled/Recurring).",
+              "trade_offs": ["Habilita casos P2B/B2B rentables.", "Infraestructura de pagos lista requerida.", "Mayor complejidad regulatoria.", "Estándar de mercado en perfiles maduros."] },
+            { "id": "cuentas-pagos-productos", "label": "Cuentas + Pagos + Productos", "tag": "Open Finance",
+              "descripcion": "Suma Loans, Cards, Investments.",
+              "trade_offs": ["Habilita scoring crediticio y gestión patrimonial.", "Coordinación entre áreas del banco requerida.", "Mayor coste de adopción.", "Posiciona en frontera Open Finance."] },
+            { "id": "stack-completo", "label": "Stack completo", "tag": "Open X",
+              "descripcion": "+ Insurances, Pensiones, Reportes de Pago, Confirmación de Fondos.",
+              "trade_offs": ["Alcance maximalista.", "Coste muy elevado.", "Alineamiento con regulación sectorial.", "Cronograma realista por sub-fase requerido."] }
+          ]
+        }
+      ]
+    },
+
+    {
+      "tipo": "capacidad-ecosistema",
+      "gate": {
+        "requiere": "perfil-builder",
+        "label": "Bloque 2 bloqueado",
+        "descripcion": "Completa las 12 decisiones del Bloque 1 · Perfil FAPI 2.0 (opción + esfuerzo EF + prioridad consumidor) para desbloquear los SLAs del ecosistema. El facilitador puede liberar manualmente si necesita ajustar el ritmo de la sala."
+      },
+      "titulo": "Bloque 2 · SLAs del ecosistema peruano",
+      "subtitulo": "Por cada dimensión y horizonte, las EFs declaran capacidad y esfuerzo, los consumidores declaran necesidad y prioridad, y el regulador propone un umbral. Cada dimensión muestra como referencia lo que Brasil sostiene en ese horizonte.",
+      "horizontes": [
+        { "id": "corto", "label": "Corto plazo · 0–6 meses",  "sub": "Marcha blanca / arranque" },
+        { "id": "medio", "label": "Medio plazo · 6–18 meses", "sub": "Operación consolidada" },
+        { "id": "largo", "label": "Largo plazo · 24+ meses",  "sub": "Ecosistema maduro" }
+      ],
+      "dimensiones": [
+        {
+          "id": "disponibilidad", "num": "DIM 01",
+          "titulo": "Disponibilidad",
+          "descripcion": "Porcentaje de tiempo en que la API responde correctamente sobre una ventana mensual.",
+          "anchor_brasil": {
+            "corto": "Brasil: 95% mensual desde producción.",
+            "medio": "Brasil: 95% con APIs core en umbrales más estrictos.",
+            "largo": "Brasil: 95% mantenido; bancos top con SLA comercial 99%."
+          }
+        },
+        {
+          "id": "tiempo-respuesta", "num": "DIM 02",
+          "titulo": "Tiempo de respuesta",
+          "descripcion": "Latencia desde request hasta response, percentil 95.",
+          "anchor_brasil": {
+            "corto": "Brasil: sin SLA explícito; benchmarks ~1500 ms p95.",
+            "medio": "Brasil: ~1000 ms p95 en APIs core.",
+            "largo": "Brasil: aspira a 750 ms alineado con UK."
+          }
+        },
+        {
+          "id": "trafico", "num": "DIM 03",
+          "titulo": "Límite de tráfico agregado",
+          "descripcion": "Capacidad total de la plataforma del proveedor, en TPS o TPM.",
+          "anchor_brasil": {
+            "corto": "Brasil: 200 TPM iniciales con escalado por fase.",
+            "medio": "Brasil: 300–500 TPM por API; 300 TPS agregados.",
+            "largo": "Brasil: 500+ TPM con escalado elástico bajo demanda."
+          }
+        },
+        {
+          "id": "cuotas-cliente", "num": "DIM 04",
+          "titulo": "Límite de operaciones por cliente",
+          "descripcion": "Cuotas por consumidor (PSBI/PSIP) para repartir capacidad y detectar abusos.",
+          "anchor_brasil": {
+            "corto": "Brasil: banda baja inicial (4 ops/ventana) para nuevos PSBI.",
+            "medio": "Brasil: tres bandas activas (baja 4 / media 120 / alta 420).",
+            "largo": "Brasil: bandas refinadas con detección de anomalías automática."
+          }
+        },
+        {
+          "id": "timeout", "num": "DIM 05",
+          "titulo": "Timeout",
+          "descripcion": "Tiempo máximo de espera antes de considerar fallida una llamada.",
+          "anchor_brasil": {
+            "corto": "Brasil: 15 segundos estándar.",
+            "medio": "Brasil: 15 segundos estándar.",
+            "largo": "Brasil: 15 segundos con monitoreo por tipo de API."
+          }
+        },
+        {
+          "id": "procesamiento", "num": "DIM 06",
+          "titulo": "Procesamiento (paginación + ventana histórica)",
+          "descripcion": "Reglas de paginación y rango temporal de datos disponibles.",
+          "anchor_brasil": {
+            "corto": "Brasil: 25–100 páginas; 12 meses históricos mínimos.",
+            "medio": "Brasil: 25–100 páginas; 24 meses históricos.",
+            "largo": "Brasil: 25–100 páginas; ventanas extendidas por compromiso comercial."
+          }
+        },
+        {
+          "id": "consentimiento", "num": "DIM 07",
+          "titulo": "Consentimiento (panel de gestión)",
+          "descripcion": "Existencia y características del panel donde el usuario consulta y revoca.",
+          "anchor_brasil": {
+            "corto": "Brasil: panel obligatorio en producción; funcionalidad básica.",
+            "medio": "Brasil: panel con visibilidad y revocación granular por consentimiento.",
+            "largo": "Brasil: panel con histórico completo y consultas regulatorias integradas."
+          }
+        },
+        {
+          "id": "monitoreo", "num": "DIM 08",
+          "titulo": "Monitoreo y reporte",
+          "descripcion": "Observabilidad operativa y regulatoria del ecosistema.",
+          "anchor_brasil": {
+            "corto": "Brasil: monitoreo interno + reportes mensuales al BACEN.",
+            "medio": "Brasil: tiempo real por API; dashboards semipúblicos.",
+            "largo": "Brasil: dashboards públicos, alertas automáticas, fiscalización activa."
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "acta-export",
+      "gate": {
+        "requiere": "capacidad-ecosistema",
+        "label": "Exportación bloqueada",
+        "descripcion": "Completa las 24 celdas de la matriz de capacidad (8 dimensiones × 3 horizontes) para desbloquear la exportación. El facilitador puede liberar manualmente para exportar un cierre parcial si la sesión termina antes."
+      },
+      "eyebrow": "Cierre del taller",
+      "titulo": "Exportar ficha-resumen + acta detallada",
+      "subtitulo": "Los dos archivos cubren lo que sale del taller: la ficha para circular entre participantes (corto, lectura rápida) y el acta para archivo del facilitador y la SBS (detalle por decisión y celda, banderas levantadas, gaps a resolver).",
+      "fapi": {
+        "decisiones": [
+          { "id": "sender-constraining",       "num": "01", "pregunta_corta": "Sender-constraining",      "opciones": [ {"id":"mtls-only","label":"Solo mTLS-bound"}, {"id":"dpop-only","label":"Solo DPoP"}, {"id":"ambos","label":"Ambos permitidos"} ], "anchor_brasil": {"opcion":"mtls-only"} },
+          { "id": "algoritmos-firma",          "num": "02", "pregunta_corta": "Algoritmos de firma",      "opciones": [ {"id":"ps256-only","label":"Solo PS256"}, {"id":"es256-only","label":"Solo ES256"}, {"id":"ambos-firma","label":"PS256 y ES256"} ], "anchor_brasil": {"opcion":"ps256-only"} },
+          { "id": "vida-access-token",         "num": "03", "pregunta_corta": "Vida access token",        "opciones": [ {"id":"5min","label":"5 minutos"}, {"id":"15min","label":"15 minutos"}, {"id":"60min","label":"60 minutos"} ], "anchor_brasil": {"opcion":"15min"} },
+          { "id": "granularidad-consentimiento","num": "04","pregunta_corta": "Granularidad",             "opciones": [ {"id":"scope-clasico","label":"Scope clásico"}, {"id":"rar-generico","label":"RAR genérico"}, {"id":"rar-estructurado","label":"RAR estructurado"} ], "anchor_brasil": {"opcion":"rar-generico"} },
+          { "id": "modelo-privilegios",        "num": "05", "pregunta_corta": "Modelo privilegios",       "opciones": [ {"id":"sin-niveles","label":"Sin niveles"}, {"id":"jerarquico","label":"Jerárquico"}, {"id":"por-dominio","label":"Por dominio"} ], "anchor_brasil": {"opcion":"por-dominio"} },
+          { "id": "grant-management",          "num": "06", "pregunta_corta": "Grant Management",         "opciones": [ {"id":"no-gm","label":"No adopta"}, {"id":"gm-minimo","label":"Mínimo"}, {"id":"gm-completo","label":"Completo"} ], "anchor_brasil": {"opcion":"gm-minimo"} },
+          { "id": "refresh-rotation",          "num": "07", "pregunta_corta": "Refresh rotation",         "opciones": [ {"id":"sin-rotacion","label":"Sin rotación"}, {"id":"con-rotacion","label":"Con rotación"} ], "anchor_brasil": {"opcion":"con-rotacion"} },
+          { "id": "vigencia-maxima",           "num": "08", "pregunta_corta": "Vigencia máxima",          "opciones": [ {"id":"90-dias","label":"90 días"}, {"id":"12-meses","label":"12 meses"}, {"id":"36-meses","label":"36 meses"}, {"id":"configurable","label":"Configurable"} ], "anchor_brasil": {"opcion":"12-meses"} },
+          { "id": "multi-autorizacion",        "num": "09", "pregunta_corta": "Multi-autorización PJ",    "opciones": [ {"id":"no-multi","label":"No habilitada"}, {"id":"multi-sincronica","label":"Sincrónica"}, {"id":"multi-asincronica","label":"Asíncrona"} ], "anchor_brasil": {"opcion":"multi-sincronica"} },
+          { "id": "jarm",                      "num": "10", "pregunta_corta": "JARM",                     "opciones": [ {"id":"baseline-sin-jarm","label":"Sin JARM"}, {"id":"advanced-con-jarm","label":"Con JARM"} ], "anchor_brasil": {"opcion":"baseline-sin-jarm"} },
+          { "id": "ciba",                      "num": "11", "pregunta_corta": "CIBA",                     "opciones": [ {"id":"ciba-no","label":"No habilitado"}, {"id":"ciba-canales","label":"Habilitado canales"} ], "anchor_brasil": {"opcion":"ciba-no"} },
+          { "id": "catalogo-fase-1",           "num": "12", "pregunta_corta": "Catálogo fase 1",          "opciones": [ {"id":"solo-cuentas","label":"Solo Cuentas"}, {"id":"cuentas-pagos","label":"Cuentas + Pagos"}, {"id":"cuentas-pagos-productos","label":"+ Productos"}, {"id":"stack-completo","label":"Stack completo"} ], "anchor_brasil": {"opcion":"cuentas-pagos"} }
+        ]
+      },
+      "sla": {
+        "horizontes": [
+          { "id": "corto", "label": "Corto plazo · 0–6 meses" },
+          { "id": "medio", "label": "Medio plazo · 6–18 meses" },
+          { "id": "largo", "label": "Largo plazo · 24+ meses" }
+        ],
+        "dimensiones": [
+          { "id": "disponibilidad",   "titulo": "Disponibilidad" },
+          { "id": "tiempo-respuesta", "titulo": "Tiempo de respuesta" },
+          { "id": "trafico",          "titulo": "Tráfico agregado" },
+          { "id": "cuotas-cliente",   "titulo": "Cuotas por cliente" },
+          { "id": "timeout",          "titulo": "Timeout" },
+          { "id": "procesamiento",    "titulo": "Procesamiento" },
+          { "id": "consentimiento",   "titulo": "Consentimiento" },
+          { "id": "monitoreo",        "titulo": "Monitoreo" }
+        ]
+      }
+    },
+
+    {
+      "tipo": "footer-completar",
+      "titulo": "Cerrar el taller",
+      "subtitulo": "Marca el taller como cerrado cuando hayas exportado la ficha-resumen y el acta. Se desbloquea el badge Co-creador del Ecosistema Peruano."
+    },
+
+    {
+      "tipo": "badge-modal"
+    }
+  ]
+}

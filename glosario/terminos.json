@@ -3,413 +3,1011 @@
     "termino_completo": "Estándares técnicos Open Finance",
     "definicion_corta": "Conjunto de especificaciones (TLS, OAuth 2.0, OpenID Connect, FAPI 2.0, ISO 20022, etc.) que definen cómo se construye y opera una API regulada Open Finance.",
     "definicion_extendida": "No son una sola norma. Son un stack: capa de transporte (TLS/mTLS), autorización (OAuth 2.0 + extensiones FAPI: PAR, RAR, PKCE), identidad (OpenID Connect), formato de mensajería (JSON, ISO 20022 en pagos), y reglas regulatorias específicas de cada jurisdicción.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "04-oauth-openid-fapi"],
-    "etiquetas": ["concepto", "general"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "concepto",
+      "general"
+    ]
   },
   "TLS": {
     "termino_completo": "Transport Layer Security",
     "definicion_corta": "Protocolo que cifra la comunicación entre cliente y servidor sobre la red. Es la S de HTTPS.",
     "definicion_extendida": "Sucesor de SSL. La versión actual recomendada es TLS 1.3 (RFC 8446). Antes de transmitir datos, cliente y servidor negocian versión, algoritmos y claves en un proceso llamado handshake. En TLS estándar solo el servidor presenta certificado.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls"],
-    "etiquetas": ["protocolo", "seguridad", "transporte"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "seguridad",
+      "transporte"
+    ]
   },
   "mTLS": {
     "termino_completo": "Mutual TLS",
     "definicion_corta": "Variante de TLS donde tanto cliente como servidor presentan certificados. Requisito de FAPI 2.0.",
     "definicion_extendida": "Mismo handshake que TLS pero el cliente también envía un certificado X.509. El servidor valida la cadena. Si el cert del cliente no fue emitido por una CA reconocida o ha expirado, la conexión se cierra antes de procesar la petición HTTP. Es la primera capa de filtrado en arquitecturas Open Finance reguladas.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "04-oauth-openid-fapi"],
-    "etiquetas": ["protocolo", "seguridad", "transporte", "FAPI"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "seguridad",
+      "transporte",
+      "FAPI"
+    ]
   },
   "handshake": {
     "termino_completo": "Handshake TLS",
     "definicion_corta": "Negociación inicial entre cliente y servidor donde se acuerdan versión, algoritmos y claves de cifrado.",
     "definicion_extendida": "En TLS 1.3 el handshake típico tiene cuatro pasos: ClientHello, ServerHello + Certificado, Verificación + intercambio de claves, Finished. En mTLS añade un paso donde el cliente también presenta su certificado. Ocurre antes de cualquier intercambio HTTP.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls"],
-    "etiquetas": ["concepto", "protocolo", "transporte"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls"
+    ],
+    "etiquetas": [
+      "concepto",
+      "protocolo",
+      "transporte"
+    ]
   },
   "X.509": {
     "termino_completo": "Certificado X.509",
     "definicion_corta": "Estándar de certificados digitales. Contiene identidad del titular, clave pública, validez y firma de una CA.",
     "definicion_extendida": "Define el formato y los campos de los certificados digitales utilizados en TLS, mTLS, firmado JWT y muchos otros protocolos de seguridad. Los certificados se distribuyen en formatos PEM (texto base64) o DER (binario). En Open Finance los emiten CAs específicas del directorio regulatorio.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls"],
-    "etiquetas": ["estándar", "criptografía", "PKI"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls"
+    ],
+    "etiquetas": [
+      "estándar",
+      "criptografía",
+      "PKI"
+    ]
   },
   "CA": {
     "termino_completo": "Certificate Authority",
     "definicion_corta": "Entidad que emite y firma certificados digitales, garantizando la identidad del titular ante terceros.",
     "definicion_extendida": "En Internet público las CAs son comerciales (DigiCert, Let's Encrypt, etc.). En Open Finance regulado son CAs específicas del directorio: la CA del FAD chileno, la del Open Finance Brasil, eIDAS QTSPs en Europa, etc. Solo certificados firmados por la CA reconocida son aceptados por las APIs reguladas.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
-    "etiquetas": ["actor", "PKI", "regulación"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "actor",
+      "PKI",
+      "regulación"
+    ]
   },
   "FAPI": {
     "termino_completo": "Financial-grade API (FAPI 2.0)",
     "definicion_corta": "Perfil de seguridad que endurece OAuth 2.0 para el sector financiero. Exige mTLS, PAR, PKCE y otros refuerzos.",
     "definicion_extendida": "Mantenido por OpenID Foundation. FAPI 2.0 (2022) simplifica y robustece sobre FAPI 1.0. Es el perfil adoptado por OBIE (UK), PSD2/EBA (UE), Open Finance Brasil, FAD chileno NCG 514, y la mayoría de iniciativas Open Finance maduras. No es opcional cuando una regulación lo invoca explícitamente.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "04-oauth-openid-fapi", "06-estandares-regulatorios"],
-    "etiquetas": ["estándar", "seguridad", "OAuth"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "04-oauth-openid-fapi",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "estándar",
+      "seguridad",
+      "OAuth"
+    ]
   },
   "ASPSP": {
     "termino_completo": "Account Servicing Payment Service Provider",
     "definicion_corta": "El banco u otra entidad financiera que opera las cuentas y expone APIs reguladas Open Finance.",
     "definicion_extendida": "Terminología de PSD2 que se ha extendido a otras jurisdicciones. Es la entidad que sostiene la cuenta del usuario y debe permitir el acceso regulado a TPPs autorizados, mediante APIs estandarizadas, mTLS y consentimiento explícito.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance", "06-estandares-regulatorios"],
-    "etiquetas": ["actor", "PSD2", "regulación"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "05-arquitectura-open-finance",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "actor",
+      "PSD2",
+      "regulación"
+    ]
   },
   "TPP": {
     "termino_completo": "Third Party Provider",
     "definicion_corta": "Tercero autorizado a consumir APIs Open Finance del ASPSP, con consentimiento del usuario.",
     "definicion_extendida": "Categoría general que agrupa AISP (Account Information Service Providers, agregadores) y PISP (Payment Initiation Service Providers, iniciadores de pago). En el FAD chileno se usan los términos paralelos PSIP y PSBI. Para operar deben estar registrados regulatoriamente y obtener cert mTLS de la CA del directorio.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance"],
-    "etiquetas": ["actor", "PSD2"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "actor",
+      "PSD2"
+    ]
   },
   "PSIP": {
     "termino_completo": "Proveedor de Servicios de Iniciación de Pagos",
     "definicion_corta": "Equivalente chileno a PISP en PSD2 — TPP autorizado a iniciar pagos en cuenta del usuario, con su consentimiento.",
     "definicion_extendida": "Terminología utilizada en la NCG 514 del FAD chileno (CMF). Junto a los PSBI (equivalentes a AISP), forman la categoría de terceros autorizados que consumen APIs reguladas en Chile.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
-    "etiquetas": ["actor", "Chile", "regulación"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "actor",
+      "Chile",
+      "regulación"
+    ]
   },
   "DCR": {
     "termino_completo": "Dynamic Client Registration",
     "definicion_corta": "Mecanismo estándar (RFC 7591) por el que un cliente OAuth se registra programáticamente contra un servidor de autorización o directorio.",
     "definicion_extendida": "En Open Finance se usa para que un TPP, ya autorizado regulatoriamente, obtenga sus credenciales (incluyendo el certificado de cliente) del directorio del ecosistema. El FAD chileno y Open Finance Brasil usan DCR para emitir certs mTLS a los TPPs registrados.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance"],
-    "etiquetas": ["protocolo", "OAuth", "RFC"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "OAuth",
+      "RFC"
+    ]
   },
   "SSA": {
     "termino_completo": "Software Statement Assertion",
     "definicion_corta": "JWT firmado por el Directorio del ecosistema que contiene los atributos verificados de una organización autorizada (organization_id, roles, jwks_uri).",
     "definicion_extendida": "Definida en RFC 7591 sección 2.3. Es la prueba criptográfica de que un cliente que pide registrarse vía DCR está realmente autorizado regulatoriamente. El Authorization Server valida la firma del SSA contra el JWKS del Directorio. En el FAD chileno se exige firma PS256 y validación de exp, aud y jti.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "04-oauth-openid-fapi"],
-    "etiquetas": ["JWT", "DCR", "FAD", "regulación"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "JWT",
+      "DCR",
+      "FAD",
+      "regulación"
+    ]
   },
   "FAD": {
     "termino_completo": "Finanzas Abiertas Chile (espacio técnico)",
     "definicion_corta": "Iniciativa pública chilena que documenta los perfiles, estándares y especificaciones técnicas del Sistema de Finanzas Abiertas (SFA).",
     "definicion_extendida": "Aterriza en documentos versionados (FAD vX.Y.Z) las disposiciones de la NCG 514 de la CMF. Por ejemplo: FAD v1.0.1 define el flujo Dynamic Client Registration. El equipo de Open Business de Minsait participa en su construcción. Su Confluence público es la mejor referencia LATAM viva sobre Open Finance regulado.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
-    "etiquetas": ["regulación", "Chile", "estándar"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "regulación",
+      "Chile",
+      "estándar"
+    ]
   },
   "NCG-514": {
     "termino_completo": "Norma de Carácter General 514 (CMF Chile)",
     "definicion_corta": "Norma de la Comisión para el Mercado Financiero (CMF) que regula el Sistema de Finanzas Abiertas chileno.",
     "definicion_extendida": "Establece roles (IPI, IPC, PSBI, PSIP), obligaciones, esquemas de consentimiento y disposiciones técnicas. Sus anexos técnicos remiten al FAD para los detalles operativos. El Anexo 3 cubre APIs y mecanismos de registro de clientes.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
-    "etiquetas": ["regulación", "Chile"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "regulación",
+      "Chile"
+    ]
   },
   "PSBI": {
     "termino_completo": "Prestador de Servicios Basados en Información",
     "definicion_corta": "Equivalente chileno a AISP (PSD2). TPP autorizado a acceder a información de cuentas con consentimiento del usuario.",
     "definicion_extendida": "Terminología CMF. Junto a los PSIP (iniciación de pagos), forman las dos categorías principales de terceros que consumen APIs reguladas en el SFA chileno. Para operar deben estar registrados en el Directorio CMF y obtener su SSA + cert mTLS.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "06-estandares-regulatorios"],
-    "etiquetas": ["actor", "Chile", "regulación"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "actor",
+      "Chile",
+      "regulación"
+    ]
   },
   "IPI": {
     "termino_completo": "Institución Proveedora de Información",
     "definicion_corta": "Entidad chilena que opera APIs reguladas para que PSBI accedan a información de cuentas (terminología NCG 514).",
     "definicion_extendida": "Equivalente conceptual al ASPSP de PSD2 cuando atiende consultas de información. Implementa el Authorization Server del SFA y recibe los DCR. Convive con el rol IPC para iniciación de pagos.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance"],
-    "etiquetas": ["actor", "Chile", "regulación"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "actor",
+      "Chile",
+      "regulación"
+    ]
   },
   "IPC": {
     "termino_completo": "Institución Proveedora de Cuentas de Pago",
     "definicion_corta": "Entidad chilena que opera APIs reguladas para que PSIP inicien pagos en cuentas del usuario (terminología NCG 514).",
     "definicion_extendida": "Equivalente conceptual al ASPSP de PSD2 cuando atiende iniciación de pagos. Implementa el Authorization Server del SFA y recibe los DCR para PSIP.",
-    "modulos_relacionados": ["03-seguridad-tls-mtls", "05-arquitectura-open-finance"],
-    "etiquetas": ["actor", "Chile", "regulación"]
+    "modulos_relacionados": [
+      "03-seguridad-tls-mtls",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "actor",
+      "Chile",
+      "regulación"
+    ]
   },
   "API": {
     "termino_completo": "Application Programming Interface",
     "definicion_corta": "Contrato entre dos sistemas que define qué se puede pedir y cómo se entrega la respuesta. No es código que se descarga; es una promesa publicada por un servidor.",
     "definicion_extendida": "Una API expone endpoints (direcciones concretas) que reciben peticiones de un tipo específico y devuelven respuestas en un formato acordado. En Open Finance las APIs son la base de toda integración: bancos exponen cuentas, pagos y consentimientos; TPPs los consumen. La API esconde la implementación interna del banco — solo importa el contrato.",
-    "modulos_relacionados": ["01-fundamentos-api", "02-http-rest-json", "05-arquitectura-open-finance"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "01-fundamentos-api",
+      "02-http-rest-json",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "endpoint": {
     "termino_completo": "Endpoint",
     "definicion_corta": "Dirección concreta dentro de una API que recibe peticiones de un tipo específico. Ejemplo: GET /accounts/{id}/balance.",
     "definicion_extendida": "Un endpoint se identifica por su método HTTP + ruta. Cada uno tiene su propia documentación: qué parámetros acepta, qué devuelve cuando todo va bien, qué errores puede producir. Una API completa es el conjunto de sus endpoints. En Open Finance los endpoints están estandarizados por el regulador (FAD chileno, OBIE británico, etc.) para que cualquier consumidor se integre sin sorpresas.",
-    "modulos_relacionados": ["01-fundamentos-api", "02-http-rest-json"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "01-fundamentos-api",
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "contrato-api": {
     "termino_completo": "Contrato de una API",
     "definicion_corta": "Documentación formal que describe todos los endpoints de una API: qué piden, qué devuelven, qué errores producen.",
     "definicion_extendida": "Habitualmente publicado en formato OpenAPI (también llamado Swagger). Permite a cualquier consumidor entender la API sin escribir código previo. En Open Finance regulado el contrato es de obligado cumplimiento — el banco no puede cambiar la forma de un endpoint sin versionar.",
-    "modulos_relacionados": ["01-fundamentos-api", "02-http-rest-json"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "01-fundamentos-api",
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "SDK": {
     "termino_completo": "Software Development Kit",
     "definicion_corta": "Librería de código que envuelve las llamadas a una API para que los desarrolladores no las escriban a mano. Atado a un lenguaje (SDK Java, SDK Python).",
     "definicion_extendida": "El SDK no es la API: es una capa de conveniencia que se descarga y se integra en la aplicación cliente. Una API puede tener varios SDKs (uno por lenguaje) o ninguno. En Open Finance no son obligatorios — el contrato OpenAPI es lo que vincula. Los SDKs son una facilidad opcional que ofrecen algunos bancos o iniciativas.",
-    "modulos_relacionados": ["01-fundamentos-api"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "01-fundamentos-api"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "HTTP": {
     "termino_completo": "Hypertext Transfer Protocol",
     "definicion_corta": "Protocolo sobre el que se transmiten las peticiones y respuestas entre cliente y servidor en la web y en las APIs.",
     "definicion_extendida": "Define la estructura de una request (método + URL + headers + body) y de una response (código de estado + headers + body). En Open Finance siempre va sobre HTTPS — HTTP cifrado con TLS (módulo 03). Las versiones modernas son HTTP/1.1, HTTP/2 y HTTP/3.",
-    "modulos_relacionados": ["02-http-rest-json", "03-seguridad-tls-mtls"],
-    "etiquetas": ["protocolo", "fundamentos"]
+    "modulos_relacionados": [
+      "02-http-rest-json",
+      "03-seguridad-tls-mtls"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "fundamentos"
+    ]
   },
   "REST": {
     "termino_completo": "Representational State Transfer",
     "definicion_corta": "Estilo arquitectónico para construir APIs sobre HTTP usando rutas con sustantivos y los verbos GET, POST, PUT, DELETE con su semántica correcta.",
     "definicion_extendida": "Definido por Roy Fielding en 2000. En Open Finance se adopta una versión pragmática: rutas predecibles, idempotencia donde corresponde, códigos de estado bien usados, JSON como formato. La pureza académica (HATEOAS) no es exigencia regulatoria. FAD chileno, OBIE, Open Finance Brasil y PSD2 todos se basan en REST pragmático.",
-    "modulos_relacionados": ["02-http-rest-json"],
-    "etiquetas": ["concepto", "estilo", "fundamentos"]
+    "modulos_relacionados": [
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "concepto",
+      "estilo",
+      "fundamentos"
+    ]
   },
   "metodo-HTTP": {
     "termino_completo": "Método HTTP (verbo)",
     "definicion_corta": "GET, POST, PUT, PATCH, DELETE. Cada uno tiene una semántica propia que en REST se respeta a rajatabla.",
     "definicion_extendida": "GET para leer (idempotente, sin body). POST para crear (no idempotente, con body). PUT para reemplazar entero (idempotente). PATCH para modificar parcialmente. DELETE para eliminar o revocar (idempotente). En Open Finance el verbo correcto es parte del contrato — un endpoint que crea pagos es siempre POST.",
-    "modulos_relacionados": ["02-http-rest-json"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "codigo-estado": {
     "termino_completo": "Código de estado HTTP",
     "definicion_corta": "Número de tres cifras al inicio de toda respuesta HTTP. La primera cifra dice todo: 2 = bien, 4 = tu culpa, 5 = mi culpa.",
     "definicion_extendida": "2xx (200, 201, 202, 204) éxito. 4xx (400, 401, 403, 404, 409, 429) error del cliente. 5xx (500, 502, 503, 504) error del servidor. En Open Finance los códigos importan: una mala interpretación puede hacer reintentar un pago que ya se procesó.",
-    "modulos_relacionados": ["02-http-rest-json"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "header": {
     "termino_completo": "Header HTTP",
     "definicion_corta": "Metadatos de una petición o respuesta: autenticación, formato esperado, identificadores de trazabilidad.",
     "definicion_extendida": "Los headers más relevantes en Open Finance: Authorization (token de acceso), Content-Type (formato del body), Accept (formato esperado de respuesta), x-fapi-interaction-id (UUID de trazabilidad por llamada — el banco lo registra y permite encontrar el error exacto si hay problemas).",
-    "modulos_relacionados": ["02-http-rest-json", "04-oauth-openid-fapi"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "02-http-rest-json",
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "payload": {
     "termino_completo": "Payload (body)",
     "definicion_corta": "Contenido principal de una petición o respuesta HTTP. En Open Finance, casi siempre un objeto JSON.",
     "definicion_extendida": "El body se acompaña del header Content-Type que describe su formato (típicamente application/json). Las requests POST y PUT llevan body con los datos a crear o reemplazar. Las responses 2xx llevan body con los datos pedidos. Los GET y los DELETE típicamente no llevan body.",
-    "modulos_relacionados": ["02-http-rest-json"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "JSON": {
     "termino_completo": "JavaScript Object Notation",
     "definicion_corta": "Formato textual estandarizado para representar datos estructurados. El lenguaje común de los payloads en Open Finance.",
     "definicion_extendida": "Definido en RFC 8259. Se construye con objetos delimitados por llaves, arrays por corchetes, valores como strings, números, booleanos o null. En Open Finance las convenciones son: wrapping data/meta, importes como string para evitar pérdida de precisión, fechas en ISO 8601 UTC, moneda separada del monto.",
-    "modulos_relacionados": ["02-http-rest-json"],
-    "etiquetas": ["formato", "fundamentos"]
+    "modulos_relacionados": [
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "formato",
+      "fundamentos"
+    ]
   },
   "idempotencia": {
     "termino_completo": "Idempotencia",
     "definicion_corta": "Propiedad por la que llamar varias veces a una operación produce el mismo estado final que llamarla una vez.",
     "definicion_extendida": "GET, PUT y DELETE son idempotentes por diseño REST. POST no lo es: dos POST a /payments pueden crear dos pagos. Por eso en Open Finance los POST sensibles llevan cabecera x-idempotency-key con UUID único — si el cliente reintenta tras un error de red, el banco detecta la clave repetida y devuelve la respuesta original sin duplicar la operación.",
-    "modulos_relacionados": ["02-http-rest-json"],
-    "etiquetas": ["concepto", "fundamentos"]
+    "modulos_relacionados": [
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "concepto",
+      "fundamentos"
+    ]
   },
   "OAuth": {
     "termino_completo": "OAuth 2.0",
     "definicion_corta": "Protocolo de autorización delegada (RFC 6749) que permite a un tercero acceder a recursos en nombre del usuario sin que el usuario comparta credenciales.",
     "definicion_extendida": "Define cuatro roles (Resource Owner, Client, Authorization Server, Resource Server) y varios flujos de obtención de tokens. El más usado en Open Finance es Authorization Code Flow. OAuth resuelve solo autorización — para identidad se le añade OpenID Connect; para banca se le añade el perfil FAPI 2.0.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "05-arquitectura-open-finance"],
-    "etiquetas": ["protocolo", "autorización", "fundamentos"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "autorización",
+      "fundamentos"
+    ]
   },
   "OIDC": {
     "termino_completo": "OpenID Connect (OIDC)",
     "definicion_corta": "Capa de identidad sobre OAuth 2.0 que añade un id_token (JWT con info del usuario) y el endpoint /userinfo.",
     "definicion_extendida": "Mantenido por OpenID Foundation. Cuando el cliente solicita el scope openid, el AS emite además del access_token un id_token con claims registrados (sub, name, email, auth_time, acr, amr, nonce). Define endpoints estándar para descubrimiento, JWKS y userinfo. En FAPI 2.0 + SFA, OIDC es obligatorio.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["protocolo", "identidad", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "identidad",
+      "OAuth"
+    ]
   },
   "JWT": {
     "termino_completo": "JSON Web Token",
     "definicion_corta": "Formato compacto y autocontenido para transmitir información firmada entre partes. Estructura: header.payload.signature en base64url.",
     "definicion_extendida": "RFC 7519. Header lleva alg+kid, payload los claims, signature la firma del emisor. Los claims registrados son iss, sub, aud, exp, nbf, iat, jti. En FAPI 2.0 los tokens van firmados con PS256 o ES256 (nunca HS256 ni none). Nunca cifrados por defecto — eso lo hace JWE.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "05-arquitectura-open-finance"],
-    "etiquetas": ["formato", "token", "criptografía"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "formato",
+      "token",
+      "criptografía"
+    ]
   },
   "JWS": {
     "termino_completo": "JSON Web Signature",
     "definicion_corta": "Estándar (RFC 7515) de firma digital sobre objetos JSON. Garantiza integridad y autenticidad.",
     "definicion_extendida": "La serialización compacta de un JWS representa un JWT firmado. FAPI recomienda algoritmos asimétricos (RSA-PSS / ECDSA) para que la verificación se haga con clave pública distribuida en JWKS, sin necesidad de compartir secretos.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["criptografía", "firma", "RFC"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "criptografía",
+      "firma",
+      "RFC"
+    ]
   },
   "JWE": {
     "termino_completo": "JSON Web Encryption",
     "definicion_corta": "Estándar (RFC 7516) de cifrado del payload JSON. Los datos quedan ilegibles para quien no tenga la clave.",
     "definicion_extendida": "Se usa cuando el payload contiene datos sensibles que no se quiere exponer ni en logs intermedios o sistemas de tránsito. Si el canal es mTLS robusto, suele bastar con JWS — JWE se reserva para datos altamente sensibles.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["criptografía", "cifrado", "RFC"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "criptografía",
+      "cifrado",
+      "RFC"
+    ]
   },
   "claim": {
     "termino_completo": "Claim de un JWT",
     "definicion_corta": "Afirmación dentro del payload de un JWT. Cada claim es un par clave/valor; los registrados (iss, sub, aud, exp, iat, jti) tienen significado estandarizado.",
     "definicion_extendida": "Hay tres categorías: registrados (RFC 7519), públicos (registrados en IANA por la comunidad) y privados (acordados entre partes). En FAPI 2.0 destacan cnf (confirmation, ata el token al cert mTLS), grant_id (referencia al grant), authorization_details (alcance RAR).",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["concepto", "JWT"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "concepto",
+      "JWT"
+    ]
   },
   "access-token": {
     "termino_completo": "Access token",
     "definicion_corta": "Token que autoriza a un cliente a llamar a las APIs del Resource Server en nombre del usuario. Vida corta (5–15 min en FAPI 2.0).",
     "definicion_extendida": "Su scope acota qué endpoints puede tocar; en SFA la granularidad real está en el grant que referencia. En FAPI 2.0 es sender-constrained: viaja con cnf.x5t#S256 atado al cert mTLS del cliente. Se presenta como Bearer en cada llamada API.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "05-arquitectura-open-finance"],
-    "etiquetas": ["token", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "token",
+      "OAuth"
+    ]
   },
   "refresh-token": {
     "termino_completo": "Refresh token",
     "definicion_corta": "Token de vida larga que permite obtener un nuevo access_token sin reautenticación del usuario.",
     "definicion_extendida": "Útil mientras el grant siga Authorised. Si el usuario revoca el grant, el refresh_token deja de funcionar de inmediato. En FAPI 2.0 se emite también sender-constrained y se canjea vía POST /token con grant_type=refresh_token.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["token", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "token",
+      "OAuth"
+    ]
   },
   "id-token": {
     "termino_completo": "ID token",
     "definicion_corta": "JWT emitido por el AS (cuando scope incluye openid) con información del usuario autenticado. Para el cliente, no para las APIs.",
     "definicion_extendida": "Define OpenID Connect. Lleva claims sub, name, email, auth_time, acr (nivel/método de autenticación), amr (métodos usados), nonce (anti-replay). No se presenta ante las APIs; solo le sirve al cliente para saber quién autenticó.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["token", "OIDC", "identidad"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "token",
+      "OIDC",
+      "identidad"
+    ]
   },
   "scope": {
     "termino_completo": "Scope OAuth",
     "definicion_corta": "Parámetro que indica el alcance solicitado por el cliente al AS. En el SFA chileno se conserva en openid; la granularidad real va en authorization_details.",
     "definicion_extendida": "En OAuth 2.0 clásico el scope llevaba etiquetas tipo accounts payments. RAR reemplaza esa granularidad por authorization_details estructurado. El scope conserva valor openid solo para activar la emisión del id_token (OIDC).",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["concepto", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "concepto",
+      "OAuth"
+    ]
   },
   "PKCE": {
     "termino_completo": "Proof Key for Code Exchange",
     "definicion_corta": "Extensión OAuth (RFC 7636) que cierra el ataque de interceptación del authorization code. Obligatorio en FAPI 2.0 con method=S256.",
     "definicion_extendida": "El cliente genera un code_verifier aleatorio (43–128 chars), calcula su hash SHA-256 (code_challenge) y envía solo el challenge en /authorize. Al canjear el code, envía el verifier original. El AS recomputa hash(verifier) y compara con el challenge. Un atacante que solo intercepte el code no tiene el verifier, no puede canjear.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["protocolo", "seguridad", "OAuth", "RFC"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "seguridad",
+      "OAuth",
+      "RFC"
+    ]
   },
   "PAR": {
     "termino_completo": "Pushed Authorization Requests",
     "definicion_corta": "Endpoint (RFC 9126) donde el cliente empuja la solicitud de autorización al AS antes de redirigir el navegador del usuario. Obligatorio en FAPI 2.0.",
     "definicion_extendida": "El cliente hace POST /par con todos los parámetros sensibles (authorization_details con montos/IBANs, code_challenge, etc.) por canal mTLS. El AS devuelve 201 con un request_uri URN de vida 90 segundos. El cliente redirige a /authorize?request_uri=... — sin nada sensible en la URL.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "05-arquitectura-open-finance"],
-    "etiquetas": ["protocolo", "seguridad", "OAuth", "RFC"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "seguridad",
+      "OAuth",
+      "RFC"
+    ]
   },
   "RAR": {
     "termino_completo": "Rich Authorization Requests",
     "definicion_corta": "Extensión OAuth (RFC 9396) que reemplaza el scope plano por un objeto JSON estructurado: authorization_details. Define qué recurso, qué acciones, qué profundidad, qué finalidad, qué vigencia.",
     "definicion_extendida": "Obligatorio en el SFA chileno y previsto en el roadmap de OFB Brasil. Cada objeto del array authorization_details lleva type (Accounts, SinglePayments...), actions, identifier, privileges (level1/2/3), purpose, recurringIndicator, frequency, validFrom/To, consentType.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "07-casos-uso-tecnicos"],
-    "etiquetas": ["protocolo", "OAuth", "FAPI", "RFC"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "07-casos-uso-tecnicos"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "OAuth",
+      "FAPI",
+      "RFC"
+    ]
   },
   "grant-management": {
     "termino_completo": "Grant Management for OAuth 2.0",
     "definicion_corta": "Especificación OpenID Foundation que define el ciclo de vida del grant: Create, Update, Replace, Merge, Query y Revoke.",
     "definicion_extendida": "Las cuatro primeras operaciones se invocan vía POST /par con grant_management_action. Las dos últimas son endpoints REST directos (GET/DELETE /grants/{grantId}). Permite al cliente y al usuario gestionar consentimientos sin re-iniciar todo el flujo desde cero.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["especificación", "OAuth", "FAPI", "consentimiento"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "especificación",
+      "OAuth",
+      "FAPI",
+      "consentimiento"
+    ]
   },
   "grant": {
     "termino_completo": "Grant (consentimiento técnico)",
     "definicion_corta": "Objeto que el AS crea cuando el usuario aprueba un consentimiento. Tiene grantId, estado, fechas de vigencia y el set de authorization_details aprobado.",
     "definicion_extendida": "Estados posibles: AwaitingAuthorisation, AwaitingMultiAuthorisation, Authorised, Revoked, Expired, Failed, Cancelled. Los tokens emitidos referencian el grant_id; revocar el grant invalida los tokens.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["concepto", "consentimiento"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "concepto",
+      "consentimiento"
+    ]
   },
   "authorization-details": {
     "termino_completo": "authorization_details",
     "definicion_corta": "Campo central de RAR: array JSON donde cada objeto describe un permiso completo (recurso, acciones, profundidad, finalidad, vigencia).",
     "definicion_extendida": "Viaja exclusivamente dentro de POST /par. Las llamadas a las APIs solo presentan el access_token; el RS resuelve internamente qué grant le corresponde y valida acciones+privilegios contra el alcance.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["RAR", "JSON", "consentimiento"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "RAR",
+      "JSON",
+      "consentimiento"
+    ]
   },
   "privileges": {
     "termino_completo": "Privileges (RAR — SFA Chile)",
     "definicion_corta": "Niveles jerárquicos de profundidad de datos sobre un recurso: level1 (listado), level2 (detalle), level3 (sub-recursos). Acumulativos.",
     "definicion_extendida": "No se puede pedir level3 sin level1 y level2. La regla jerárquica se valida en /par. Excepción: en la operación merge, el body trae solo el delta y la regla se valida sobre el grant resultante. Refleja la profundidad de la ruta del endpoint, no scopes distintos.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["RAR", "FAD", "Chile", "consentimiento"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "RAR",
+      "FAD",
+      "Chile",
+      "consentimiento"
+    ]
   },
   "sender-constrained": {
     "termino_completo": "Sender-constrained access token",
     "definicion_corta": "Token cuyo uso está atado al cliente que lo solicitó. Si otro intenta usarlo, el RS lo descarta. Obligatorio en FAPI 2.0.",
     "definicion_extendida": "Dos mecanismos en FAPI 2.0 Baseline: mTLS-bound (RFC 8705) — token con cnf.x5t#S256 que es hash del cert mTLS del cliente; o DPoP (RFC 9449) — token con cnf.jkt que es hash de la clave pública generada por el cliente. En banca regulada gana mTLS-bound; DPoP cubre clientes públicos.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["seguridad", "FAPI", "token"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "seguridad",
+      "FAPI",
+      "token"
+    ]
   },
   "DPoP": {
     "termino_completo": "Demonstrating Proof of Possession",
     "definicion_corta": "Mecanismo (RFC 9449) por el que un cliente prueba posesión de una clave privada firmando cada request a la API con un JWT corto.",
     "definicion_extendida": "Alternativa a mTLS-bound para clientes públicos (apps móviles, SPAs) donde mTLS no es viable. El access_token lleva cnf.jkt con el hash de la clave pública; cada llamada API va acompañada de un DPoP proof firmado con la clave privada. FAPI 2.0 Baseline lo acepta como alternativa.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["protocolo", "seguridad", "OAuth", "RFC"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "seguridad",
+      "OAuth",
+      "RFC"
+    ]
   },
   "JARM": {
     "termino_completo": "JWT Secured Authorization Response Mode",
     "definicion_corta": "Modo de respuesta del AS donde los parámetros de respuesta (code, state) viajan firmados dentro de un JWT en lugar de la query string clásica.",
     "definicion_extendida": "Cierra ataques de manipulación de la respuesta del /authorize. Está en FAPI 2.0 Advanced, no en Baseline. En el SFA chileno es opcional. El cliente recibe un parámetro response que es un JWT y lo valida con la clave pública del AS antes de procesarlo.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["protocolo", "FAPI", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "FAPI",
+      "OAuth"
+    ]
   },
   "CIBA": {
     "termino_completo": "Client Initiated Backchannel Authentication",
     "definicion_corta": "Perfil OIDC para escenarios donde la autenticación no puede ocurrir en un navegador: cajero automático, call center, IVR, comercio físico.",
     "definicion_extendida": "El cliente inicia la autenticación por el backchannel; el usuario aprueba en otro dispositivo registrado (típicamente app móvil del banco). Tres modos: Poll (cliente hace polling), Ping (AS notifica URI), Push (AS empuja directo el resultado). Útil cuando un cliente pregunta cómo hacer Open Finance desde un canal sin navegador.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "07-casos-uso-tecnicos"],
-    "etiquetas": ["protocolo", "OIDC", "FAPI"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "07-casos-uso-tecnicos"
+    ],
+    "etiquetas": [
+      "protocolo",
+      "OIDC",
+      "FAPI"
+    ]
   },
   "authorization-server": {
     "termino_completo": "Authorization Server (AS)",
     "definicion_corta": "Servidor que autentica al usuario, gestiona el consentimiento, emite tokens y permite revocarlos. En el SFA lo opera el IPI/IPC.",
     "definicion_extendida": "Responsabilidades: autenticar al usuario (con SCA cuando aplica), pintar la pantalla de consentimiento, validar la solicitud de autorización (coherencia scope ↔ actions, regla jerárquica privileges, validez del cert mTLS), emitir access_token + refresh_token + id_token, exponer endpoints /par, /authorize, /token, /grants, /userinfo, /revoke, /jwks. Es la pieza más sensible del ecosistema.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "05-arquitectura-open-finance"],
-    "etiquetas": ["actor", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "actor",
+      "OAuth"
+    ]
   },
   "resource-server": {
     "termino_completo": "Resource Server (RS)",
     "definicion_corta": "Servidor que aloja las APIs reguladas (cuentas, pagos, créditos…) y verifica el token en cada llamada.",
     "definicion_extendida": "En FAPI 2.0 valida también que el certificado mTLS coincida con cnf.x5t#S256 del token. Verifica que las acciones y privilegios del grant cubran el endpoint solicitado. El RS y el AS suelen estar operados por la misma entidad (el banco) pero son piezas distintas.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "05-arquitectura-open-finance"],
-    "etiquetas": ["actor", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "05-arquitectura-open-finance"
+    ],
+    "etiquetas": [
+      "actor",
+      "OAuth"
+    ]
   },
   "resource-owner": {
     "termino_completo": "Resource Owner",
     "definicion_corta": "El usuario final dueño de los datos. En el SFA, persona natural o jurídica que se autentica en su banco para autorizar a una fintech.",
     "definicion_extendida": "Nunca comparte sus credenciales con el cliente — solo aprueba en la pantalla del Authorization Server. Es la fuente del consentimiento. Sus derechos incluyen consultar y revocar consentimientos vía Panel de Control.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["actor", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "actor",
+      "OAuth"
+    ]
   },
   "SCA": {
     "termino_completo": "Strong Customer Authentication",
     "definicion_corta": "Autenticación reforzada con al menos dos de tres factores: algo que sabes (contraseña), algo que tienes (móvil con OTP), algo que eres (biometría).",
     "definicion_extendida": "Introducida por PSD2 RTS en Europa. En el SFA chileno y en los perfiles de la región se exige SCA al autorizar consentimientos. El nivel de SCA queda registrado en el claim acr del id_token. Para pagos > umbral se aplica también SCA específica del pago, distinta de la SCA inicial.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "06-estandares-regulatorios"],
-    "etiquetas": ["concepto", "seguridad", "PSD2"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "concepto",
+      "seguridad",
+      "PSD2"
+    ]
   },
   "purpose": {
     "termino_completo": "Purpose (RAR)",
     "definicion_corta": "Campo del authorization_details que declara la finalidad del consentimiento en español, máx. 300 caracteres. Informativo — no restringe técnicamente.",
     "definicion_extendida": "Queda registrado en auditoría (NCG 514 lo exige) y se muestra al usuario en la pantalla de consentimiento. El AS NO usa purpose para decidir si una llamada API está autorizada; lo que decide es la combinación type + actions + identifier + privileges. Confundir esos roles es un error frecuente.",
-    "modulos_relacionados": ["04-oauth-openid-fapi"],
-    "etiquetas": ["RAR", "FAD", "consentimiento"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi"
+    ],
+    "etiquetas": [
+      "RAR",
+      "FAD",
+      "consentimiento"
+    ]
   },
   "frequency": {
     "termino_completo": "Frequency (RAR — RFC 5545)",
     "definicion_corta": "Cadena RFC 5545 (iCalendar) que expresa la periodicidad del acceso recurrente. Ej.: R/2025-05-01T00:00:00Z/P1M = repetir cada mes.",
     "definicion_extendida": "Obligatorio cuando recurringIndicator=true. Sintaxis: R/<fecha-inicio>/<periodo-ISO-8601>. P1D = 1 día, P1M = 1 mes, P1Y = 1 año. Si recurringIndicator=false, no se incluye frequency — el consentimiento es de uso único.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "07-casos-uso-tecnicos"],
-    "etiquetas": ["RAR", "RFC", "consentimiento"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "07-casos-uso-tecnicos"
+    ],
+    "etiquetas": [
+      "RAR",
+      "RFC",
+      "consentimiento"
+    ]
   },
   "FAPI-2-Baseline": {
     "termino_completo": "FAPI 2.0 Baseline",
     "definicion_corta": "Núcleo obligatorio de FAPI 2.0: mTLS o DPoP, PAR, PKCE S256, sender-constrained tokens, algoritmos asimétricos (PS256/ES256), Authorization Code Flow.",
     "definicion_extendida": "Es el punto de partida no negociable de cualquier perfil FAPI 2.0. Cubre los vectores de ataque principales y permite certificación. Sobre él se construyen las decisiones que cada jurisdicción debe completar (granularidad del consentimiento, alcance de Grant Management, vigencia, multi-autorización, etc.).",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "04b-fapi-perfil-propio"],
-    "etiquetas": ["FAPI", "estándar", "seguridad"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "04b-fapi-perfil-propio"
+    ],
+    "etiquetas": [
+      "FAPI",
+      "estándar",
+      "seguridad"
+    ]
   },
   "FAPI-2-Advanced": {
     "termino_completo": "FAPI 2.0 Advanced",
     "definicion_corta": "Perfil extendido sobre FAPI 2.0 Baseline que añade JARM y refuerzos adicionales de no repudio.",
     "definicion_extendida": "Mantenido por OpenID Foundation. Suma JWT Secured Authorization Response Mode (JARM) y request objects firmados con requisitos adicionales. Cierra ataques de manipulación de la respuesta del Authorization Server. Su adopción es una decisión de cada perfil — no es obligatorio para certificar FAPI 2.0.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "04b-fapi-perfil-propio"],
-    "etiquetas": ["FAPI", "estándar", "seguridad", "JARM"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "04b-fapi-perfil-propio"
+    ],
+    "etiquetas": [
+      "FAPI",
+      "estándar",
+      "seguridad",
+      "JARM"
+    ]
   },
   "refresh-rotation": {
     "termino_completo": "Refresh token rotation",
     "definicion_corta": "Política según la cual cada canje del refresh_token emite uno nuevo e invalida el anterior. Permite detectar usos indebidos de un refresh comprometido.",
     "definicion_extendida": "Si el Authorization Server detecta dos usos del mismo refresh_token, asume compromiso y revoca el grant. Mayor complejidad de gestión de estado en el cliente, pero defensa en profundidad significativa. Recomendado especialmente cuando el refresh tiene vida larga.",
-    "modulos_relacionados": ["04-oauth-openid-fapi", "04b-fapi-perfil-propio"],
-    "etiquetas": ["seguridad", "token", "OAuth"]
+    "modulos_relacionados": [
+      "04-oauth-openid-fapi",
+      "04b-fapi-perfil-propio"
+    ],
+    "etiquetas": [
+      "seguridad",
+      "token",
+      "OAuth"
+    ]
+  },
+  "SLA": {
+    "termino_completo": "Service Level Agreement",
+    "definicion_corta": "Contrato técnico-operativo que define umbrales medibles de calidad de servicio: disponibilidad, latencia, capacidad, timeout y otras dimensiones.",
+    "definicion_extendida": "En Open Finance los SLA regulatorios los fija el regulador o el operador del ecosistema y son obligatorios. Los SLA comerciales los pactan dos participantes entre sí y pueden ser más exigentes. No son aspiraciones: son umbrales auditables y, en muchos casos, reportables al regulador.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "operación",
+      "concepto",
+      "regulación"
+    ]
+  },
+  "disponibilidad": {
+    "termino_completo": "Disponibilidad",
+    "definicion_corta": "Porcentaje de tiempo en que la API responde correctamente sobre una ventana de medición (típicamente mensual o trimestral).",
+    "definicion_extendida": "Se calcula sobre el universo completo de transacciones del periodo, no sobre una muestra. 99% mensual permite ~7.2 horas de caída; 99.5% permite ~3.6 horas; 99.9% permite ~43 minutos. Es la primera métrica que pide el regulador y la primera que un PSBI ve en el dashboard del ecosistema.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "SLA",
+      "operación",
+      "métrica"
+    ]
+  },
+  "TPS": {
+    "termino_completo": "Transactions Per Second",
+    "definicion_corta": "Capacidad agregada de una API medida en picos instantáneos por segundo.",
+    "definicion_extendida": "Métrica de tráfico que protege al proveedor frente a picos cortos. Brasil y Chile fijan 300 TPS como referencia agregada. No confundir con TPM (transacciones por minuto): una plataforma puede cumplir TPM y aún así colapsar en picos TPS.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "SLA",
+      "métrica",
+      "capacidad"
+    ]
+  },
+  "TPM": {
+    "termino_completo": "Transactions Per Minute",
+    "definicion_corta": "Capacidad agregada de una API medida como promedio sobre una ventana de un minuto.",
+    "definicion_extendida": "Brasil define 200–500 TPM según la API. TPM y TPS no son lo mismo: TPM promedia, TPS captura picos. Si el SLA dice TPM y la realidad pega picos TPS, hay incumplimiento real aunque el reporte mensual diga lo contrario.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "SLA",
+      "métrica",
+      "capacidad"
+    ]
+  },
+  "timeout": {
+    "termino_completo": "Timeout",
+    "definicion_corta": "Tiempo máximo que el consumidor espera antes de considerar fallida una llamada. Es un umbral de decisión de fallo, no de tolerancia infinita.",
+    "definicion_extendida": "Brasil lo fija en 15 segundos; Chile aún lo discute en grupos de trabajo. Un timeout alto bloquea recursos del consumidor en operaciones que ya no van a responder. Pasado el umbral, el consumidor debe aplicar lógica de reintento o degradación.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "SLA",
+      "operación",
+      "concepto"
+    ]
+  },
+  "paginacion": {
+    "termino_completo": "Paginación",
+    "definicion_corta": "Mecanismo de partición de respuestas largas en páginas sucesivas para evitar payloads inmanejables.",
+    "definicion_extendida": "Define cuántos registros caben por página (típicamente 25–100) y cómo se navega la colección (next/prev URIs, cursores, offsets). UK acepta hasta 100 páginas dentro del payload; Brasil define 25–100 páginas por tipo de recurso; Chile fija 100 registros por página.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos",
+      "02-http-rest-json"
+    ],
+    "etiquetas": [
+      "SLA",
+      "procesamiento",
+      "API"
+    ]
+  },
+  "ventana-historica": {
+    "termino_completo": "Ventana histórica",
+    "definicion_corta": "Rango de tiempo hacia atrás durante el cual los datos transaccionales están disponibles para consulta vía API.",
+    "definicion_extendida": "UK ofrece al menos 24 meses (hasta 7 años en algunos sub-recursos por compromiso comercial). Chile fija 12 meses; Colombia opera un acuerdo informal de 3–6 meses. Condiciona los casos de uso viables: scoring crediticio exige ventanas largas, PFM corriente vive con 12 meses.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "SLA",
+      "procesamiento",
+      "datos"
+    ]
+  },
+  "banda-criticidad": {
+    "termino_completo": "Banda de criticidad (Brasil)",
+    "definicion_corta": "Clasificación del cliente consumidor (PSBI/PSIP) según su volumen de operaciones permitido por ventana. Brasil define tres bandas: baja, media, alta.",
+    "definicion_extendida": "Baja: 4 ops/ventana. Media: 120 ops/ventana. Alta: 420 ops/ventana. La banda inicial siempre es la más baja; el escalado se solicita y se audita. Permite al proveedor proteger capacidad y al regulador detectar patrones anómalos de consumo. Es el modelo más detallado del mundo en lo que respecta a cuotas por cliente.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "SLA",
+      "Brasil",
+      "cuotas",
+      "regulación"
+    ]
+  },
+  "OBIE": {
+    "termino_completo": "Open Banking Implementation Entity / Open Banking Limited",
+    "definicion_corta": "Operador del ecosistema de Open Banking UK. Coordina estándares, monitoreo, métricas y operación bajo supervisión de la FCA y la CMA.",
+    "definicion_extendida": "OBIE fue la entidad original; OBL es su sucesora. Mantiene el dashboard público de salud del ecosistema, publica métricas mensuales estandarizadas por banco y opera el directorio de TPPs. Es la referencia mundial en gobernanza operativa de Open Banking.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "actor",
+      "UK",
+      "regulación"
+    ]
+  },
+  "FCA": {
+    "termino_completo": "Financial Conduct Authority",
+    "definicion_corta": "Regulador financiero del Reino Unido. Supervisa Open Banking junto a la CMA.",
+    "definicion_extendida": "Define el marco normativo y audita el cumplimiento operativo. En conjunto con la CMA establece los umbrales de SLA y la obligación de reporte público mensual. Cualquier incumplimiento sostenido puede terminar en sanción pública.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos",
+      "06-estandares-regulatorios"
+    ],
+    "etiquetas": [
+      "actor",
+      "UK",
+      "regulación"
+    ]
+  },
+  "DICT": {
+    "termino_completo": "Diretório de Identificadores de Contas Transacionais",
+    "definicion_corta": "Componente del Open Finance Brasil operado por el BACEN, que centraliza identificadores de cuentas y soporta el monitoreo agregado del ecosistema.",
+    "definicion_extendida": "El DICT es el corazón del sistema brasileño de pagos instantáneos (PIX) y se ha extendido al ecosistema Open Finance. Permite al BACEN observar patrones de consumo en tiempo real y disparar alertas frente a comportamientos anómalos.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "componente",
+      "Brasil",
+      "BACEN"
+    ]
+  },
+  "developer-portal": {
+    "termino_completo": "Developer Portal",
+    "definicion_corta": "Sitio público o semipúblico donde el ecosistema o el participante publica especificaciones, guías y herramientas para que los consumidores se integren.",
+    "definicion_extendida": "Centraliza OpenAPI/Swagger, guías de onboarding, roadmap de implementación, sandbox de pruebas y guías de buenas prácticas (incluida prevención de fraude). UK y Brasil operan portales del ecosistema; Chile en fase actual y Colombia dejan al participante la responsabilidad de su portal individual.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "operación",
+      "integración"
+    ]
+  },
+  "service-desk": {
+    "termino_completo": "Service Desk",
+    "definicion_corta": "Canal formal por el que el ecosistema o el participante recibe consultas, incidencias y solicitudes de los consumidores.",
+    "definicion_extendida": "Suele articularse en niveles N1/N2/N3 con SLA propio por nivel. Alimenta el ciclo de mejora de los estándares técnicos cuando los incidentes recurrentes evidencian gaps en la documentación o en la especificación.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "operación",
+      "soporte"
+    ]
+  },
+  "API-Manager": {
+    "termino_completo": "API Manager",
+    "definicion_corta": "Plataforma de gestión del ciclo de vida de las APIs: publicación, versionamiento, control de tráfico, autenticación y observabilidad.",
+    "definicion_extendida": "Es la pieza que el banco interpone entre sus sistemas core y los consumidores externos. Implementa políticas de TPS/TPM, cuotas por cliente, validación de tokens, registro de trazabilidad (x-fapi-interaction-id) y enrutamiento por versión. Sin API Manager robusto, sostener un SLA Open Finance es muy difícil en la práctica.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "componente",
+      "operación",
+      "infraestructura"
+    ]
+  },
+  "versionamiento": {
+    "termino_completo": "Versionamiento de APIs",
+    "definicion_corta": "Política de gestión de cambios que permite que distintas versiones de la API coexistan durante un período de gracia, sin romper integraciones existentes.",
+    "definicion_extendida": "Dos niveles: versión de API completa (v1 → v2, rupturas estructurales mayores) y versión de recurso dentro de la API (cambios en sub-recursos sin afectar al resto). El estándar internacional es versionar en la ruta del endpoint (/accounts/v1/...) y mantener versiones previas operativas durante 6–12 meses.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "operación",
+      "API",
+      "gobernanza"
+    ]
+  },
+  "soporte-niveles": {
+    "termino_completo": "Niveles de soporte N1 / N2 / N3",
+    "definicion_corta": "Modelo escalonado de resolución de incidencias técnicas: N1 primer contacto, N2 análisis técnico, N3 resolución profunda con intervención de plataforma.",
+    "definicion_extendida": "N1 resuelve dudas comunes, errores conocidos, validación de credenciales y conectividad. N2 analiza errores no documentados, comportamiento anómalo y revisa logs. N3 escala a bugs de plataforma, equipo de producto e intervención de infraestructura. Cada nivel suele tener su propio SLA de tiempo de respuesta.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "operación",
+      "soporte"
+    ]
+  },
+  "monitoreo": {
+    "termino_completo": "Monitoreo (operativo y regulatorio)",
+    "definicion_corta": "Dos funciones distintas: detectar caídas/latencias (responsabilidad del participante y del operador del ecosistema) y medir cumplimiento de SLA para reporte al regulador.",
+    "definicion_extendida": "UK y Brasil operan monitoreo en tiempo real, global y por API, con dashboards públicos o semipúblicos. Chile y Colombia aún están consolidando su modelo de monitoreo agregado. La separación entre operativo y regulatorio es importante porque las herramientas, frecuencias y consumidores de la información son distintos.",
+    "modulos_relacionados": [
+      "04c-slas-requisitos-operativos"
+    ],
+    "etiquetas": [
+      "operación",
+      "observabilidad",
+      "SLA"
+    ]
   }
 }

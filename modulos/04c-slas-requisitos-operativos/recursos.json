@@ -1,0 +1,79 @@
+{
+  "modulo": "04c-slas-requisitos-operativos",
+  "videos": [
+    {
+      "titulo": "Cómo facilitar el taller — recorrido por la matriz de validación",
+      "duracion_min": 16,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/04c-taller-slas.mp4",
+      "pendiente": true,
+      "obligatorio": false,
+      "descripcion": "Guía para el facilitador: cómo abrir cada horizonte (corto, medio, largo plazo), qué preguntas usar como disparadores y cómo cerrar consensos con el equipo del banco."
+    }
+  ],
+  "lecturas": [
+    {
+      "titulo": "Open Banking UK — Operational Guidelines (Open Banking Limited)",
+      "url": "https://standards.openbanking.org.uk/operational-guidelines/",
+      "tipo": "guia",
+      "obligatorio": true,
+      "tiempo_min": 25,
+      "descripcion": "Marco operativo de referencia. Define la metodología de cálculo de disponibilidad y latencia, y los umbrales de reporte."
+    },
+    {
+      "titulo": "Open Banking UK — Performance Metrics",
+      "url": "https://www.openbanking.org.uk/regulatory-reporting/",
+      "tipo": "dashboard",
+      "obligatorio": false,
+      "tiempo_min": 15,
+      "descripcion": "Dashboard público de salud del ecosistema. Permite ver métricas mensuales agregadas y por proveedor."
+    },
+    {
+      "titulo": "Manual Operacional do Open Finance Brasil — BACEN",
+      "url": "https://openfinancebrasil.org.br/regulacao/",
+      "tipo": "manual",
+      "obligatorio": true,
+      "tiempo_min": 30,
+      "descripcion": "Documento maestro de los SLAs brasileños: bandas de criticidad, TPS/TPM, timeouts, paginación por API."
+    },
+    {
+      "titulo": "Open Finance Brasil — Convenção e Estrutura de Governança",
+      "url": "https://openfinancebrasil.org.br/regulacao/",
+      "tipo": "manual",
+      "obligatorio": false,
+      "tiempo_min": 20,
+      "descripcion": "Define las obligaciones de monitoreo, reporte y escalado entre participantes y BACEN."
+    },
+    {
+      "titulo": "CMF Chile — NCG 514 y anexos técnicos del SFA",
+      "url": "https://www.cmfchile.cl/portal/principal/613/w3-channel.html",
+      "tipo": "normativa",
+      "obligatorio": true,
+      "tiempo_min": 25,
+      "descripcion": "Marco regulatorio chileno. Las dimensiones operativas del SFA están en discusión por los grupos de trabajo; este documento recoge lo ya definido y las áreas abiertas."
+    },
+    {
+      "titulo": "URF Colombia — Decreto 1297/2022 y estándares técnicos",
+      "url": "https://www.urf.gov.co/",
+      "tipo": "normativa",
+      "obligatorio": true,
+      "tiempo_min": 20,
+      "descripcion": "Marco normativo colombiano. Define plataforma de consentimientos y deja abierto el grueso de las dimensiones operativas."
+    },
+    {
+      "titulo": "Customer Experience Guidelines — Open Banking UK",
+      "url": "https://standards.openbanking.org.uk/customer-experience-guidelines/",
+      "tipo": "guia",
+      "obligatorio": false,
+      "tiempo_min": 20,
+      "descripcion": "Útil para entender cómo los SLAs operativos se traducen en experiencia del usuario final del PSBI/PSIP."
+    }
+  ],
+  "documentos_apoyo": [
+    {
+      "titulo": "Plantilla de validación con el ecosistema (pendiente)",
+      "tipo": "markdown",
+      "estado": "por_publicar",
+      "descripcion": "Plantilla exportable basada en la matriz de tres horizontes. Se publicará en una iteración posterior del módulo como recurso para llevar al taller."
+    }
+  ]
+}

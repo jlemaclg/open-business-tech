@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" aria-hidden="true">
+  <!-- Outer hexagon (granate Minsait) -->
+  <polygon points="100,8 184,55 184,145 100,192 16,145 16,55"
+           fill="#4F062A" stroke="#FF0054" stroke-width="3"/>
+  <!-- Inner subtle hexagon for depth -->
+  <polygon points="100,28 167,65 167,135 100,172 33,135 33,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.35"/>
+
+  <!-- Mesa redonda central — círculo -->
+  <circle cx="100" cy="100" r="32" fill="none" stroke="#FF0054" stroke-width="2.5"/>
+  <circle cx="100" cy="100" r="32" fill="#FF0054" opacity="0.08"/>
+
+  <!-- 4 cabezas alrededor de la mesa (4 actores: EF, fintech, regulador, cámara) -->
+  <g fill="#FF0054">
+    <!-- Norte (regulador) -->
+    <circle cx="100" cy="62"  r="7"/>
+    <!-- Este (EF) -->
+    <circle cx="138" cy="100" r="7"/>
+    <!-- Sur (fintech/consumidor) -->
+    <circle cx="100" cy="138" r="7"/>
+    <!-- Oeste (cámara) -->
+    <circle cx="62"  cy="100" r="7"/>
+  </g>
+
+  <!-- Indicadores de "anchor Brasil" — 4 trazos dorados pequeños conectando -->
+  <g stroke="#D6A93A" stroke-width="1.5" fill="none" opacity="0.85">
+    <line x1="100" y1="72" x2="100" y2="80"/>
+    <line x1="128" y1="100" x2="120" y2="100"/>
+    <line x1="100" y1="128" x2="100" y2="120"/>
+    <line x1="72"  y1="100" x2="80"  y2="100"/>
+  </g>
+
+  <!-- Símbolo central — check (consenso firmado en mesa) -->
+  <polyline points="92,100 98,106 110,94" stroke="#FFFFFF" stroke-width="3"
+            fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Corner accent dots representing co-creación -->
+  <g fill="#FF0054">
+    <circle cx="50" cy="50" r="3"/>
+    <circle cx="150" cy="50" r="3"/>
+    <circle cx="50" cy="150" r="3"/>
+    <circle cx="150" cy="150" r="3"/>
+  </g>
+</svg>

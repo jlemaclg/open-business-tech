@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" aria-hidden="true">
+  <!-- Outer hexagon (granate Minsait) -->
+  <polygon points="100,8 184,55 184,145 100,192 16,145 16,55"
+           fill="#4F062A" stroke="#FF0054" stroke-width="3"/>
+  <!-- Inner subtle hexagon for depth -->
+  <polygon points="100,28 167,65 167,135 100,172 33,135 33,65"
+           fill="none" stroke="#FF0054" stroke-width="1" opacity="0.35"/>
+
+  <!-- Central composition: dashboard panel with bars + magnifier overlay -->
+  <g stroke="#FF0054" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Dashboard panel -->
+    <rect x="50" y="62" width="100" height="80" rx="3" stroke-width="2.5"/>
+    <!-- Header divider -->
+    <line x1="50" y1="74" x2="150" y2="74" stroke-width="1.5" opacity="0.5"/>
+    <!-- Bar chart bars (SLA metrics) -->
+    <rect x="62" y="120" width="10" height="14" fill="#FF0054" opacity="0.35" stroke="none"/>
+    <rect x="78" y="108" width="10" height="26" fill="#FF0054" opacity="0.55" stroke="none"/>
+    <rect x="94" y="96"  width="10" height="38" fill="#FF0054" opacity="0.75" stroke="none"/>
+    <rect x="110" y="86" width="10" height="48" fill="#FF0054" stroke="none"/>
+    <rect x="126" y="100" width="10" height="34" fill="#FF0054" opacity="0.6" stroke="none"/>
+    <!-- Baseline -->
+    <line x1="58" y1="134" x2="142" y2="134" stroke-width="1.5" opacity="0.7"/>
+  </g>
+
+  <!-- Magnifier overlay (reading the metrics) -->
+  <g stroke="#FFFFFF" fill="none" stroke-width="3" stroke-linecap="round">
+    <circle cx="128" cy="110" r="16" fill="#4F062A"/>
+    <line x1="140" y1="122" x2="152" y2="134"/>
+    <!-- Inner check inside the lens -->
+    <polyline points="120,110 126,116 137,103" stroke="#FF0054" stroke-width="2.5" fill="none"/>
+  </g>
+
+  <!-- Corner accent dots representing the four ecosystems compared -->
+  <g fill="#FF0054">
+    <circle cx="50" cy="50" r="3"/>
+    <circle cx="150" cy="50" r="3"/>
+    <circle cx="50" cy="150" r="3"/>
+    <circle cx="150" cy="150" r="3"/>
+  </g>
+</svg>

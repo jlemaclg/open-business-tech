@@ -1,0 +1,329 @@
+{
+  "modulo": "04c-slas-requisitos-operativos",
+  "titulo_topbar": "SLAs y requisitos operativos",
+  "duracion_min": 35,
+  "nivel": "intermedio",
+  "tipo": "profundizacion",
+  "xp_lectura": 30,
+  "xp_quiz": 0,
+  "xp_quiz_perfecto": 0,
+  "badge": {
+    "id": "lector-de-slas",
+    "nombre": "Lector de SLAs",
+    "svg_url": "../../assets/img/badges/lector-de-slas.svg",
+    "descripcion": "Has completado el módulo de SLAs y requisitos operativos. Conoces las ocho dimensiones que componen un SLA en Open Finance, sabes cómo las resuelven UK, Brasil, Chile y Colombia, y dispones de un marco para validar con un banco qué nivel de servicio puede sostener en el corto, medio y largo plazo."
+  },
+
+  "componentes": [
+
+    {
+      "tipo": "hero-modulo",
+      "eyebrow": "MÓDULO 04c · PROFUNDIZACIÓN",
+      "titulo_pre_accent": "SLAs:",
+      "titulo_accent": "la calidad de servicio",
+      "titulo_post_accent": "como condición de existencia del ecosistema",
+      "subtitulo": "Una API que devuelve la información correcta el 80% de las veces no es una API funcional: es una API rota. Este módulo recorre las ocho dimensiones que componen un SLA en Open Finance, las compara entre UK, Brasil, Chile y Colombia, y propone una matriz de validación con el ecosistema a tres horizontes.",
+      "duracion_min": 35,
+      "nivel": "Profundización",
+      "badge_target": "Lector de SLAs"
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "alerta",
+      "titulo": "Por qué este módulo importa",
+      "parrafos": [
+        "En Open Finance, un <span class=\"glosario-term\" data-term=\"PSBI\">PSBI</span> puede llamar a decenas de bancos para construir una vista consolidada del usuario, y un <span class=\"glosario-term\" data-term=\"PSIP\">PSIP</span> inicia pagos en nombre de un cliente que espera una confirmación en segundos. La <strong>calidad de servicio</strong> no es un atributo opcional: es la condición de existencia del ecosistema.",
+        "Los <span class=\"glosario-term\" data-term=\"SLA\">SLAs</span> (Service Level Agreements) son el contrato técnico-operativo que define qué nivel de servicio se compromete a entregar cada participante. No son aspiraciones: son <strong>umbrales medibles, auditables y, en muchos casos, reportables al regulador</strong>.",
+        "Una aclaración inicial. Los SLAs regulatorios y los SLAs comerciales no son lo mismo. Los primeros los fija el regulador o el operador del ecosistema y son obligatorios. Los segundos los pactan dos participantes entre sí (por ejemplo, un agregador con un banco) y pueden ser más exigentes. Este módulo se concentra en los <strong>SLAs regulatorios y de ecosistema</strong>, que son los que aparecen en proyectos de implementación."
+      ],
+      "cita": "Cuando un consultor entra a una reunión con un banco que está dimensionando su plataforma, debe saber qué preguntar y contra qué referencia comparar. Ese es exactamente el propósito de este módulo."
+    },
+
+    {
+      "tipo": "objetivos-grid",
+      "titulo": "Lo que vas a saber al final",
+      "subtitulo": "Cuatro puntos concretos. Si los cubres, puedes sentarte en una mesa técnica con un banco a discutir su SLA objetivo.",
+      "items": [
+        { "num": "01", "titulo": "Las 8 dimensiones de un SLA", "descripcion": "Disponibilidad, latencia, capacidad agregada, cuotas por cliente, timeout, procesamiento, consentimiento y monitoreo. Qué mide cada una y en qué unidad." },
+        { "num": "02", "titulo": "Los 4 ecosistemas comparados", "descripcion": "UK, Brasil, Chile y Colombia. Qué exige cada regulador, qué deja al acuerdo informal de industria y qué está aún en discusión." },
+        { "num": "03", "titulo": "Errores conceptuales frecuentes", "descripcion": "Las confusiones que aparecen recurrentemente en conversaciones con clientes — disponibilidad vs. latencia, TPS vs. TPM, timeout como decisión de fallo." },
+        { "num": "04", "titulo": "Validación con el ecosistema", "descripcion": "Una matriz a tres horizontes (corto, medio, largo plazo) con preguntas concretas para llevar a la mesa con un banco o con un participante del ecosistema." }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Las <span class=\"accent\">8 dimensiones</span> de un SLA Open Finance",
+      "subtitulo": "Antes de comparar ecosistemas, conviene tener claras las dimensiones. Un SLA se construye con ocho variables operativas, agrupadas aquí en cuatro categorías. Cada categoría reúne las dimensiones que se mueven juntas en discusiones de implementación.",
+      "tabs": [
+        {
+          "id": "dim-disponibilidad-latencia",
+          "titulo": "Disponibilidad y latencia",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "destacada": true,
+            "tag": "Dimensión 1",
+            "titulo": "Disponibilidad",
+            "subtitulo": "El porcentaje de tiempo en que la API responde correctamente",
+            "items": [
+              { "check": true, "texto": "Unidad: porcentaje (%) sobre una ventana de medición — habitualmente mensual o trimestral." },
+              { "check": true, "texto": "99.5% mensual permite ~3.6 horas de caída; 99% permite ~7.2 horas; 99.9% permite ~43 minutos." },
+              { "check": true, "texto": "Se calcula sobre el universo completo de transacciones del periodo, no sobre una muestra." },
+              { "check": true, "texto": "Es la primera métrica que pide el regulador y la primera que un PSBI ve cuando publican el dashboard del ecosistema." }
+            ]
+          },
+          "derecha": {
+            "tag": "Dimensión 2",
+            "titulo": "Tiempo de respuesta",
+            "subtitulo": "La latencia que el consumidor experimenta de extremo a extremo",
+            "items": [
+              { "check": true, "texto": "Unidad: milisegundos. Se mide habitualmente en percentil 95 o 99, no en media." },
+              { "check": true, "texto": "Va acompañado de una tasa de error tolerada (típicamente 0.5%–1%)." },
+              { "check": true, "texto": "Un 200 OK que tarda 4 segundos puede estar incumpliendo el SLA aunque sea técnicamente exitoso." },
+              { "check": true, "texto": "Define el coste de UX del PSBI/PSIP: cuanto mayor sea, más probable que el usuario abandone el flujo." }
+            ]
+          }
+        },
+        {
+          "id": "dim-capacidad",
+          "titulo": "Capacidad agregada y cuotas",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "destacada": true,
+            "tag": "Dimensión 3",
+            "titulo": "Límite de tráfico agregado",
+            "subtitulo": "La capacidad total que la plataforma del proveedor puede absorber",
+            "items": [
+              { "check": true, "texto": "Unidad: <span class=\"glosario-term\" data-term=\"TPS\">TPS</span> (transacciones por segundo) o <span class=\"glosario-term\" data-term=\"TPM\">TPM</span> (por minuto)." },
+              { "check": true, "texto": "TPS mide picos instantáneos; TPM mide promedios. Una plataforma puede cumplir TPM y aún así colapsar en picos cortos." },
+              { "check": true, "texto": "Brasil y Chile fijan 300 TPS como referencia agregada." },
+              { "check": true, "texto": "Esta dimensión condiciona el dimensionamiento de infraestructura del banco y el coste de implementación." }
+            ]
+          },
+          "derecha": {
+            "tag": "Dimensión 4",
+            "titulo": "Límite de operaciones por cliente",
+            "subtitulo": "Cuotas individuales por cada consumidor (PSBI / PSIP)",
+            "items": [
+              { "check": true, "texto": "Protege al proveedor de un consumidor abusivo y reparte capacidad de forma equitativa." },
+              { "check": true, "texto": "Brasil usa <span class=\"glosario-term\" data-term=\"banda-criticidad\">bandas de criticidad</span> — baja (4 ops/ventana), media (120) y alta (420)." },
+              { "check": true, "texto": "Permite al regulador detectar patrones anómalos de consumo." },
+              { "check": true, "texto": "En jurisdicciones sin definición formal, suele negociarse vía acuerdo bilateral entre participantes." }
+            ]
+          }
+        },
+        {
+          "id": "dim-tiempos-procesamiento",
+          "titulo": "Timeout y procesamiento",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "destacada": true,
+            "tag": "Dimensión 5",
+            "titulo": "Timeout",
+            "subtitulo": "El tiempo máximo que el consumidor espera antes de considerar fallida la llamada",
+            "items": [
+              { "check": true, "texto": "Unidad: segundos. Brasil lo fija en 15s; Chile aún lo discute en grupos de trabajo." },
+              { "check": true, "texto": "Es una decisión de fallo, no un tope de tolerancia infinita." },
+              { "check": true, "texto": "Un timeout alto bloquea recursos del consumidor en operaciones que ya no van a responder." },
+              { "check": true, "texto": "Pasado el umbral, el consumidor debe aplicar lógica de reintento o degradación." }
+            ]
+          },
+          "derecha": {
+            "tag": "Dimensión 6",
+            "titulo": "Procesamiento",
+            "subtitulo": "Reglas de paginación, ventana histórica y modo de entrega",
+            "items": [
+              { "check": true, "texto": "<span class=\"glosario-term\" data-term=\"paginacion\">Paginación</span>: cuántos registros caben por página y cómo se navega la colección (típicamente entre 25 y 100 por página)." },
+              { "check": true, "texto": "<span class=\"glosario-term\" data-term=\"ventana-historica\">Ventana histórica</span>: rango de tiempo hacia atrás disponible — desde 6 meses (Colombia, informal) hasta 24+ meses (UK)." },
+              { "check": true, "texto": "Modo de entrega: tiempo real vs batch. Open Finance moderno asume tiempo real, sin diferimiento." },
+              { "check": true, "texto": "Condiciona los casos de uso viables: scoring crediticio exige ventanas largas, PFM corriente vive con 12 meses." }
+            ]
+          }
+        },
+        {
+          "id": "dim-gobernanza",
+          "titulo": "Consentimiento y monitoreo",
+          "tipo_contenido": "grid-2-cards",
+          "izquierda": {
+            "destacada": true,
+            "tag": "Dimensión 7",
+            "titulo": "Consentimiento",
+            "subtitulo": "Existencia y características del panel de gestión del usuario final",
+            "items": [
+              { "check": true, "texto": "El ecosistema obliga al participante a operar un panel donde el usuario consulta y revoca sus consentimientos." },
+              { "check": true, "texto": "Chile y Colombia lo establecen explícitamente como obligación regulatoria." },
+              { "check": true, "texto": "Conecta directamente con el módulo de RAR + Grant Management — sin Grant Management no hay panel real, hay listado plano." },
+              { "check": true, "texto": "Es la dimensión más visible al usuario y la que más rápido erosiona confianza si está mal implementada." }
+            ]
+          },
+          "derecha": {
+            "tag": "Dimensión 8",
+            "titulo": "Monitoreo y reporte",
+            "subtitulo": "Mecanismos de observabilidad operados por el ecosistema",
+            "items": [
+              { "check": true, "texto": "UK y Brasil operan monitoreo en tiempo real, global y por API, con dashboards públicos o semipúblicos." },
+              { "check": true, "texto": "Chile y Colombia aún están consolidando su modelo de monitoreo agregado." },
+              { "check": true, "texto": "Se distingue entre monitoreo operativo (responsabilidad del participante) y monitoreo regulatorio (evidencia para el regulador)." },
+              { "check": true, "texto": "Hay obligación de reportes periódicos al regulador en ecosistemas maduros." }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Los <span class=\"accent\">4 ecosistemas</span> comparados",
+      "subtitulo": "Cada ecosistema regula las ocho dimensiones con distinto grado de detalle y distinta exigencia. UK es el de mayor madurez, Brasil el de mayor volumen, Chile en implementación, Colombia en fase temprana.",
+      "tabs": [
+        {
+          "id": "eco-uk",
+          "titulo": "Reino Unido",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start\"><div><h3 style=\"font-family:Georgia,serif;font-weight:400;color:#4F062A;margin-top:0\">Open Banking UK</h3><p style=\"font-size:14px;line-height:1.6;color:#260717\">Ecosistema de referencia mundial por madurez y trazabilidad pública de su operación. Coordinado por <span class=\"glosario-term\" data-term=\"OBIE\">Open Banking Limited</span> (sucesora de OBIE), bajo supervisión de la <span class=\"glosario-term\" data-term=\"FCA\">FCA</span> y la CMA. Los bancos publican métricas mensuales estandarizadas, lo que ha creado una cultura de transparencia operativa propia de UK.</p></div><div style=\"background:#F5F4EE;padding:20px;border-left:3px solid #FF0054\"><table style=\"width:100%;font-size:13px;border-collapse:collapse\"><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7;width:50%\">Disponibilidad</td><td style=\"padding:6px 0;font-weight:600\">99.5% mensual</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Tiempo de respuesta</td><td style=\"padding:6px 0;font-weight:600\">750 ms · tasa error 0.5%</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Paginación</td><td style=\"padding:6px 0;font-weight:600\">Hasta 100 páginas</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Ventana histórica</td><td style=\"padding:6px 0;font-weight:600\">≥24 meses (hasta 7 años)</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Monitoreo</td><td style=\"padding:6px 0;font-weight:600\">Tiempo real, global y por API</td></tr></table></div></div><p style=\"margin-top:20px;padding:16px 20px;background:#260717;color:#FFFFFF;font-size:13px;line-height:1.6;border-radius:4px\"><strong style=\"color:#FF0054\">Nota operativa.</strong> Cuando el tiempo de respuesta o la tasa de error superan los umbrales, el banco debe reportarlo y aplicar planes de remediación. Algunos bancos implementan objetivos superiores (99.9%) por compromiso comercial — eso es SLA comercial, no regulatorio.</p>"
+        },
+        {
+          "id": "eco-brasil",
+          "titulo": "Brasil",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start\"><div><h3 style=\"font-family:Georgia,serif;font-weight:400;color:#4F062A;margin-top:0\">Open Finance Brasil</h3><p style=\"font-size:14px;line-height:1.6;color:#260717\">Ecosistema con mayor volumen transaccional de Latinoamérica. Lo coordina el Banco Central do Brasil (BACEN) y está estructurado en fases (datos, pagos, seguros, inversiones). Es el modelo más detallado del mundo en lo que respecta a cuotas y bandas de criticidad de clientes consumidores.</p></div><div style=\"background:#F5F4EE;padding:20px;border-left:3px solid #FF0054\"><table style=\"width:100%;font-size:13px;border-collapse:collapse\"><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7;width:50%\">Disponibilidad</td><td style=\"padding:6px 0;font-weight:600\">95% mensual</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Tráfico</td><td style=\"padding:6px 0;font-weight:600\">200–500 TPM · 300 TPS</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Bandas (ops/ventana)</td><td style=\"padding:6px 0;font-weight:600\">Baja 4 · Media 120 · Alta 420</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Timeout</td><td style=\"padding:6px 0;font-weight:600\">15 segundos</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Paginación</td><td style=\"padding:6px 0;font-weight:600\">25–100 páginas por recurso</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Monitoreo</td><td style=\"padding:6px 0;font-weight:600\">Tiempo real, global y por API</td></tr></table></div></div><p style=\"margin-top:20px;padding:16px 20px;background:#260717;color:#FFFFFF;font-size:13px;line-height:1.6;border-radius:4px\"><strong style=\"color:#FF0054\">Nota operativa.</strong> Las APIs core (cuentas, pagos) tienen umbrales más estrictos que las APIs de fases posteriores. El monitoreo se gestiona centralizadamente por el BACEN a través del <span class=\"glosario-term\" data-term=\"DICT\">DICT</span> y los sistemas de fiscalización del ecosistema, con obligación de reportes periódicos por parte de los participantes.</p>"
+        },
+        {
+          "id": "eco-chile",
+          "titulo": "Chile",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start\"><div><h3 style=\"font-family:Georgia,serif;font-weight:400;color:#4F062A;margin-top:0\">Sistema de Finanzas Abiertas</h3><p style=\"font-size:14px;line-height:1.6;color:#260717\">El SFA está en fase de implementación bajo la coordinación de la CMF, con marco normativo Ley 21.521 y NCG 514. La disponibilidad ya está definida por decreto en dos niveles diferenciados — productivo y marcha blanca — que reflejan el reconocimiento regulatorio de la curva de maduración del ecosistema.</p></div><div style=\"background:#F5F4EE;padding:20px;border-left:3px solid #FF0054\"><table style=\"width:100%;font-size:13px;border-collapse:collapse\"><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7;width:50%\">Disponibilidad</td><td style=\"padding:6px 0;font-weight:600\">99% productivo · 95% marcha blanca</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Tiempo de respuesta</td><td style=\"padding:6px 0;font-weight:600\">1500 ms</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Tráfico</td><td style=\"padding:6px 0;font-weight:600\">300 TPS · método alt. en discusión</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Timeout</td><td style=\"padding:6px 0;font-weight:600\">En discusión</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Paginación / Historial</td><td style=\"padding:6px 0;font-weight:600\">100 / 12 meses / tiempo real</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Consentimiento</td><td style=\"padding:6px 0;font-weight:600\">Plataforma obligatoria por participante</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Monitoreo</td><td style=\"padding:6px 0;font-weight:600\">En discusión</td></tr></table></div></div><p style=\"margin-top:20px;padding:16px 20px;background:#260717;color:#FFFFFF;font-size:13px;line-height:1.6;border-radius:4px\"><strong style=\"color:#FF0054\">Nota operativa.</strong> La distinción 99% productivo / 95% marcha blanca es importante en la conversación con el banco: el 95% aplica durante la fase inicial de operación supervisada; el 99% es el umbral exigible una vez declarado producción plena. El SFA establece además tres reglas concretas de procesamiento: paginación de 100 registros, 12 meses de ventana histórica y entrega en tiempo real. La plataforma de gestión de consentimiento conecta directamente con RAR + Grant Management del FAD.</p>"
+        },
+        {
+          "id": "eco-colombia",
+          "titulo": "Colombia",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start\"><div><h3 style=\"font-family:Georgia,serif;font-weight:400;color:#4F062A;margin-top:0\">Open Finance Colombia</h3><p style=\"font-size:14px;line-height:1.6;color:#260717\">Ecosistema en fase temprana, regido por el Decreto 1297 de 2022. <strong>La URF no ha emitido todavía SLAs oficiales</strong> sobre ninguna de las ocho dimensiones operativas. Todo lo que existe hoy son acuerdos informales de industria que operan entre participantes. La obligatoriedad de plataforma de consentimientos es lo único que sí está definido como obligación regulatoria.</p></div><div style=\"background:#F5F4EE;padding:20px;border-left:3px solid #FF0054\"><table style=\"width:100%;font-size:13px;border-collapse:collapse\"><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7;width:50%\">Disponibilidad</td><td style=\"padding:6px 0;font-weight:600\">Sin SLA oficial · acuerdo industria &gt;90%</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Tiempo de respuesta</td><td style=\"padding:6px 0;font-weight:600\">Sin SLA oficial</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Tráfico / Cuotas</td><td style=\"padding:6px 0;font-weight:600\">Sin SLA oficial</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Timeout</td><td style=\"padding:6px 0;font-weight:600\">Sin SLA oficial</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Procesamiento</td><td style=\"padding:6px 0;font-weight:600\">Sin SLA oficial · acuerdo industria 3–6 meses</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Consentimiento</td><td style=\"padding:6px 0;font-weight:600\">Plataforma obligatoria (Decreto 1297)</td></tr><tr><td style=\"padding:6px 0;color:#260717;opacity:0.7\">Monitoreo</td><td style=\"padding:6px 0;font-weight:600\">Sin SLA oficial</td></tr></table></div></div><p style=\"margin-top:20px;padding:16px 20px;background:#260717;color:#FFFFFF;font-size:13px;line-height:1.6;border-radius:4px\"><strong style=\"color:#FF0054\">Nota operativa.</strong> No hay marco regulatorio operativo de la URF más allá del Decreto 1297. Cada participante opera bajo políticas internas o acuerdos bilaterales. Los acuerdos informales de industria no son anecdóticos: en disputas, se citan como práctica esperada del ecosistema. Que no haya SLA regulatorio oficial no equivale a que no haya obligaciones operativas — solo a que están sin codificar.</p>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Matriz <span class=\"accent\">consolidada</span>",
+      "subtitulo": "La tabla cruzada que recoge las ocho dimensiones por las cuatro jurisdicciones. Sirve como ficha-resumen para abrir conversaciones con un cliente bancario o con el ecosistema completo.",
+      "tabs": [
+        {
+          "id": "matriz-consolidada",
+          "titulo": "Tabla cruzada — 8 dimensiones × 4 ecosistemas",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"overflow-x:auto;background:#FFFFFF;border:1px solid rgba(38,7,23,0.08)\"><table style=\"width:100%;font-size:13px;border-collapse:collapse;min-width:880px\"><thead><tr style=\"background:#260717;color:#FFFFFF\"><th style=\"padding:12px;text-align:left;font-weight:600\">Dimensión</th><th style=\"padding:12px;text-align:left;font-weight:600\">UK</th><th style=\"padding:12px;text-align:left;font-weight:600\">Brasil</th><th style=\"padding:12px;text-align:left;font-weight:600\">Chile</th><th style=\"padding:12px;text-align:left;font-weight:600\">Colombia</th></tr></thead><tbody><tr style=\"border-bottom:1px solid rgba(38,7,23,0.06)\"><td style=\"padding:10px 12px;font-weight:600;color:#4F062A\">Disponibilidad</td><td style=\"padding:10px 12px;color:#1B5E20\">99.5%</td><td style=\"padding:10px 12px;color:#1B5E20\">95%</td><td style=\"padding:10px 12px;color:#1B5E20\">99% prod · 95% m. blanca</td><td style=\"padding:10px 12px;color:#999\">Sin SLA oficial (industria &gt;90%)</td></tr><tr style=\"border-bottom:1px solid rgba(38,7,23,0.06);background:#F5F4EE\"><td style=\"padding:10px 12px;font-weight:600;color:#4F062A\">Tiempo de respuesta</td><td style=\"padding:10px 12px;color:#1B5E20\">750 ms · err 0.5%</td><td style=\"padding:10px 12px;color:#666\">—</td><td style=\"padding:10px 12px;color:#1B5E20\">1500 ms</td><td style=\"padding:10px 12px;color:#999\">Sin SLA oficial</td></tr><tr style=\"border-bottom:1px solid rgba(38,7,23,0.06)\"><td style=\"padding:10px 12px;font-weight:600;color:#4F062A\">Límite de tráfico</td><td style=\"padding:10px 12px;color:#666\">—</td><td style=\"padding:10px 12px;color:#1B5E20\">200–500 TPM · 300 TPS</td><td style=\"padding:10px 12px;color:#8A6D00\">300 TPS · método alt. en discusión</td><td style=\"padding:10px 12px;color:#999\">Sin SLA oficial</td></tr><tr style=\"border-bottom:1px solid rgba(38,7,23,0.06);background:#F5F4EE\"><td style=\"padding:10px 12px;font-weight:600;color:#4F062A\">Cuotas por cliente</td><td style=\"padding:10px 12px;color:#666\">—</td><td style=\"padding:10px 12px;color:#1B5E20\">Baja 4 · Media 120 · Alta 420</td><td style=\"padding:10px 12px;color:#666\">—</td><td style=\"padding:10px 12px;color:#999\">Sin SLA oficial</td></tr><tr style=\"border-bottom:1px solid rgba(38,7,23,0.06)\"><td style=\"padding:10px 12px;font-weight:600;color:#4F062A\">Timeout</td><td style=\"padding:10px 12px;color:#666\">—</td><td style=\"padding:10px 12px;color:#1B5E20\">15 segundos</td><td style=\"padding:10px 12px;color:#8A6D00\">En discusión</td><td style=\"padding:10px 12px;color:#999\">Sin SLA oficial</td></tr><tr style=\"border-bottom:1px solid rgba(38,7,23,0.06);background:#F5F4EE\"><td style=\"padding:10px 12px;font-weight:600;color:#4F062A\">Procesamiento</td><td style=\"padding:10px 12px;color:#1B5E20\">Hasta 100 páginas</td><td style=\"padding:10px 12px;color:#1B5E20\">25–100 páginas por recurso</td><td style=\"padding:10px 12px;color:#1B5E20\">100 · 12 meses · tiempo real</td><td style=\"padding:10px 12px;color:#999\">Sin SLA oficial · industria 3–6m</td></tr><tr style=\"border-bottom:1px solid rgba(38,7,23,0.06)\"><td style=\"padding:10px 12px;font-weight:600;color:#4F062A\">Consentimiento</td><td style=\"padding:10px 12px;color:#666\">—</td><td style=\"padding:10px 12px;color:#666\">—</td><td style=\"padding:10px 12px;color:#1B5E20\">Plataforma obligatoria</td><td style=\"padding:10px 12px;color:#1B5E20\">Plataforma obligatoria</td></tr><tr><td style=\"padding:10px 12px;font-weight:600;color:#4F062A\">Monitoreo</td><td style=\"padding:10px 12px;color:#1B5E20\">Tiempo real, global y por API</td><td style=\"padding:10px 12px;color:#1B5E20\">Tiempo real, global y por API</td><td style=\"padding:10px 12px;color:#8A6D00\">En discusión</td><td style=\"padding:10px 12px;color:#999\">Sin SLA oficial</td></tr></tbody></table></div><div style=\"display:flex;gap:24px;margin-top:16px;font-size:12px;color:#260717\"><span><span style=\"display:inline-block;width:10px;height:10px;background:#1B5E20;margin-right:6px;vertical-align:middle\"></span>Definido y exigible</span><span><span style=\"display:inline-block;width:10px;height:10px;background:#8A6D00;margin-right:6px;vertical-align:middle\"></span>En discusión</span><span><span style=\"display:inline-block;width:10px;height:10px;background:#666666;margin-right:6px;vertical-align:middle\"></span>No aplicable / no exige el marco</span><span><span style=\"display:inline-block;width:10px;height:10px;background:#999999;margin-right:6px;vertical-align:middle\"></span>Sin SLA oficial</span></div><p style=\"margin-top:18px;font-size:13px;line-height:1.6;color:#260717;font-style:italic\">Los campos en blanco (—) indican dimensiones que el regulador no define explícitamente en su marco normativo público o que están integradas dentro de otra categoría. No equivalen a \"sin definición\": en UK y Brasil muchas de estas reglas se rigen por estándares técnicos detallados que no encajan exactamente en la columna correspondiente.</p>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "comparativa-tabs",
+      "titulo": "Validación con el ecosistema · <span class=\"accent\">tres horizontes</span>",
+      "subtitulo": "Esta es la herramienta operativa del módulo. Cuando un banco está dimensionando su plataforma o cuando el ecosistema necesita acordar un nivel base, la conversación útil no es \"qué SLA queremos\" sino \"qué SLA podemos sostener hoy, en 12 meses y en 24+ meses\". Cada pestaña agrupa las dimensiones razonables a ese horizonte, con preguntas concretas para abrir mesa.",
+      "tabs": [
+        {
+          "id": "horizonte-corto",
+          "titulo": "Corto plazo · 0–6 meses",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#260717;color:#FFFFFF;padding:24px;margin-bottom:20px\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#FF0054;text-transform:uppercase;margin-bottom:8px\">Lo alcanzable de salida</div><h3 style=\"font-family:Georgia,serif;font-weight:400;margin:0 0 12px 0;font-size:22px\">Lo que un banco puede comprometerse a sostener en la fase de arranque</h3><p style=\"margin:0;font-size:14px;line-height:1.6;opacity:0.85\">En los primeros seis meses, el ecosistema arranca con infraestructura recién desplegada, equipos formándose y operación sin histórico. Pretender métricas de Open Banking UK desde el día uno produce compromisos que se incumplen — y compromisos incumplidos erosionan la confianza del ecosistema más rápido que un SLA modesto y cumplido.</p></div><div style=\"display:grid;grid-template-columns:1fr 1fr;gap:20px\"><div style=\"background:#F5F4EE;padding:20px;border-top:3px solid #FF0054\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#FF0054;text-transform:uppercase;margin-bottom:8px\">Razonable</div><ul style=\"margin:0;padding-left:20px;font-size:13px;line-height:1.7;color:#260717\"><li>Disponibilidad: <strong>95% mensual</strong> (rango Brasil/Chile)</li><li>Tiempo de respuesta: <strong>1500–2000 ms</strong></li><li>Capacidad agregada: <strong>50–100 TPS</strong> iniciales</li><li>Ventana histórica: <strong>6–12 meses</strong></li><li>Monitoreo: <strong>operativo interno</strong>, reporte mensual al regulador</li></ul></div><div style=\"background:#F5F4EE;padding:20px;border-top:3px solid #4F062A\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#4F062A;text-transform:uppercase;margin-bottom:8px\">Preguntas para la mesa</div><ul style=\"margin:0;padding-left:20px;font-size:13px;line-height:1.7;color:#260717\"><li>¿Qué disponibilidad real ha sostenido vuestra plataforma core en los últimos 90 días?</li><li>¿Cuál es el percentil 95 actual de latencia en las APIs candidatas?</li><li>¿Cuántos TPS soporta hoy la capa de exposición sin escalado?</li><li>¿Tenéis dashboard operativo en producción o lo estáis montando?</li><li>¿Quién en el banco firma los compromisos del SLA — TI o producto?</li></ul></div></div>"
+        },
+        {
+          "id": "horizonte-medio",
+          "titulo": "Medio plazo · 6–18 meses",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#260717;color:#FFFFFF;padding:24px;margin-bottom:20px\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#FF0054;text-transform:uppercase;margin-bottom:8px\">Lo alcanzable tras la curva de aprendizaje</div><h3 style=\"font-family:Georgia,serif;font-weight:400;margin:0 0 12px 0;font-size:22px\">El nivel que el ecosistema espera de un participante consolidado</h3><p style=\"margin:0;font-size:14px;line-height:1.6;opacity:0.85\">Pasados seis meses de operación, el participante ya tiene histórico real, métricas auditables y una plataforma rodada. Es el horizonte en el que el SLA regulatorio empieza a tener dientes y donde la diferencia entre un banco preparado y uno que improvisa se hace pública.</p></div><div style=\"display:grid;grid-template-columns:1fr 1fr;gap:20px\"><div style=\"background:#F5F4EE;padding:20px;border-top:3px solid #FF0054\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#FF0054;text-transform:uppercase;margin-bottom:8px\">Razonable</div><ul style=\"margin:0;padding-left:20px;font-size:13px;line-height:1.7;color:#260717\"><li>Disponibilidad: <strong>99% mensual</strong> en APIs core</li><li>Tiempo de respuesta: <strong>1000 ms p95</strong></li><li>Capacidad agregada: <strong>200–300 TPS</strong> sostenidos</li><li>Cuotas por cliente: <strong>bandas implementadas</strong> (modelo Brasil adaptado)</li><li>Timeout: <strong>15 segundos</strong> estandarizado</li><li>Ventana histórica: <strong>12–24 meses</strong></li><li>Monitoreo: <strong>tiempo real por API</strong>, reportes automatizados</li></ul></div><div style=\"background:#F5F4EE;padding:20px;border-top:3px solid #4F062A\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#4F062A;text-transform:uppercase;margin-bottom:8px\">Preguntas para la mesa</div><ul style=\"margin:0;padding-left:20px;font-size:13px;line-height:1.7;color:#260717\"><li>¿Habéis identificado las APIs core que necesitan SLA más estricto?</li><li>¿Qué inversión en infraestructura está prevista a 12 meses?</li><li>¿El modelo de cuotas por cliente está diseñado o se decide ad-hoc?</li><li>¿Quién operará el dashboard de monitoreo — banco, ecosistema o proveedor externo?</li><li>¿Tenéis política de versionamiento y soporte N1/N2/N3 documentada?</li></ul></div></div>"
+        },
+        {
+          "id": "horizonte-largo",
+          "titulo": "Largo plazo · 24+ meses",
+          "tipo_contenido": "texto-libre",
+          "html": "<div style=\"background:#260717;color:#FFFFFF;padding:24px;margin-bottom:20px\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#FF0054;text-transform:uppercase;margin-bottom:8px\">El ecosistema maduro</div><h3 style=\"font-family:Georgia,serif;font-weight:400;margin:0 0 12px 0;font-size:22px\">Lo que se exige cuando el ecosistema entra en fase de explotación plena</h3><p style=\"margin:0;font-size:14px;line-height:1.6;opacity:0.85\">A más de dos años, el ecosistema tiene volumen real, casos de uso consolidados y dependencia operativa de terceros. Aquí el SLA deja de ser objetivo a cumplir y se convierte en barrera de entrada: un participante que no sostiene estos niveles pierde acceso a mercados y a partners. Es el punto de referencia para alinearse con UK.</p></div><div style=\"display:grid;grid-template-columns:1fr 1fr;gap:20px\"><div style=\"background:#F5F4EE;padding:20px;border-top:3px solid #FF0054\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#FF0054;text-transform:uppercase;margin-bottom:8px\">Razonable</div><ul style=\"margin:0;padding-left:20px;font-size:13px;line-height:1.7;color:#260717\"><li>Disponibilidad: <strong>99.5%+ mensual</strong> (referencia UK)</li><li>Tiempo de respuesta: <strong>750 ms p95</strong> · tasa error &lt; 0.5%</li><li>Capacidad agregada: <strong>500+ TPS</strong> con escalado elástico</li><li>Cuotas por cliente: <strong>bandas refinadas</strong> con detección de anomalías</li><li>Ventana histórica: <strong>24+ meses</strong> (hasta 7 años en algunos sub-recursos)</li><li>Monitoreo: <strong>dashboard público</strong> de salud del ecosistema</li><li>Soporte: <strong>N1/N2/N3</strong> con SLA propio por nivel</li></ul></div><div style=\"background:#F5F4EE;padding:20px;border-top:3px solid #4F062A\"><div style=\"font-size:11px;letter-spacing:0.12em;color:#4F062A;text-transform:uppercase;margin-bottom:8px\">Preguntas para la mesa</div><ul style=\"margin:0;padding-left:20px;font-size:13px;line-height:1.7;color:#260717\"><li>¿La plataforma soporta escalado elástico real o depende de capacidad fija?</li><li>¿Hay capacidad de auditoría externa de SLA además de auto-reporte?</li><li>¿El ecosistema dispone de dashboard público o sigue siendo opaco al usuario final?</li><li>¿Cómo se trata el incumplimiento — sanción, remediación, salida del ecosistema?</li><li>¿La política de versionamiento garantiza un periodo de gracia de al menos 6–12 meses?</li></ul></div></div>"
+        }
+      ]
+    },
+
+    {
+      "tipo": "ejemplo-real",
+      "tag": "Caso real · LATAM",
+      "titulo": "Brasil — el modelo de <span class=\"accent\">bandas de criticidad</span>",
+      "subtitulo": "Brasil es el ecosistema con mayor volumen transaccional de LATAM. Su modelo de cuotas por cliente, organizado en tres bandas, es la referencia más sofisticada del mundo. Vale la pena entender el flujo completo porque condiciona cómo un PSBI dimensiona su consumo desde el día uno.",
+      "pasos": [
+        {
+          "num": "01",
+          "titulo": "Clasificación inicial del consumidor",
+          "descripcion": "Al darse de alta en el ecosistema, el PSBI declara su tipo de servicio (agregación, scoring, PFM, asesoría) y el BACEN lo asigna a una banda inicial — habitualmente baja (4 ops/ventana)."
+        },
+        {
+          "num": "02",
+          "titulo": "Operación bajo cuota",
+          "descripcion": "El PSBI consume las APIs de los bancos respetando la cuota de su banda. Si la sobrepasa, las llamadas reciben 429 Too Many Requests y debe esperar a la siguiente ventana o iniciar el escalado de banda."
+        },
+        {
+          "num": "03",
+          "titulo": "Solicitud de escalado de banda",
+          "descripcion": "Cuando el PSBI demuestra volumen sostenido y operación limpia (sin spikes anómalos, sin errores recurrentes), puede solicitar al ecosistema escalar a banda media (120 ops) o alta (420 ops). El BACEN audita y aprueba."
+        },
+        {
+          "num": "04",
+          "titulo": "Monitoreo agregado por DICT",
+          "descripcion": "El DICT y los sistemas de fiscalización del ecosistema observan el comportamiento de todos los participantes en tiempo real. Patrones anómalos disparan alertas y, en casos extremos, suspensión preventiva del consumidor mientras se investiga."
+        },
+        {
+          "num": "05",
+          "titulo": "Reporte y trazabilidad pública",
+          "descripcion": "Los participantes reciben reportes periódicos de su consumo vs cuota. El ecosistema publica métricas agregadas — eso permite a un PSBI competir comparando su nivel de servicio vs el promedio de su banda."
+        }
+      ]
+    },
+
+    {
+      "tipo": "por-que-importa",
+      "icono": "alerta",
+      "titulo": "Errores conceptuales frecuentes",
+      "parrafos": [
+        "<strong>\"Disponibilidad del 99% es solo 1% peor que 99.9%.\"</strong> &nbsp; No. El 99% mensual permite ~7.2 horas de caída; el 99.9% permite ~43 minutos. La diferencia operativa es de un orden de magnitud — y el coste de infraestructura para pasar de uno al otro también.",
+        "<strong>\"<span class=\"glosario-term\" data-term=\"TPS\">TPS</span> y <span class=\"glosario-term\" data-term=\"TPM\">TPM</span> son lo mismo, solo que en otra unidad.\"</strong> &nbsp; No exactamente. TPS mide picos instantáneos (segundo a segundo); TPM mide promedios sobre un minuto. Una plataforma puede cumplir TPM y aún así colapsar en picos cortos. Si el SLA dice TPM y la realidad pega picos TPS, hay incumplimiento aunque el reporte mensual diga lo contrario.",
+        "<strong>\"El <span class=\"glosario-term\" data-term=\"timeout\">timeout</span> debe estar lo más alto posible para no fallar.\"</strong> &nbsp; No. Un timeout alto bloquea recursos del consumidor en operaciones que ya no van a responder. El timeout es un umbral de decisión de fallo, no de tolerancia infinita. Brasil lo fija en 15s no por casualidad — es el punto donde más vale considerar la llamada fallida y reintentar.",
+        "<strong>\"Si la API responde 200 OK, está cumpliendo SLA.\"</strong> &nbsp; No necesariamente. El SLA cubre disponibilidad y latencia. Un 200 OK que tarda 4 segundos puede estar incumpliendo el SLA aunque sea técnicamente exitoso. Esto es habitual en mesas técnicas donde el equipo de operaciones del banco celebra que no hay 5xx mientras el PSBI mide latencias inviables.",
+        "<strong>\"Si Colombia no tiene SLAs definidos, no hay obligaciones operativas.\"</strong> &nbsp; No. Los acuerdos informales de industria operan como referencia. En disputas, se citan como práctica esperada del ecosistema — y un participante que opera muy por debajo del acuerdo informal pierde acceso a partners aunque técnicamente no incumpla normativa."
+      ],
+      "cita": "El SLA no es un reporte mensual: es la primera línea de defensa de la confianza operativa del ecosistema. Si lo trato como métrica de marketing en lugar de compromiso técnico, el ecosistema entero pierde."
+    },
+
+    {
+      "tipo": "dialogo-transferencia",
+      "titulo": "Lo que el banco te va a preguntar en la primera mesa",
+      "subtitulo": "Cuatro intercambios típicos cuando un consultor entra a discutir SLAs con el equipo técnico de un banco. Son las preguntas que conviene tener resueltas antes del taller.",
+      "intercambios": [
+        {
+          "cliente": "¿Por qué tendríamos que comprometernos a 99.5% si el ecosistema admite 95%? Estamos asumiendo un coste enorme sin ganar nada.",
+          "tu": "El 95% es el piso regulatorio; el 99.5% es el techo competitivo. Un PSBI que tiene que llamar a diez bancos para construir una vista del usuario va a notar mucho más al banco que cae 7 horas/mes que al que cae 40 minutos. En la práctica, los flujos de agregación se diseñan para tolerar al peor banco — eso significa que el banco menos disponible marca el ritmo de toda la integración del PSBI, y eso se traduce en menor adopción del banco peor disponible. El número regulatorio no es el número competitivo."
+        },
+        {
+          "cliente": "¿Y si nuestro core no soporta los tiempos de respuesta que pide el ecosistema? ¿Qué hacemos, mentimos en el reporte?",
+          "tu": "Nadie te pide mentir, te piden remediar. Lo que sí te pide el ecosistema es transparencia y plan: declara honestamente que tu p95 está en 2.5 segundos, presenta el roadmap a 12 meses para llevarlo a 1.5, y reporta progresivamente. El regulador audita cumplimiento sobre lo declarado, no sobre lo aspiracional. Lo grave no es no cumplir; es ocultar que no cumples. En UK eso ha terminado en sanciones públicas — la trazabilidad de las métricas mensuales hace muy visible cualquier divergencia entre reporte y realidad."
+        },
+        {
+          "cliente": "Las bandas de Brasil suenan bien, pero ¿cómo decidimos quién entra en cuál? Eso es una pesadilla operativa.",
+          "tu": "Brasil resolvió eso publicando criterios objetivos: tipo de servicio del PSBI, volumen sostenido durante una ventana de evaluación (típicamente 90 días) y ausencia de patrones anómalos. La banda inicial siempre es la más baja; el escalado se solicita y se audita. Lo importante es que las bandas no son discrecionales — son auditables. Si tu banco va a adoptar el modelo, lo que tenéis que hacer es decidir qué criterios objetivos publicáis, no improvisar caso por caso."
+        },
+        {
+          "cliente": "Si el ecosistema todavía está discutiendo varias dimensiones (Chile y Colombia), ¿con qué SLA arrancamos? No podemos esperar a que el regulador termine.",
+          "tu": "Tres pasos. Primero, fija lo que ya está definido — disponibilidad, ventana histórica, procesamiento — al mínimo regulatorio. Segundo, lo que está en discusión, declaradlo internamente al objetivo razonable de medio plazo (99% disponibilidad, 1000ms p95, 200 TPS) y operad contra eso, aunque el regulador no os audite todavía. Tercero, documentad el SLA interno y publicadlo a los participantes con los que tenéis acuerdos bilaterales — eso protege en disputas y posiciona al banco como referencia cuando el regulador cierre las definiciones. La matriz de tres horizontes de este módulo está pensada precisamente para esa conversación."
+        }
+      ]
+    },
+
+    {
+      "tipo": "footer-completar",
+      "titulo": "Completar el ejercicio",
+      "subtitulo": "Marca el módulo como completado cuando hayas recorrido las cuatro secciones — dimensiones, ecosistemas, matriz de validación y diálogo con el banco. Se desbloquea el badge Lector de SLAs (30 XP)."
+    },
+
+    {
+      "tipo": "badge-modal"
+    }
+  ]
+}

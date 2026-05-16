@@ -1,0 +1,71 @@
+{
+  "modulo": "04d-taller-peru-perfil-slas",
+  "videos": [
+    {
+      "titulo": "Guía de facilitación del taller Perú (pendiente)",
+      "duracion_min": 22,
+      "url": "https://minsait.sharepoint.com/sites/openbusiness/videos/04d-taller-peru-facilitacion.mp4",
+      "pendiente": true,
+      "obligatorio": false,
+      "descripcion": "Recorrido completo del taller con dinámicas de mesa, tiempos sugeridos por bloque, cómo usar los anchors brasileños como punto de partida y cómo cerrar consenso ante banderas levantadas."
+    }
+  ],
+  "lecturas": [
+    {
+      "titulo": "Manual Operacional do Open Finance Brasil — BACEN",
+      "url": "https://openfinancebrasil.org.br/regulacao/",
+      "tipo": "manual",
+      "obligatorio": true,
+      "tiempo_min": 35,
+      "descripcion": "Documento maestro de los SLAs brasileños y del perfil técnico. Es la fuente primaria de los anchors usados en el taller."
+    },
+    {
+      "titulo": "Open Finance Brasil — Convenção e Estrutura de Governança",
+      "url": "https://openfinancebrasil.org.br/regulacao/",
+      "tipo": "manual",
+      "obligatorio": false,
+      "tiempo_min": 20,
+      "descripcion": "Modelo de gobernanza, monitoreo y reporte de Brasil. Útil para discutir el bloque 2 (SLAs) con la SBS y cámaras peruanas."
+    },
+    {
+      "titulo": "FAPI 2.0 Security Profile (OpenID Foundation)",
+      "url": "https://openid.net/specs/fapi-2_0-security-profile.html",
+      "tipo": "spec",
+      "obligatorio": true,
+      "tiempo_min": 25,
+      "descripcion": "Baseline obligatorio sobre el que se construyen las 12 decisiones del bloque 1."
+    },
+    {
+      "titulo": "Grant Management for OAuth 2.0",
+      "url": "https://openid.net/specs/fapi-grant-management.html",
+      "tipo": "spec",
+      "obligatorio": true,
+      "tiempo_min": 20,
+      "descripcion": "Define las seis operaciones del ciclo de vida del grant. Soporta la discusión de la decisión 6."
+    },
+    {
+      "titulo": "Superintendencia de Banca, Seguros y AFP (SBS) — Perú",
+      "url": "https://www.sbs.gob.pe/",
+      "tipo": "regulador",
+      "obligatorio": false,
+      "tiempo_min": 15,
+      "descripcion": "Web institucional del regulador peruano. Verificar últimas comunicaciones sobre el Directorio peruano antes del taller."
+    },
+    {
+      "titulo": "Open Banking UK — Performance Metrics",
+      "url": "https://www.openbanking.org.uk/regulatory-reporting/",
+      "tipo": "dashboard",
+      "obligatorio": false,
+      "tiempo_min": 15,
+      "descripcion": "Referencia de monitoreo público. Útil para discutir el horizonte largo del bloque 2."
+    }
+  ],
+  "documentos_apoyo": [
+    {
+      "titulo": "Plantilla de minuta del facilitador (pendiente)",
+      "tipo": "markdown",
+      "estado": "por_publicar",
+      "descripcion": "Plantilla con tiempos sugeridos por bloque, guion de preguntas detonantes y formato para registrar comentarios cualitativos. Se publicará en una iteración posterior."
+    }
+  ]
+}

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1280">
   <title>Open Business Tech Academy</title>
-  <link rel="stylesheet" href="assets/css/theme.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/modulo.css">
+  <link rel="stylesheet" href="assets/css/theme.css?v=2026051603">
+  <link rel="stylesheet" href="assets/css/components.css?v=2026051603">
+  <link rel="stylesheet" href="assets/css/modulo.css?v=2026051603">
   <style>
     /* --------- HUB ESPECÍFICO --------- */
     .hub-hero {
@@ -429,6 +429,10 @@
         descripcion: 'Authorization Code, PKCE, JWT, PAR, RAR y Grant Management. El consentimiento granular del SFA chileno por dentro.' },
       { id: '04b-fapi-perfil-propio',       num: '04b', titulo: 'Construyendo un perfil FAPI 2.0 propio', badge: 'disenador-perfil-fapi',  disponible: true, tipo: 'profundizacion',
         descripcion: 'Doce decisiones que toda jurisdicción tiene encima de la mesa al adoptar FAPI 2.0. Diseñado para autoformación y para taller facilitado.' },
+      { id: '04c-slas-requisitos-operativos', num: '04c', titulo: 'SLAs y requisitos operativos en Open Finance', badge: 'lector-de-slas',     disponible: true, tipo: 'profundizacion',
+        descripcion: 'Ocho dimensiones del SLA, cuatro ecosistemas comparados y una matriz de validación a tres horizontes para llevar a la mesa con un banco o con el ecosistema.' },
+      { id: '04d-taller-peru-perfil-slas',    num: '04d', titulo: 'Taller Perú · Perfil FAPI 2.0 + SLAs (co-creación)', badge: 'co-creador-peru', disponible: false, tipo: 'taller',
+        descripcion: 'Taller presencial de día completo para una mesa mixta peruana. 12 decisiones FAPI + 8 dimensiones SLA × 3 horizontes, ancladas en la práctica de Open Finance Brasil. Cierra con ficha-resumen y acta detallada exportables.' },
       { id: '05-arquitectura-open-finance', num: '05', titulo: 'Arquitectura Open Finance',          badge: 'arquitecto-del-ecosistema', disponible: false },
       { id: '06-estandares-regulatorios',   num: '06', titulo: 'Estándares y mapeo regulatorio LATAM', badge: 'cartografo-regulatorio',  disponible: false },
       { id: '07-casos-uso-tecnicos',        num: '07', titulo: 'Casos de uso técnicos',              badge: 'embajador-open-finance',    disponible: false }
@@ -563,29 +567,32 @@
             .then(svg => {
               if (!svg) return;
               const host = el.querySelector('.svg-host') || el;
-              const tmp = document.createElement('div');
-              tmp.innerHTML = svg;
-              const newSvg = tmp.querySelector('svg');
-              if (newSvg) {
-                const old = host.querySelector('svg');
-                if (old) old.replaceWith(newSvg);
-              }
-            }).catch(() => {});
+              host.innerHTML = svg;
+            })
+            .catch(() => {});
         }
       });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    // Guardar objetivo personal al pulsar "Fijar"
+    document.getElementById('objGuardar').addEventListener('click', () => {
+      const moduloId = document.getElementById('objModulo').value;
+      const fecha    = document.getElementById('objFecha').value;
+      if (!moduloId) {
+        alert('Elige un módulo objetivo primero.');
+        return;
+      }
+      Progress.fijarObjetivoPersonal({ modulo_target: moduloId, fecha_target: fecha });
       pintar();
-      // Guardar objetivo personal
-      document.getElementById('objGuardar').addEventListener('click', () => {
-        const m = document.getElementById('objModulo').value;
-        const f = document.getElementById('objFecha').value;
-        if (!m) return;
-        Progress.setObjetivoPersonal(m, f);
-        pintar();
-      });
     });
+
+    // Pintar al cargar y al volver a la pestaña
+    document.addEventListener('DOMContentLoaded', pintar);
+    window.addEventListener('focus', pintar);
+    // Si Progress ya cargó (DOMContentLoaded puede haber pasado), pintar ya
+    if (document.readyState !== 'loading') {
+      try { pintar(); } catch (e) { console.warn('[hub] error pintando:', e); }
+    }
   </script>
 </body>
 </html>
