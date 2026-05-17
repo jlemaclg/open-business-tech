@@ -1,0 +1,263 @@
+/* ============================================================
+   Componente: taller-votacion
+   Bloque de votación punto-a-punto para talleres OBTA.
+   Diseñado para inyectarse dentro de pestañas de comparativa-tabs
+   o cualquier contenedor HTML libre. El script taller-votacion.js
+   engancha la interactividad de forma delegativa.
+   ============================================================ */
+
+/* Contenedor general del bloque votable */
+.tv-bloque {
+  background: #F5F4EE;
+  padding: 20px;
+  border-top: 3px solid #FF0054;
+}
+
+.tv-bloque__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #FF0054;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.tv-bloque__intro {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #260717;
+  opacity: 0.75;
+  margin: 0 0 14px 0;
+}
+
+/* Lista de puntos votables */
+.tv-puntos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tv-punto {
+  background: #FFFFFF;
+  border: 1px solid rgba(38, 7, 23, 0.08);
+  padding: 14px 16px;
+  border-radius: 4px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.tv-punto[data-voto="acuerdo"]  { border-left: 3px solid #1B5E20; }
+.tv-punto[data-voto="no"]       { border-left: 3px solid #B71C1C; }
+.tv-punto[data-voto="propuesta"]{ border-left: 3px solid #8A6D00; }
+
+.tv-punto__texto {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #260717;
+  margin-bottom: 10px;
+}
+
+.tv-punto__texto strong { color: #4F062A; }
+
+/* Botonera de voto */
+.tv-punto__botonera {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.tv-vote-btn {
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 6px 12px;
+  border-radius: 3px;
+  border: 1px solid rgba(38, 7, 23, 0.18);
+  background: #FFFFFF;
+  color: #260717;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tv-vote-btn:hover { background: #F5F4EE; }
+
+.tv-vote-btn[data-voto="acuerdo"].is-active {
+  background: #1B5E20;
+  border-color: #1B5E20;
+  color: #FFFFFF;
+}
+
+.tv-vote-btn[data-voto="no"].is-active {
+  background: #B71C1C;
+  border-color: #B71C1C;
+  color: #FFFFFF;
+}
+
+.tv-vote-btn[data-voto="propuesta"].is-active {
+  background: #8A6D00;
+  border-color: #8A6D00;
+  color: #FFFFFF;
+}
+
+/* Iconos SVG inline en botones */
+.tv-vote-btn svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* Input de propuesta — aparece solo si voto = propuesta */
+.tv-punto__propuesta {
+  margin-top: 6px;
+}
+
+.tv-punto__propuesta input[type="text"] {
+  width: 100%;
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid rgba(138, 109, 0, 0.4);
+  border-radius: 3px;
+  background: #FFFBF0;
+  color: #260717;
+  box-sizing: border-box;
+}
+
+.tv-punto__propuesta input[type="text"]:focus {
+  outline: none;
+  border-color: #8A6D00;
+  box-shadow: 0 0 0 2px rgba(138, 109, 0, 0.15);
+}
+
+/* Observaciones por punto (siempre disponible) */
+.tv-punto__observacion {
+  margin-top: 6px;
+}
+
+.tv-punto__observacion textarea {
+  width: 100%;
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 6px 10px;
+  border: 1px solid rgba(38, 7, 23, 0.12);
+  border-radius: 3px;
+  background: #FAFAF7;
+  color: #260717;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 36px;
+}
+
+.tv-punto__observacion textarea:focus {
+  outline: none;
+  border-color: #4F062A;
+  background: #FFFFFF;
+}
+
+.tv-punto__observacion-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #260717;
+  opacity: 0.55;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* ============ Cierre de bloque: consenso unánime / mayoría ============ */
+
+.tv-consenso {
+  margin-top: 20px;
+  padding: 16px 18px;
+  background: #260717;
+  color: #FFFFFF;
+  border-radius: 4px;
+}
+
+.tv-consenso__label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FF0054;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.tv-consenso__botonera {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.tv-consenso-btn {
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 8px 16px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tv-consenso-btn:hover { background: rgba(255, 255, 255, 0.08); }
+
+.tv-consenso-btn.is-active {
+  background: #FF0054;
+  border-color: #FF0054;
+  color: #FFFFFF;
+}
+
+.tv-consenso__notas textarea {
+  width: 100%;
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 40px;
+}
+
+.tv-consenso__notas textarea::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+.tv-consenso__notas textarea:focus {
+  outline: none;
+  border-color: #FF0054;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tv-consenso__notas-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Resumen — píldora compacta al cabecero del consenso cuando hay datos */
+.tv-consenso__resumen {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.tv-consenso__resumen strong { color: #FF0054; font-style: normal; }
