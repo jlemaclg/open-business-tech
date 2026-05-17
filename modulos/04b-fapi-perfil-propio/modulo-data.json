@@ -1,4 +1,4 @@
-{
+﻿{
   "modulo": "04b-fapi-perfil-propio",
   "titulo_topbar": "Construyendo un perfil FAPI 2.0",
   "duracion_min": 60,
@@ -159,16 +159,16 @@
               "id": "ambos",
               "label": "Ambos permitidos",
               "tag": "Híbrido",
-              "descripcion": "El perfil acepta mTLS-bound y DPoP. El cliente elige según su naturaleza (TPP regulado con cert vs. cliente público sin cert).",
+              "descripcion": "El perfil acepta mTLS-bound y DPoP. El cliente elige según su naturaleza (tercero regulado con cert vs. cliente público sin cert).",
               "trade_offs": [
-                "Máxima flexibilidad: cobertura tanto de TPPs corporativos como de clientes públicos.",
+                "Máxima flexibilidad: cobertura tanto de terceros corporativos como de clientes públicos.",
                 "Doble lógica de validación en cada Resource Server.",
                 "Requiere claridad sobre qué tipos de cliente pueden usar cada mecanismo.",
                 "Mayor coste de implementación inicial."
               ]
             }
           ],
-          "nota": "En jurisdicciones donde el Directorio del ecosistema emite certificados X.509 a todos los TPPs autorizados, mTLS-bound suele bastar. DPoP entra al menú cuando el alcance incluye clientes públicos que el regulador no quiere obligar a gestionar certificados."
+          "nota": "En jurisdicciones donde el Directorio del ecosistema emite certificados X.509 a todos los terceros autorizados, mTLS-bound suele bastar. DPoP entra al menú cuando el alcance incluye clientes públicos que el regulador no quiere obligar a gestionar certificados."
         },
         {
           "id": "algoritmos-firma",
@@ -303,7 +303,7 @@
                 "Máxima granularidad y trazabilidad de auditoría.",
                 "Habilita pantallas de consentimiento ricas y verificables.",
                 "Requiere especificación detallada por parte del regulador.",
-                "Coste de implementación mayor, especialmente para TPPs sin experiencia previa."
+                "Coste de implementación mayor, especialmente para terceros sin experiencia previa."
               ]
             }
           ]
@@ -322,7 +322,7 @@
               "tag": "Plano",
               "descripcion": "El consentimiento se otorga al recurso completo. El cliente accede a todos los sub-recursos disponibles dentro del scope.",
               "trade_offs": [
-                "Mínima carga conceptual para el usuario y para los TPPs.",
+                "Mínima carga conceptual para el usuario y para los terceros.",
                 "Granularidad limitada — no se puede pedir solo balance sin transacciones.",
                 "Dificulta el principio de mínimo privilegio.",
                 "Reduce trabajo en el Authorization Server."
@@ -623,7 +623,7 @@
                 "Alcance mínimo, menor riesgo regulatorio.",
                 "Habilita casos de uso de agregación y PFM.",
                 "Excluye iniciación de pagos y productos.",
-                "Adecuado cuando el ecosistema TPP está en formación."
+                "Adecuado cuando el ecosistema tercero está en formación."
               ]
             },
             {
@@ -681,7 +681,7 @@
       "intercambios": [
         {
           "cliente": "Si FAPI 2.0 ya está certificado, ¿por qué tengo que tomar todas estas decisiones? ¿No basta con adoptar el estándar?",
-          "tu": "FAPI 2.0 Baseline fija un núcleo de seguridad obligatorio: mTLS o DPoP, PAR, PKCE S256, sender-constrained, PS256 o ES256, Authorization Code Flow. Eso no se discute. Pero el estándar deja explícitamente abiertas las decisiones operativas — qué algoritmos exigir, qué vida de token, qué granularidad de consentimiento, qué alcance de Grant Management, qué catálogo de APIs cubrir. Esas decisiones las toma cada jurisdicción según su madurez regulatoria, su ecosistema TPP y su estrategia. Si no se toman, no hay implementación posible."
+          "tu": "FAPI 2.0 Baseline fija un núcleo de seguridad obligatorio: mTLS o DPoP, PAR, PKCE S256, sender-constrained, PS256 o ES256, Authorization Code Flow. Eso no se discute. Pero el estándar deja explícitamente abiertas las decisiones operativas — qué algoritmos exigir, qué vida de token, qué granularidad de consentimiento, qué alcance de Grant Management, qué catálogo de APIs cubrir. Esas decisiones las toma cada jurisdicción según su madurez regulatoria, su ecosistema tercero y su estrategia. Si no se toman, no hay implementación posible."
         },
         {
           "cliente": "¿Hay decisiones que sean incompatibles entre sí? ¿Puedo elegir cualquier combinación?",
@@ -693,7 +693,7 @@
         },
         {
           "cliente": "¿Y si más adelante queremos cambiar una decisión? ¿Cuán costoso es?",
-          "tu": "Depende de la decisión. Cambiar la vigencia máxima de 12 a 36 meses es una modificación de parámetro — bajo coste técnico, requiere comunicación a TPPs y usuarios. Cambiar de scope clásico a RAR estructurado es una migración de fondo — exige rehacer toda la integración del cliente y del Authorization Server. Por eso conviene tomar las decisiones de granularidad (4, 5, 6) con horizonte de medio plazo, mientras que las de tiempos (3) y vigencia (8) admiten ajustes operativos. El módulo no formaliza esa distinción, pero en el taller conviene marcar qué decisiones son estructurales y cuáles son operativas."
+          "tu": "Depende de la decisión. Cambiar la vigencia máxima de 12 a 36 meses es una modificación de parámetro — bajo coste técnico, requiere comunicación a terceros y usuarios. Cambiar de scope clásico a RAR estructurado es una migración de fondo — exige rehacer toda la integración del cliente y del Authorization Server. Por eso conviene tomar las decisiones de granularidad (4, 5, 6) con horizonte de medio plazo, mientras que las de tiempos (3) y vigencia (8) admiten ajustes operativos. El módulo no formaliza esa distinción, pero en el taller conviene marcar qué decisiones son estructurales y cuáles son operativas."
         }
       ]
     },
