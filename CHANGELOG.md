@@ -5,6 +5,37 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [1.3.0] — 2026-08-07
+
+### Añadido
+- Quiz de 6 preguntas para el módulo 04b · Construyendo un perfil FAPI 2.0 propio
+- Quiz de 7 preguntas para el módulo 04c · SLAs y requisitos operativos
+- Módulo 04d · Taller Perú activado en la ruta (antes `disponible: false`, publicado como ejemplo funcionando de módulo tipo "taller")
+
+### Corregido
+- Prerrequisito de 04c apuntaba a `05-arquitectura-open-finance`, un módulo sin contenido; corregido a `04-oauth-openid-fapi`
+
+### Infraestructura
+- `node_modules/` deja de trackearse en git (añadido a `.gitignore`)
+- `.gitattributes` añadido para normalizar line endings (CRLF/LF) y evitar diffs de ruido
+
+---
+
+## [1.2.0] — 2026-05-17
+
+### Añadido
+- Módulo 04b · Construyendo un perfil FAPI 2.0 propio (autoformación + taller facilitado)
+- Módulo 04c · SLAs y requisitos operativos en Open Finance (UK, Brasil, Chile, Colombia)
+- Módulo 04d · Taller Perú — Perfil FAPI 2.0 + SLAs (co-creación)
+- Componentes: `perfil-builder`, `perfil-resumen`, `taller-setup`, `capacidad-ecosistema`, `acta-export`, `taller-votacion`, `recursos-panel`
+- Nuevo tipo de entrada de ruta `tipo: 'profundizacion'` / `tipo: 'taller'` junto al lineal
+
+> **Nota:** 04b/04c/04d se publicaron en varios commits entre el 13 y el 17 de mayo
+> sin registrarse en su momento en este archivo. Esta entrada consolida ese trabajo
+> retroactivamente.
+
+---
+
 ## [1.1.0] — 2026-05-13
 
 ### Añadido
